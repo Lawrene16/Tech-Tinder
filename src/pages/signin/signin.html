@@ -1,0 +1,53 @@
+<ion-content padding>
+
+    <br>
+    <br>
+    <br>
+    <p align="center">
+      <img src="../../assets/icon.png" height="110">
+      <!-- <b style="font-size: 35px; color: white">ech-Tinder</b> -->
+    </p>
+  
+    <br>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="signinForm">
+
+      <ion-item class="listt">
+          <ion-label floating>E-mail or Phone</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+    
+        <ion-item class="listt">
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>          
+        </ion-item>
+
+        <button  ion-button type="submit" [disabled]="signinForm.invalid" class="btn success">SIGN IN</button>
+    
+  </form>
+  
+    <!-- <p align="center"><b >Or</b></p> -->
+    <button ion-button 
+    block style="border-radius: 5px;
+    margin-top: 20px;
+    margin-left: 30px;
+    width: 75vw;" 
+    color="testone">
+    <ion-icon style="font-size: 30px;
+     position: absolute; left: 20px;" name="logo-linkedin"></ion-icon>                    
+     Sign in with LinkedIn
+</button>
+
+    <br>
+    <br>
+    
+    <div>
+      <b class="forgotp">FORGOT PASSWORD?</b>
+      <b class="joinn" (click)="onSignUp()">JOIN NOW</b>
+    </div>
+
+
+
+
+
+</ion-content>

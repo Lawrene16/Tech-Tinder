@@ -1,0 +1,34 @@
+<!--
+  Generated template for the ChatsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Chats</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list no-lines> <!-- se o view for o CHATS -->
+      <button ion-item *ngFor="let chat of chats | async" (click)="onChatOpen(chat)">
+        <ion-avatar item-start>
+          <img [src]="chat.photo || 'assets/imgs/no-photo.jpg'">
+        </ion-avatar>
+        <h2>{{ chat.title }}</h2>
+        <!-- se c.lastMessage for FALSE, ele cai no else, que vai chamar o elemento abaixo (através do #) -->
+        <!-- <p *ngIf="chat.lastMessage; else customMessage"> {{ chat.timeStamp | date: 'dd/MM/yyyy HH:mm'}} - {{ chat.lastMessage }}</p>
+        <ng-template #customMessage>
+          <p>No messages.</p>
+        </ng-template> -->
+        <p *ngIf="chat.lastMessage"> {{ chat.timeStamp | date: 'dd/MM/yyyy HH:mm'}} - {{ chat.lastMessage }}</p>
+        <p *ngIf="!chat.lastMessage">No messages.</p>
+      </button>
+    </ion-list>
+
+</ion-content>

@@ -1,0 +1,55 @@
+page-signin {
+    .content_bg{
+        // background-image: url('../../assets/back3.jpeg');
+        // background-image: url('../../assets/back5.png');        
+        // background-image: url('../../assets/download.jpeg');
+        // background-image: url('../../assets/happy2.png');
+        
+        // background-repeat: no-repeat;
+        // background-size: cover;
+        // width: 100%;
+        // // object-fit: contain;
+        // // object-fit: cover;
+        
+        // background-position: -170px;
+
+        background-color: white;
+        
+    }
+
+    .listt{
+        background: transparent;
+        color: color($colors, testone);
+        
+    }
+
+    .btn {
+          color: color($colors, testone);
+        border: 2px solid color($colors, testone);
+        background-color: transparent;
+        color: color($colors, testone);
+        padding: 20px 28px;
+        font-size: 16px;
+        margin-right: 40px;
+        margin-top: 20px;
+        margin-left: 30px;
+        width: 75vw;
+        cursor: pointer;
+      }
+
+      .forgotp{
+          color: color($colors, testone);
+          margin-left: 15px;
+        // position: absolute;
+        // z-index: 5;
+        
+        // left: 50px;
+      }
+
+      .joinn{
+            float: right;
+            margin-right: 15px;
+            color: color($colors, testone);
+            
+      }
+}

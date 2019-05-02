@@ -1,0 +1,190 @@
+<ion-header>
+    <ion-navbar ion-fixed align-title="center"  color="light">
+        <ion-title color="primary">  
+          Profile
+        </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  
+  <ion-content padding>
+  
+    <p align="center">
+      <!-- <div class="user-photo"> -->
+        <img class="user-photo"
+         src="../../assets/one.jpg">
+      <!-- </div> -->
+    </p>
+
+    <h4 align="center">{{fullname}}</h4>
+    <p align="center">{{skills}}
+    </p>
+
+    <p align="center">Hourly Rate - {{hourlyrate}}</p>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+            <button class="btn" (click)="onChatCreate()">MESSAGE</button>
+        </ion-col>
+
+        <ion-col>
+          <button class="btntwo">
+            SHORTLIST
+      </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <br>
+    <ion-list>
+      <ion-list>
+        <ion-list-header>Last Experience</ion-list-header>
+
+        <ion-item *ngFor="let experience of experiences">
+          <ion-avatar item-left>
+            <img src="../../assets/upwork.png">
+          </ion-avatar>
+          <b>{{experience.role}}</b><br>
+          {{experience.company}}
+        </ion-item>
+
+        <!-- <ion-item>
+            <ion-avatar item-left>
+              <img src="../../assets/upwork.png">
+            </ion-avatar>
+            <b>Android Developer</b><br>
+            Upwork
+          </ion-item> -->
+
+          <br>
+          <ion-list-header>About Edung</ion-list-header>
+          <div style="margin: 15px; font-size: 16px">
+              {{writeup}}
+          </div>
+      </ion-list>
+    </ion-list>
+
+    <!-- <div class="topdiv" >
+  
+      <div style="width: 100%; height: 10vh;"></div>
+      <div align="center"><b style="font-size: 16px; color: white">Expert Cross Platform Developer</b></div> 
+      <div align="center" style="font-size: 14px; color: white">
+        <ion-icon></ion-icon>
+        Port Harcourt, Nigeria
+     </div>     
+     <div style="width: 100%; height: 3vh;"></div>
+     
+      <div align="center"><b style="font-size: 16px; margin-top: 10px; color: white">$12.50/hr</b></div> 
+      
+      
+      <div class="user-photo">
+        <img src="../../assets/one.jpg">
+      </div>
+  
+  
+      
+      <ion-grid >
+        <ion-row style="padding-left: 110px; margin-top: 5vh">
+                <ion-col col-5>
+                    <div >
+                        <ion-card style="padding: 7px">
+                            Android
+                          </ion-card>
+                    </div>
+                    
+                  </ion-col>
+                    
+                  <ion-col col-4>
+                      <div >
+                          <ion-card style="padding: 7px">
+                              UI/UX
+                            </ion-card>
+                      </div>
+                      
+                    </ion-col>
+
+                   
+        </ion-row>
+      </ion-grid>
+  
+  
+    </div> -->
+<!--   
+    <div style="margin-top: 12vh"></div>
+    <div style="margin: 15px; font-size: 16px">
+        I am an Expert Cross platform Mobile Developer with over 4 years experience building mobile apps with Java, Kotlin, Swift, Objective-C, Ionic and Flutter. 
+  
+        I build/maintain/debug mobile apps as a hobby, therefore, I have expert knowledge on a lot of areas and tools that extend the Android and iOS framework to whatever is to be achieved.
+        
+        Quality is very important to me so I always write readable and maintainable codes using best practices, clean architectural principles with reactive approach and MVVM pattern.
+        
+        I always ensure that every product is thoroughly tested on multiple devices before its release. I follow requirements strictly without missing a step and I can also share my ideas if you are nor sure of how something should work.
+        
+        I am reachable on Upwork and through any other means of communication. I am also comfortable working remotely with tools like Teamviewer, Anydesk or goToMeeting.. 
+        
+        What matters to me is to actually make your ideas a reality. 
+        I will like to be a part of your project and make it a success, nothing gives me more joy. 
+        
+        I look forward to working with you
+    </div>
+   -->
+  
+    <!-- <div>
+      <ion-list>
+        
+            <ion-item-divider>
+                Account Info 
+                <ion-icon color="white" name="ios-create-outline" 
+                
+                item-right></ion-icon>   
+            </ion-item-divider>
+  
+            <ion-item detail-push (click)="showBox(0)">
+                Edung
+                <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   
+            </ion-item>
+  
+            <ion-item detail-push (click)="showBox(1)">
+                Divinefavour 
+                <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   
+            </ion-item>
+  
+            <ion-item detail-push (click)="showBox(2)">
+                lawrenedickson49@gmail.com 
+                <ion-icon color="white" name="ios-mail-outline" item-left></ion-icon>   
+            </ion-item>
+  
+  
+  
+  
+  
+            <ion-item-divider>
+                Change Password
+                <ion-icon color="white" name="ios-create-outline" 
+                item-right></ion-icon>   
+            </ion-item-divider>
+  
+            <ion-item detail-push (click)="showBox(3)">
+                New Password
+                <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   
+            </ion-item>
+  
+            <ion-item detail-push (click)="showBox(4)">
+                Confirm Password 
+                <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   
+            </ion-item>
+  
+  
+            <ion-item-divider>
+                Connected Accounts
+                <ion-icon color="white" name="ios-create-outline" 
+                item-right></ion-icon>   
+            </ion-item-divider>
+  
+      </ion-list>
+    </div> -->
+  
+    
+  </ion-content>
+  

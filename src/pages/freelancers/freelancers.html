@@ -1,0 +1,95 @@
+<!-- <ion-header>
+  <ion-navbar color="transparent">
+    <ion-buttons start>
+      <button ion-button menuToggle>
+      <ion-icon name="menu" color="dark"></ion-icon>
+    </button>
+    </ion-buttons>
+
+    <ion-searchbar class="searchitem"
+    animated="true" 
+   placeholder="Search for talents close to you"></ion-searchbar>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openSecondModal()">
+          <ion-icon  class="icon ion-home custom-icon" name="notifications"></ion-icon>
+      </button>
+  </ion-buttons>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content class="maincontent">
+
+    <ion-fab bottom right (click)="increase()" >
+      <button color="testone" ion-fab mini>
+        <ion-icon name="md-add"></ion-icon>
+      </button>
+    </ion-fab>
+  
+    <ion-input [(ngModel)]="radius" (keypress)="eventHandler($event.keyCode)" class="bottominput" bottom right placeholder="radius">
+        
+    </ion-input>
+  
+    <ion-fab bottom (click)="reduce()" right style="margin-right: 85px">
+      <button color="testone" ion-fab mini>
+        <ion-icon name="md-remove"></ion-icon>
+      </button>
+    </ion-fab>
+  
+  
+  
+    <div  #map id="map">
+    </div>
+  
+  
+    <ion-list class="floatinglist">
+      <ion-item *ngFor="let country of countries" (click)="add(country, i)">
+        {{country}}
+      </ion-item>
+    </ion-list>
+  
+    <ion-card class="headercard">
+      <ion-grid style="height: 50px;">
+        <ion-row>
+          <ion-col col-1>
+          <ion-icon menuToggle style="font-size: 27px; margin-left: 10px; float: left;" 
+          name="menu" color="dark"></ion-icon>                      
+          </ion-col>
+  
+          <ion-col>
+            <ion-searchbar animated="true" 
+            placeholder="Find talents close to you"
+            (ionChange)="search()"
+            (ionBlur)="removeFocus()"
+            debounce=500 [(ngModel)]="searchedtag" class="mysearch"></ion-searchbar>
+              <!-- <ion-searchbar animated="true" 
+          placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>-->
+          </ion-col>
+  
+  
+          <ion-col col-1>
+          <ion-icon style="font-size: 27px; 
+          margin-right: 10px; float: right;" name="notifications-outline" 
+          color="dark"></ion-icon>                                  
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  
+      <!-- <div>
+          <ion-icon style="font-size: 27px; margin-left: 20px; float: left; margin-top: 1px; margin-bottom: 1px;" name="menu" color="dark"></ion-icon>            
+          <ion-searchbar style="float: left;" animated="true" 
+          placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>
+      </div>
+           -->
+      </ion-card>
+  
+    <!-- <p align="center" id="intitalstring">
+      <b>Edung Divinefavour</b><br>
+      Hourly rate - $12.5/hr<br>
+      Skills - Android | UI/UX
+      <br>
+      <br>
+      <button onclick="Window.myComponent.viewProfile()" class="contactbtn">View Profile</button>
+    </p> -->
+  </ion-content>
+  

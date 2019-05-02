@@ -1,0 +1,108 @@
+<ion-header>
+    <ion-navbar ion-fixed align-title="center"  color="light">
+        <ion-title color="primary">  
+          Setup Your Profile
+        </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  
+  <ion-content padding>
+  
+    <p align="center">
+      <!-- <div class="user-photo"> -->
+        <img class="user-photo"
+         src="../../assets/user.png">
+      <!-- </div> -->
+    </p>
+  
+    <div (click)="showBox(0)">
+        <h4 align="center">{{fullname}}
+            <ion-icon item-right name="ios-create-outline"></ion-icon></h4>
+    </div>
+
+    <div [hidden]="isshidden" (click)="revert()">
+        <p style="margin-left: 30px;margin-right:30px" id="currentskills" align="center">
+            <ion-icon item-right name="ios-remove-circle-outline"></ion-icon>
+          </p>
+
+    </div>
+
+    <div (click)="showBox(1)">
+        <p align="center">Hourly Rate - ${{hourlyrate}}/hr
+            <ion-icon item-right name="ios-create-outline"></ion-icon>
+          </p>
+    </div>
+ 
+    <br>
+      <ion-list>
+
+          <ion-list-header>Skills
+          </ion-list-header>
+
+              <div class="autocomplete">
+                  <ion-item>
+                    <ion-input  type="text" 
+                                placeholder="Search skill tags here"
+                                [(ngModel)]="input"
+                                (ionChange)="search()"
+                                (ionBlur)="removeFocus()"
+                                debounce=500>
+                              </ion-input>
+                  </ion-item>
+                  <ion-list>
+                    <ion-item *ngFor="let country of countries" (click)="add(country, i)">
+                      {{country}}
+                    </ion-item>
+                  </ion-list>
+            </div>
+
+        <ion-list-header (click)="showBox(2)">My Experiences
+            <ion-icon item-right name="ios-create-outline"></ion-icon>
+        </ion-list-header>
+
+        <p [hidden]="shouldhidetext" style="margin-left: 20px">No Experiences Added Yet, Click the icon above to add experiences</p>
+  
+        <ion-item *ngFor="let experience of experienceslist; let i= index">
+          <ion-avatar item-left>
+            <img src="../../assets/upwork.png">
+          </ion-avatar>
+          <b>{{experience.role}}</b><br>
+          {{experience.company}}
+          <ion-icon 
+          name="ios-remove-circle-outline" (click)="removeExperience(experience, i)" item-right></ion-icon>
+        </ion-item>
+<!--   
+        <ion-item>
+            <ion-avatar item-left>
+              <img src="../../assets/upwork.png">
+            </ion-avatar>
+            <b>Android Developer</b><br>
+            Upwork
+          <ion-icon name="ios-remove-circle-outline" item-right></ion-icon>
+          </ion-item>
+   -->
+
+
+
+
+
+
+
+          <br>
+          <ion-list-header (click)="showBox(3)">About Me
+            <ion-icon item-right name="ios-create-outline"></ion-icon>
+          </ion-list-header>
+
+        <p [hidden]="shouldhidetexttwo" style="margin-left: 20px">Click the button above to tell the Tech-Tinder community about yourself</p>
+
+          <div id="writeup" style="margin: 15px; font-size: 16px">
+             {{writeup}}
+          </div>
+      </ion-list>
+
+      <p align="center">
+          <button ion-button outline (click)="saveprofile()" class="bsuccess">SAVE PROFILE</button>
+      </p>
+  </ion-content>
+  

@@ -1,0 +1,52 @@
+page-signup {
+
+    .invalid {
+        border: 2px solid #fff;
+    }    
+
+    .invalid-icon {
+        color: #ea6153;
+    }
+
+    .listt{
+        background: transparent;
+        color: color($colors, testone);
+        
+    }
+
+    .choosecard{
+      padding: 10px;
+      text-align: center;
+    }
+
+    .btn {
+          color: color($colors, testone);
+        border: 2px solid color($colors, testone);
+        background-color: transparent;
+        color: color($colors, testone);
+        padding: 20px 28px;
+        font-size: 16px;
+        margin-right: 40px;
+        margin-top: 20px;
+        margin-left: 30px;
+        width: 75vw;
+        cursor: pointer;
+      }
+
+      .forgotp{
+          color: color($colors, testone);
+          margin-left: 15px;
+        // position: absolute;
+        // z-index: 5;
+        
+        // left: 50px;
+      }
+
+      .joinn{
+            float: right;
+            margin-right: 15px;
+            color: color($colors, testone);
+            
+      }
+    
+}
