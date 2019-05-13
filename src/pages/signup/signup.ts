@@ -12,7 +12,6 @@ import { AuthService } from '../../providers/auth/auth.service';
 import { UserService } from './../../providers/user/user.service';
 // import { User } from '../../models/user.model';
 
-import { HomePage } from './../home/home';
 import { TabsclientPage } from '../tabsclient/tabsclient';
 import { TabsfreelancerPage } from '../tabsfreelancer/tabsfreelancer';
 import { SetupprofilePage } from '../setupprofile/setupprofile';
@@ -156,6 +155,10 @@ export class SignupPage {
       message: message,
       buttons: ['Ok']
     }).present();
+  }
+
+  alreadyaMember(){
+    this.navCtrl.pop();
   }
 
 }

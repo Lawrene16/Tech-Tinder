@@ -1,3 +1,51 @@
 page-jobs {
-
+    .fab {
+        width: 30px !important;
+        height: 30px !important;
+        }
+    
+      #map{
+        // height: 85vh
+        height: 100vh;
+    }
+    
+    .headercard{
+      position: absolute;
+      z-index: 5;
+      top: 2px;
+    }
+    
+    .mysearch{
+        background: transparent;
+        margin: auto;
+        z-index: 5;
+        flex-basis: 50px;
+        position: absolute;
+        top: -1px;
+    }
+    
+    
+    
+    .contactbtn{
+        height: 30px;
+        width: 90px;
+        background: color($colors, testone);
+        color: white;
+    }
+          .searchitem{
+            // background: #263238;
+            background: transparent;
+            position: absolute;
+            z-index: 5;
+            top: 0vh;
+            // background: #000;
+            
+          }
+    
+          .maincontent{
+            // background-image: url('../../assets/map.png');
+            
+            // background-repeat: no-repeat;
+            // background-size: cover;
+          }
 }

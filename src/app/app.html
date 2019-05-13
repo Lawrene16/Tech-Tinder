@@ -1,8 +1,37 @@
-<ion-menu [content]="minhaNav" enabled="false" id="user-menu" persistent="false">
-    <!-- persistent = true faz o menu aparecer mesmo qndo dermos um push em novas paginas (empilhar) -->
-    <user-menu [user]="currentUser">
-
-    </user-menu>
-</ion-menu>
-
-<ion-nav #minhaNav [root]="rootPage"></ion-nav>
+<ion-menu persistent="true" [content]="content" type="overlay">
+    <ion-header no-border>
+      <ion-toolbar>
+                <div class="container">
+                    <img class="userimage" src="../../assets/one.jpg">
+                    <b class="user-name">Edung Divinefavour</b>
+                    <div class="user-mail">lawrenedickson49@gmail.com</div>
+                    <br>
+                    <br>
+                   
+                </div>
+  
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+  
+        <ion-list>
+          <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
+              <ion-icon item-start [name]="p.icon"></ion-icon>
+              <!-- <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon> -->
+              {{ p.title }}
+            </button>
+        </ion-list>
+  
+  <!-- 
+              <ion-list>
+          <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
+              <ion-icon item-start [name]="p.icon"></ion-icon>
+              {{ p.title }}
+            </button>
+        </ion-list> -->
+      </ion-content>
+  </ion-menu>
+  
+  <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+  <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

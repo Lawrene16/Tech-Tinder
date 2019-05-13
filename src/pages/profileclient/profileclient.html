@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-navbar ion-fixed align-title="center"  color="light">
+      <button ion-button left menuToggle>
+            <ion-icon class="icon ion-home custom-icon" name="menu"></ion-icon>
+      </button>
+
+      <ion-title>  
+        My Profile
+      </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div class="topdiv" >
+
+    <div style="width: 100%; height: 7vh;"></div>
+
+    <div class="user-photo">
+      <img src="../../assets/one.jpg">
+    </div>
+
+  </div>
+
+  <div>
+    <ion-list>
+      
+          <ion-item-divider>
+              Account Info 
+              <ion-icon color="white" name="ios-create-outline" 
+              
+              item-right></ion-icon>   
+          </ion-item-divider>
+
+          <ion-item detail-push (click)="showBox(0)">
+              Edung
+              <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   
+          </ion-item>
+
+          <ion-item detail-push (click)="showBox(1)">
+              Divinefavour 
+              <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   
+          </ion-item>
+
+          <ion-item detail-push (click)="showBox(2)">
+              lawrenedickson49@gmail.com 
+              <ion-icon color="white" name="ios-mail-outline" item-left></ion-icon>   
+          </ion-item>
+
+
+
+
+
+          <ion-item-divider>
+              Change Password
+              <ion-icon color="white" name="ios-create-outline" 
+              item-right></ion-icon>   
+          </ion-item-divider>
+
+          <ion-item detail-push (click)="showBox(3)">
+              New Password
+              <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   
+          </ion-item>
+
+          <ion-item detail-push (click)="showBox(4)">
+              Confirm Password 
+              <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   
+          </ion-item>
+
+
+          <ion-item-divider>
+              Connected Accounts
+              <ion-icon color="white" name="ios-create-outline" 
+              item-right></ion-icon>   
+          </ion-item-divider>
+
+    </ion-list>
+  </div>
+
+  
+</ion-content>

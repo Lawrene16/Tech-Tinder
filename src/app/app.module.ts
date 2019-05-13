@@ -12,7 +12,6 @@ import { CapitalizePipe } from '../pipes/capitalize/capitalize';
 import { ChatPage } from '../pages/chat/chat';
 import { ChatService } from '../providers/chat/chat.service';
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
-import { HomePage } from '../pages/home/home';
 import { MessageBoxComponent } from './../components/message-box/message-box.component';
 import { MessageService } from '../providers/message/message.service';
 import { MyApp } from './app.component';
@@ -33,6 +32,9 @@ import { ChatsPage } from '../pages/chats/chats';
 import { SetupprofilePage } from '../pages/setupprofile/setupprofile';
 import { ModalPage } from '../pages/modal/modal';
 import { DetailsfreelancerPage } from '../pages/detailsfreelancer/detailsfreelancer';
+import { PostjobPage } from '../pages/postjob/postjob';
+import { ProfileclientPage } from '../pages/profileclient/profileclient';
+import { JoblistPage } from '../pages/joblist/joblist';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -54,7 +56,6 @@ const firebaseAuthConfig = {
     CapitalizePipe,
     ChatPage,
     CustomLoggedHeaderComponent,
-    HomePage,
     MessageBoxComponent,
     MyApp,
     ProgressBarComponent,
@@ -62,9 +63,12 @@ const firebaseAuthConfig = {
     TabsclientPage,
     TabsfreelancerPage,
     JobsPage,
+    PostjobPage,
+    ProfileclientPage,
     FreelancersPage,
     ShortlistedPage,
     SetupprofilePage,
+    JoblistPage,    
     DetailsfreelancerPage,
     ModalPage,
     ProfilefreelancerPage,
@@ -88,7 +92,6 @@ const firebaseAuthConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     ChatPage,
-    HomePage,
     MyApp,
     SetupprofilePage,
     JobsPage,
@@ -96,6 +99,9 @@ const firebaseAuthConfig = {
     ModalPage,
     FreelancersPage,
     ShortlistedPage,
+    JoblistPage,
+    PostjobPage,
+    ProfileclientPage,
     ProfilefreelancerPage,
     SigninPage,
     TabsclientPage,

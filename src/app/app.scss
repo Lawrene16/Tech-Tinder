@@ -1,20 +1,36 @@
-// http://ionicframework.com/docs/theming/
+// @import "../../node_modules/ionic2-auto-complete/auto-complete";
 
-
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
-
-.auth-icon {
-    font-size: 7.0em;
-}
+.container {
+    //   position: relative;
+    //   background-image: url('../assets/icon/test.png');
+      text-align: center;
+      height: 21vh;
+      color: white;
+      background: color($colors, testone);
+      padding: 0px;
+    }
+    
+    .user-name {
+      font-size: 18px;
+      position: absolute;
+      bottom: 35px;
+      right: 16px;
+    }
+    
+    .userimage{
+      width:80px;
+      position: absolute;
+      top: -5vh;
+      left: -5vh;
+      height:80px;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+      margin: 50px;
+    }
+    
+    .user-mail {
+      font-size: 15px;
+      position: absolute;
+      bottom: 15px;
+      right: 16px;
+    }

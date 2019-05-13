@@ -51427,8 +51427,36 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
-.auth-icon {
-  font-size: 7.0em;
+.container {
+  text-align: center;
+  height: 21vh;
+  color: white;
+  background: #006096;
+  padding: 0px;
+}
+
+.user-name {
+  font-size: 18px;
+  position: absolute;
+  bottom: 35px;
+  right: 16px;
+}
+
+.userimage {
+  width: 80px;
+  position: absolute;
+  top: -5vh;
+  left: -5vh;
+  height: 80px;
+  border-radius: 50%;
+  margin: 50px;
+}
+
+.user-mail {
+  font-size: 15px;
+  position: absolute;
+  bottom: 15px;
+  right: 16px;
 }
 
 message-box {
@@ -51627,6 +51655,208 @@ page-freelancers .searchitem {
   position: absolute;
   z-index: 5;
   top: 0vh;
+}
+
+page-jobs .fab {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+page-jobs #map {
+  height: 100vh;
+}
+
+page-jobs .headercard {
+  position: absolute;
+  z-index: 5;
+  top: 2px;
+}
+
+page-jobs .mysearch {
+  background: transparent;
+  margin: auto;
+  z-index: 5;
+  -webkit-flex-basis: 50px;
+  -ms-flex-preferred-size: 50px;
+  flex-basis: 50px;
+  position: absolute;
+  top: -1px;
+}
+
+page-jobs .contactbtn {
+  height: 30px;
+  width: 90px;
+  background: #006096;
+  color: white;
+}
+
+page-jobs .searchitem {
+  background: transparent;
+  position: absolute;
+  z-index: 5;
+  top: 0vh;
+}
+
+page-postjob .autocomplete {
+  width: 100%;
+}
+
+page-postjob .autocomplete ion-item ion-input {
+  padding: 1px !important;
+}
+
+page-postjob .autocomplete ion-list {
+  position: absolute;
+  width: 95%;
+  overflow-y: scroll;
+  max-height: 150%;
+  border: 5px;
+  z-index: 999;
+}
+
+page-postjob .autocomplete ion-list ion-item {
+  background: #f1f1f1;
+}
+
+page-postjob .autocomplete ion-list ion-item:hover {
+  cursor: pointer;
+  background: #dddddd;
+}
+
+page-postjob ion-input.custom-input {
+  font-size: 20px;
+}
+
+page-postjob ion-input.custom-input ::-webkit-input-placeholder {
+  font-size: 18px;
+  color: white;
+}
+
+page-postjob ion-input.custom-input ::-moz-placeholder {
+  font-size: 18px;
+  color: white;
+}
+
+page-postjob ion-input.custom-input ::-ms-input-placeholder {
+  font-size: 18px;
+  color: white;
+}
+
+page-postjob ion-input.custom-input ::placeholder {
+  font-size: 18px;
+  color: white;
+}
+
+page-postjob .itemclass {
+  height: 6vh;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  margin-left: 10px;
+  outline-color: black;
+  margin-right: 10px;
+  padding-left: 10px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  outline-style: auto;
+  outline-color: #c3c3c3;
+}
+
+page-postjob .item2class {
+  height: 21vh;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  margin-left: 10px;
+  outline-color: black;
+  margin-right: 10px;
+  padding-left: 10px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  outline-style: auto;
+  outline-color: #c3c3c3;
+}
+
+page-profileclient .topdiv {
+  width: 100%;
+  height: 27vh;
+}
+
+page-profileclient .user-photo {
+  width: 90px;
+  height: 90px;
+  margin: 1em auto;
+  background: #fff;
+  overflow: hidden;
+  top: 70vh;
+  border-radius: 50%;
+}
+
+page-profileclient img {
+  display: block;
+  border-radius: 50%;
+}
+
+page-profileclient .knowrow {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+page-profilefreelancer .topdiv {
+  width: 100%;
+  height: 10vh;
+}
+
+page-profilefreelancer .user-photo {
+  width: 90px;
+  height: 95px;
+  margin: 1em auto;
+  background: #fff;
+  margin-top: 20px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+page-profilefreelancer .btn {
+  color: #006096;
+  border: 2px solid #006096;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  float: right;
+}
+
+page-profilefreelancer .btntwo {
+  background: #006096;
+  color: white;
+  font-size: 16px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+page-profilefreelancer img {
+  display: block;
+}
+
+page-profilefreelancer .knowrow {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
 page-setupprofile .topdiv {

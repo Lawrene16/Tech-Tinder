@@ -1,0 +1,32 @@
+page-profileclient {
+    .topdiv{
+        width: 100%;
+        // background-color: color($colors, testone);
+        // background-color: #006096;        
+        height: 27vh;
+    }
+
+    .user-photo {
+        width: 90px;
+        height: 90px;
+        margin: 1em auto;
+        background: #fff;
+        overflow: hidden;
+        top: 70vh;
+        border-radius: 50%;
+      }
+
+      img{
+        display: block;
+        border-radius: 50%;
+      }
+
+      .knowrow{
+        justify-content: center; 
+        margin-top: 6px; 
+        margin-bottom: 10px; 
+        
+        font-size: 14px;
+        // color: color($colors, grey);
+    }
+}

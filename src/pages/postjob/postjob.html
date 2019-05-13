@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-navbar color="light">
+    <ion-buttons start>
+      <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    </ion-buttons>
+
+    <ion-title>Post Job</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="maincontent">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+            <ion-card>
+                <p style="margin-top: 20px" align="center"><ion-icon name="ios-clock-outline"></ion-icon></p>
+                <p style="margin-top: 5px"  align="center">Short term or part time work</p>
+                <p style="margin-top: 5px" align="center">Less than 30 hrs/week</p>
+                <p style="margin-bottom: 20px; margin-top: 5px" align="center">Less than 3 months</p>
+            </ion-card>
+        </ion-col>
+
+        <ion-col>
+            <ion-card>
+                <p style="margin-top: 20px" align="center"><ion-icon name="ios-calendar-outline"></ion-icon></p>
+                <p style="margin-top: 5px"  align="center">Dedicated Long term work</p>
+                <p style="margin-top: 5px" align="center">More than 30 hrs/week</p>
+                <p style="margin-bottom: 20px; margin-top: 5px" align="center">3+ months</p>
+            </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <br>
+      <b style="margin-left: 11px; margin-bottom: 7px; ">Enter the title of your job post here</b>
+      <ion-row class="itemclass">
+          <ion-input
+            placeholder="Enter Job Description Here" required></ion-input>  
+      </ion-row>
+
+
+      <br>
+      <b style="margin-left: 11px; margin-bottom: 1px; ">
+        Job Category</b>
+      
+      <ion-card>
+            <ion-item>
+                    <ion-label style="opacity: 0.7; margin: 10px">Select Job Category </ion-label>
+                    <ion-select>
+                      <ion-option>Function QA</ion-option>
+                      <ion-option>Translation</ion-option>
+                      <ion-option>Writing</ion-option>
+                      <ion-option>IT & Networking</ion-option>
+                      <ion-option>Accounting & Consulting</ion-option>
+                      <ion-option>Data Science & Analytics</ion-option>
+                      <ion-option>Legal</ion-option>
+                      <ion-option>Sales & Marketing</ion-option>
+                      <ion-option>Web, Mobile & Software Dev</ion-option>
+                      <ion-option>Engineering & Architecture</ion-option>
+                      <ion-option>Admin Support</ion-option>
+                      <ion-option>Design & Creative</ion-option>
+                      <ion-option>Customer Service</ion-option>
+                      
+                    </ion-select>
+            </ion-item>
+         
+      </ion-card>
+
+
+
+       <!-- <ion-auto-complete [dataProvider]="CompletetestProvider"></ion-auto-complete>-->
+
+
+    <br>
+      <b style="margin-left: 13px; margin-bottom: 7px; ">
+Add skill tags</b>
+
+    <div class="autocomplete">
+      <ion-item>
+        <ion-input  type="text" 
+                    placeholder="Search skill tags here"
+                    [(ngModel)]="input"
+                    (ionChange)="search()"
+                    (ionBlur)="removeFocus()"
+                    debounce=500></ion-input>
+      </ion-item>
+      <ion-list>
+        <ion-item *ngFor="let country of countries" (click)="add(country)">
+          {{country}}
+        </ion-item>
+      </ion-list>
+</div>
+
+<div class="skillsdiv">
+  <ion-grid>
+    <ion-row *ngFor="let row of grid">
+      <ion-col width-50 *ngFor="let skill of row">
+        {{skill}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+
+
+      <br>
+      <b style="margin-left: 11px; margin-bottom: 7px; ">Enter job description here</b>
+      <ion-row class="item2class">
+          <ion-input
+            placeholder="Enter Job Description Here" required></ion-input>  
+      </ion-row>
+
+
+      <br>
+      <b style="margin-left: 11px; margin-bottom: 1px; ">Additional project files</b>
+      <ion-card>
+          <ion-item>
+              <ion-icon name="add" item-left></ion-icon>
+                <div>Upload</div>                
+          </ion-item>
+      </ion-card>
+
+      <br>
+    <button ion-button color="testone" style="margin-left: 50px; margin-right: 50px">
+        Post Job
+    </button>    
+    <br>  
+
+    </ion-grid>  
+</ion-content>

@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../providers/auth/auth.service';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
-import { HomePage } from './../home/home';
 import { SignupPage } from './../signup/signup';
 
 @Component({
@@ -43,8 +42,13 @@ export class SigninPage {
     this.authService.signInWithEmail(user)
       .then((isLogged: boolean) => {
         if (isLogged) {
-          this.navCtrl.setRoot(HomePage);
+          console.log(user);
+
+          // this.navCtrl.setRoot(HomePage);
           loading.dismiss();
+
+
+
         }
       })
       .catch((er: any) => {
