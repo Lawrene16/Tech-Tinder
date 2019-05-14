@@ -48,7 +48,7 @@ export class MyApp {
 
           if (user.userType == "recruiter") {
             this.rootPage = TabsclientPage;
-            this.rootPage = ProfileclientPage;           
+            // this.rootPage = ProfileclientPage;           
             
             this.pages = [
               { title: 'Home', icon: 'ios-home', component: TabsclientPage, pageName: 'GotopremiumPage', index: 1 },

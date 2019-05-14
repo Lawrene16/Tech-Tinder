@@ -35,6 +35,7 @@ import { DetailsfreelancerPage } from '../pages/detailsfreelancer/detailsfreelan
 import { PostjobPage } from '../pages/postjob/postjob';
 import { ProfileclientPage } from '../pages/profileclient/profileclient';
 import { JoblistPage } from '../pages/joblist/joblist';
+import { Geolocation } from  '@ionic-native/geolocation';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -113,6 +114,7 @@ const firebaseAuthConfig = {
   providers: [
     AuthService,
     ChatService,
+    Geolocation,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

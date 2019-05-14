@@ -1,5 +1,6 @@
-import { Component,  ViewChild, ElementRef  } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, ToastController, NavParams } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 declare var google: any;
@@ -17,28 +18,29 @@ export class JobsPage {
   map: any;
 
   constructor(public navCtrl: NavController,
+    private geolocation: Geolocation,
     public toastCtrl: ToastController,
   ) {
     Window["myComponent"] = this;
   }
 
-  ionViewDidLoad(){
+  ionViewDidLoad() {
     this.loadMap();
   }
 
-  populateMap(map){
+  populateMap(map) {
 
     var icon = {
       url: '../../assets/icon/dot.png', // url
       scaledSize: new google.maps.Size(40, 40), // scaled size
-      origin: new google.maps.Point(0,0), // origin
+      origin: new google.maps.Point(0, 0), // origin
       anchor: new google.maps.Point(0, 0) // anchor
-  };
+    };
 
-  var text = document.getElementById("intitalstring");
-  var initialwindow = new google.maps.InfoWindow({
-    content: text
-  });
+    var text = document.getElementById("intitalstring");
+    var initialwindow = new google.maps.InfoWindow({
+      content: text
+    });
 
 
     var features = [
@@ -99,18 +101,18 @@ export class JobsPage {
     //   });
     // }
 
-    markerslist.forEach(function(mymarker) {
-      mymarker.addListener('click', (event) =>  {
-             initialwindow.open(map, mymarker);
-          });
+    markerslist.forEach(function (mymarker) {
+      mymarker.addListener('click', (event) => {
+        initialwindow.open(map, mymarker);
+      });
     });
   }
 
-  viewProfile(){
+  viewProfile() {
     // this.navCtrl.push(DetailsfreelancerPage);
   }
 
-  loadMap(){
+  loadMap() {
 
     var mapStyle = [
       {
@@ -119,19 +121,19 @@ export class JobsPage {
         stylers: [
           { visibility: "off" }
         ]
-      },{
+      }, {
         featureType: "poi",
         elementType: "labels",
         stylers: [
           { visibility: "off" }
         ]
-      },{
+      }, {
         featureType: "water",
         elementType: "labels",
         stylers: [
           { visibility: "off" }
         ]
-      },{
+      }, {
         featureType: "road",
         elementType: "labels",
         stylers: [
@@ -141,31 +143,35 @@ export class JobsPage {
     ];
 
 
-    let latLng = new google.maps.LatLng(-33.91722, 151.23064);
-    let mapOptions = {
-      center: latLng,
-      zoom: 16,
-      disableDefaultUI: true,
-      mapTypeId: 'terrain'
-    }
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    this.map.set('styles', mapStyle);
-    this.addDefaultMarker(this.map, latLng);
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log(resp.coords);
 
-    this.populateMap(this.map);
-    this.map.addListener('click', (e) => {
-      console.log('Clicked')
-    });    
+      let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+      let mapOptions = {
+        center: latLng,
+        zoom: 16,
+        disableDefaultUI: true,
+        mapTypeId: 'terrain'
+      }
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      this.map.set('styles', mapStyle);
+      this.addDefaultMarker(this.map, latLng);
+  
+      this.populateMap(this.map);
+      this.map.addListener('click', (e) => {
+        console.log('Clicked')
+      });
+    })
   }
 
-  addDefaultMarker(map, position){
-    
+  addDefaultMarker(map, position) {
+
     var icon = {
       url: '../../assets/icon/red.png', // url
       scaledSize: new google.maps.Size(40, 40), // scaled size
-      origin: new google.maps.Point(0,0), // origin
+      origin: new google.maps.Point(0, 0), // origin
       anchor: new google.maps.Point(0, 0) // anchor
-  };
+    };
 
     var defmarker = new google.maps.Marker({
       position: position,
@@ -175,7 +181,7 @@ export class JobsPage {
       title: 'Hello World!'
     });
 
-    defmarker.addListener('click', function() {
+    defmarker.addListener('click', function () {
       map.setZoom(15);
       map.panTo(defmarker.getPosition());
     });
@@ -183,17 +189,17 @@ export class JobsPage {
     return defmarker;
   }
 
-  presentToast(message){
+  presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
       position: 'top'
     });
-  
+
     toast.onDidDismiss(() => {
       console.log('Dismissed toast');
     });
-  
+
     toast.present();
   }
 

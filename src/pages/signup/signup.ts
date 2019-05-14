@@ -16,6 +16,7 @@ import { TabsclientPage } from '../tabsclient/tabsclient';
 import { TabsfreelancerPage } from '../tabsfreelancer/tabsfreelancer';
 import { SetupprofilePage } from '../setupprofile/setupprofile';
 // import { emailValidator } from '../../validators/email';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-signup',
@@ -39,6 +40,7 @@ export class SignupPage {
     public loadingCtrl: LoadingController,  // mostrar o loading
     public navCtrl: NavController,
     public navParams: NavParams,
+    private geolocation: Geolocation,    
     public userService: UserService
   ) {
     // variavel com a expressão regular de validação de e-mail
@@ -107,20 +109,24 @@ export class SignupPage {
               .then(() => {  // o método retorna uma promise vazia
 
 
-                this.firedata.ref('/users').child(userUniqueId).update({
-                  userType: this.userType,
-                  uid: userUniqueId
-                }).then(() =>{
-
-                  loading.dismiss();
-
-                  if(this.userType == "freelancer"){
-                    this.navCtrl.setRoot(SetupprofilePage, {"fullname": fullname});
-                  }else if(this.userType == "recruiter"){
-                      this.navCtrl.setRoot(TabsclientPage);
-                  }
-                });
-                
+                this.geolocation.getCurrentPosition().then((resp) =>{
+                  console.log(resp.coords);
+                  this.firedata.ref('/users').child(userUniqueId).update({
+                    userType: this.userType,
+                    uid: userUniqueId,
+                    lat: resp.coords.latitude,
+                    lng: resp.coords.longitude
+                  }).then(() =>{
+  
+                    loading.dismiss();
+  
+                    if(this.userType == "freelancer"){
+                      this.navCtrl.setRoot(SetupprofilePage, {"fullname": fullname});
+                    }else if(this.userType == "recruiter"){
+                        this.navCtrl.setRoot(TabsclientPage);
+                    }
+                  });
+                })                
               }).catch((error: any) => {
                 loading.dismiss();
                 this.showAlert(error);

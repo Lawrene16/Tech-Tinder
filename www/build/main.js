@@ -264,6 +264,7 @@ var SigninPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__ = __webpack_require__(626);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -285,17 +286,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 // import { emailValidator } from '../../validators/email';
+
 var SignupPage = (function () {
     function SignupPage(alertCtrl, authService, // service de criação de usuario de autenticação
         formBuilder, // para trabalhar com formulário
         loadingCtrl, // mostrar o loading
-        navCtrl, navParams, userService) {
+        navCtrl, navParams, geolocation, userService) {
         this.alertCtrl = alertCtrl;
         this.authService = authService;
         this.formBuilder = formBuilder;
         this.loadingCtrl = loadingCtrl;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.geolocation = geolocation;
         this.userService = userService;
         this.checkingEmail = true;
         this.firedata = __WEBPACK_IMPORTED_MODULE_2_firebase_app__["database"]();
@@ -355,17 +358,22 @@ var SignupPage = (function () {
                     var userUniqueId = authState.auth.uid;
                     _this.userService.create(formUser, userUniqueId) // cria usuario (nó no database)
                         .then(function () {
-                        _this.firedata.ref('/users').child(userUniqueId).update({
-                            userType: _this.userType,
-                            uid: userUniqueId
-                        }).then(function () {
-                            loading.dismiss();
-                            if (_this.userType == "freelancer") {
-                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__["a" /* SetupprofilePage */], { "fullname": fullname });
-                            }
-                            else if (_this.userType == "recruiter") {
-                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__["a" /* TabsclientPage */]);
-                            }
+                        _this.geolocation.getCurrentPosition().then(function (resp) {
+                            console.log(resp.coords);
+                            _this.firedata.ref('/users').child(userUniqueId).update({
+                                userType: _this.userType,
+                                uid: userUniqueId,
+                                lat: resp.coords.latitude,
+                                lng: resp.coords.longitude
+                            }).then(function () {
+                                loading.dismiss();
+                                if (_this.userType == "freelancer") {
+                                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__["a" /* SetupprofilePage */], { "fullname": fullname });
+                                }
+                                else if (_this.userType == "recruiter") {
+                                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__["a" /* TabsclientPage */]);
+                                }
+                            });
                         });
                     }).catch(function (error) {
                         loading.dismiss();
@@ -402,15 +410,10 @@ var SignupPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'page-signup',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/signup/signup.html"*/'<ion-content padding>\n    <p align="center">\n        <img src="../../assets/icon.png" height="110">\n        <!-- <b style="font-size: 35px; color: white">ech-Tinder</b> -->\n      </p>\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">\n  \n    <ion-item [class.invalid]="!signupForm.controls.name.valid && signupForm.controls.name.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.name.valid && signupForm.controls.name.dirty" name="person" item-left color="primary"></ion-icon>\n      <ion-input type="text" placeholder="Name" formControlName="name"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.name.valid  && signupForm.controls.name.dirty">\n      <p class="invalid-icon" *ngIf="signupForm.controls.name.errors.required">Please enter a valid name.</p>\n      <p class="invalid-icon" *ngIf="signupForm.controls.name.errors.minlength">Your name must have at least 3 characteres</p>\n    </ion-item>\n    \n    <ion-item [class.invalid]="!signupForm.controls.username.valid && signupForm.controls.username.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.username.valid && signupForm.controls.username.dirty" name="at" item-left color="primary"></ion-icon>\n      <ion-input type="text" placeholder="Username" formControlName="username"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.username.valid  && (signupForm.controls.username.dirty || signupForm.controls.username.touched)">\n      <p class="invalid-icon" *ngIf="signupForm.controls.username.errors.required">Please enter a valid username.</p>\n      <p class="invalid-icon" *ngIf="signupForm.controls.username.errors.minlength">Your username must have at least 3 characteres.</p>\n    </ion-item>\n    \n    <ion-item [class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.email.valid && signupForm.controls.email.dirty" name="mail" item-left color="primary"></ion-icon>\n      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input> \n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.email.valid && (signupForm.controls.email.dirty || signupForm.controls.email.touched)">\n      <p class="invalid-icon" *ngIf="!signupForm.controls.email.pending">Please enter a valid email.</p>\n    </ion-item>\n    <!-- <ion-item *ngIf="signupForm.controls.email.pending">\n      <p>Checking email</p>\n    </ion-item> -->\n    \n    <ion-item [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.password.valid && signupForm.controls.password.dirty" name="lock" item-left color="primary"></ion-icon>\n      <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.password.valid  && (signupForm.controls.password.dirty || signupForm.controls.password.touched)">\n      <p class="invalid-icon" *ngIf="signupForm.controls.password.errors.required">Please enter a valid password.</p>\n      <p class="invalid-icon" *ngIf="signupForm.controls.password.errors.minlength">Your password must have at least 6 characters.</p>\n    </ion-item>\n    <br>\n\n    <h5 style="text-align: center; opacity: 0.7">I want to be a </h5>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n            <ion-card\n            [ngStyle]="{\'background-color\': cardbackgroundr}"\n            (click)="isRecruiter()"\n             class="choosecard">\n             <h2 \n            [ngStyle]="{\'color\': cardtextr}"             \n             style="opacity: 0.8">Recruiter\n            </h2></ion-card>\n        </ion-col>\n        <ion-col>\n            <ion-card \n            [ngStyle]="{\'background-color\': cardbackgroundf}"            \n            (click)="isFreelancer()" class="choosecard">\n            <h2\n            [ngStyle]="{\'color\': cardtextf}"             \n             style="opacity: 0.8">Freelancer</h2>\n          </ion-card>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    \n\n    <button ion-button block class="btn success" type="submit" [disabled]="signupForm.invalid">Create Account</button>\n    <!-- se o signupForm for inválido, vai retornar TRUE e DESABILITAR o botão -->\n    \n  </form>\n\n  <button ion-button \n  (click)="linkedinsignup()"\n  block style="border-radius: 5px;\n  margin-top: 20px;\n  margin-left: 30px;\n  width: 75vw;" \n  color="testone">\n  <ion-icon style="font-size: 30px;\n   position: absolute; left: 20px;" name="logo-linkedin"></ion-icon>                    \n   Join now with LinkedIn!\n</button>\n\n<br>\n    <div>\n      <!-- <b class="forgotp">F?</b> -->\n      <b class="joinn" (click)="alreadyaMember()">ALREADY A MEMBER?</b>\n    </div>\n\n  \n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/signup/signup.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__["a" /* UserService */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__["a" /* UserService */]) === "function" && _h || Object])
     ], SignupPage);
     return SignupPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
 }());
 
 //# sourceMappingURL=signup.js.map
@@ -834,6 +837,7 @@ var ShortlistedPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__ = __webpack_require__(626);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -850,12 +854,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var FreelancersPage = (function () {
-    function FreelancersPage(navCtrl, keyboard, authService, storage, loadingCtrl) {
+    function FreelancersPage(navCtrl, keyboard, authService, storage, geolocation, loadingCtrl) {
         this.navCtrl = navCtrl;
         this.keyboard = keyboard;
         this.authService = authService;
         this.storage = storage;
+        this.geolocation = geolocation;
         this.loadingCtrl = loadingCtrl;
         this.firedata = __WEBPACK_IMPORTED_MODULE_3_firebase___default.a.database();
         this.firebaseArray = [];
@@ -878,10 +884,16 @@ var FreelancersPage = (function () {
         this.searchedtag = '';
         this.countries = [];
         Window["myComponent"] = this;
+        this.getLocation();
     }
     FreelancersPage.prototype.add = function (item, i) {
         this.countries = [];
         this.searchedtag = item;
+    };
+    FreelancersPage.prototype.getLocation = function () {
+        this.geolocation.getCurrentPosition().then(function (resp) {
+            console.log(resp.coords);
+        });
     };
     FreelancersPage.prototype.ionViewCanEnter = function () {
         return this.authService.authenticated;
@@ -925,32 +937,34 @@ var FreelancersPage = (function () {
             var contentwindow = new google.maps.InfoWindow({});
             temparr.forEach(function (firebaseSpot) {
                 // console.log(firebaseSpot)
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(firebaseSpot.lat, firebaseSpot.lng),
-                    icon: icon,
-                    animation: google.maps.Animation.DROP,
-                    map: map
-                });
-                _this.markerslist.push(marker);
-                _this.storage.set("clickedmarker", firebaseSpot);
-                var strinh = '<p align="center" id="intitalstring">' +
-                    '<b>' + firebaseSpot.name + '</b><br>' +
-                    'Hourly rate - ' + firebaseSpot.hourlyRate + '<br>' +
-                    'Skills - ' + firebaseSpot.skillsstring + '<br>' +
-                    '<br>' +
-                    '<button onclick="Window.myComponent.viewProfile()" class="contactbtn">View Profile</button>' +
-                    '</p>';
-                marker.addListener('click', function (event) {
-                    if (map.getZoom() != _this.zoomvalue && map.getZoom() != _this.zoomvalue) {
-                        map.setZoom(16);
-                        map.panTo(marker.getPosition());
-                    }
-                    else if (map.getZoom() == _this.zoomvalue) {
-                        contentwindow.setContent(strinh);
-                        _this.storage.set("clickedmarker", firebaseSpot);
-                        contentwindow.open(map, marker);
-                    }
-                });
+                if (firebaseSpot.userType == "freelancer") {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(firebaseSpot.lat, firebaseSpot.lng),
+                        icon: icon,
+                        animation: google.maps.Animation.DROP,
+                        map: map
+                    });
+                    _this.markerslist.push(marker);
+                    _this.storage.set("clickedmarker", firebaseSpot);
+                    var strinh = '<p align="center" id="intitalstring">' +
+                        '<b>' + firebaseSpot.name + '</b><br>' +
+                        'Hourly rate - ' + firebaseSpot.hourlyRate + '<br>' +
+                        'Skills - ' + firebaseSpot.skillsstring + '<br>' +
+                        '<br>' +
+                        '<button onclick="Window.myComponent.viewProfile()" class="contactbtn">View Profile</button>' +
+                        '</p>';
+                    marker.addListener('click', function (event) {
+                        if (map.getZoom() != _this.zoomvalue && map.getZoom() != _this.zoomvalue) {
+                            map.setZoom(16);
+                            map.panTo(marker.getPosition());
+                        }
+                        else if (map.getZoom() == _this.zoomvalue) {
+                            contentwindow.setContent(strinh);
+                            _this.storage.set("clickedmarker", firebaseSpot);
+                            contentwindow.open(map, marker);
+                        }
+                    });
+                }
             });
         });
     };
@@ -1020,19 +1034,22 @@ var FreelancersPage = (function () {
                 ]
             }
         ];
-        var latLng = new google.maps.LatLng(-33.91722, 151.23064);
-        var mapOptions = {
-            center: latLng,
-            zoom: this.zoomvalue,
-            disableDefaultUI: true,
-            mapTypeId: 'terrain'
-        };
-        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-        this.map.set('styles', mapStyle);
-        this.addDefaultMarker(this.map, latLng);
-        this.populateMap(this.map);
-        this.map.addListener('click', function (e) {
-            console.log(_this.map.getZoom());
+        this.geolocation.getCurrentPosition().then(function (resp) {
+            console.log(resp.coords);
+            var latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+            var mapOptions = {
+                center: latLng,
+                zoom: _this.zoomvalue,
+                disableDefaultUI: true,
+                mapTypeId: 'terrain'
+            };
+            _this.map = new google.maps.Map(_this.mapElement.nativeElement, mapOptions);
+            _this.map.set('styles', mapStyle);
+            _this.addDefaultMarker(_this.map, latLng);
+            _this.populateMap(_this.map);
+            _this.map.addListener('click', function (e) {
+                console.log(_this.map.getZoom());
+            });
         });
     };
     FreelancersPage.prototype.addDefaultMarker = function (map, position) {
@@ -1105,19 +1122,16 @@ var FreelancersPage = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('map'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _a || Object)
     ], FreelancersPage.prototype, "mapElement", void 0);
     FreelancersPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'page-freelancers',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/freelancers/freelancers.html"*/'<!-- <ion-header>\n  <ion-navbar color="transparent">\n    <ion-buttons start>\n      <button ion-button menuToggle>\n      <ion-icon name="menu" color="dark"></ion-icon>\n    </button>\n    </ion-buttons>\n\n    <ion-searchbar class="searchitem"\n    animated="true" \n   placeholder="Search for talents close to you"></ion-searchbar>\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="openSecondModal()">\n          <ion-icon  class="icon ion-home custom-icon" name="notifications"></ion-icon>\n      </button>\n  </ion-buttons>\n  </ion-navbar>\n</ion-header> -->\n\n<ion-content class="maincontent">\n\n    <ion-fab bottom right (click)="increase()" >\n      <button color="testone" ion-fab mini>\n        <ion-icon name="md-add"></ion-icon>\n      </button>\n    </ion-fab>\n  \n    <ion-input [(ngModel)]="radius" (keypress)="eventHandler($event.keyCode)" class="bottominput" bottom right placeholder="radius">\n        \n    </ion-input>\n  \n    <ion-fab bottom (click)="reduce()" right style="margin-right: 85px">\n      <button color="testone" ion-fab mini>\n        <ion-icon name="md-remove"></ion-icon>\n      </button>\n    </ion-fab>\n  \n  \n  \n    <div  #map id="map">\n    </div>\n  \n  \n    <ion-list class="floatinglist">\n      <ion-item *ngFor="let country of countries" (click)="add(country, i)">\n        {{country}}\n      </ion-item>\n    </ion-list>\n  \n    <ion-card class="headercard">\n      <ion-grid style="height: 50px;">\n        <ion-row>\n          <ion-col col-1>\n          <ion-icon menuToggle style="font-size: 27px; margin-left: 10px; float: left;" \n          name="menu" color="dark"></ion-icon>                      \n          </ion-col>\n  \n          <ion-col>\n            <ion-searchbar animated="true" \n            placeholder="Find talents close to you"\n            (ionChange)="search()"\n            (ionBlur)="removeFocus()"\n            debounce=500 [(ngModel)]="searchedtag" class="mysearch"></ion-searchbar>\n              <!-- <ion-searchbar animated="true" \n          placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>-->\n          </ion-col>\n  \n  \n          <ion-col col-1>\n          <ion-icon style="font-size: 27px; \n          margin-right: 10px; float: right;" name="notifications-outline" \n          color="dark"></ion-icon>                                  \n          </ion-col>\n        </ion-row>\n      </ion-grid>\n  \n      <!-- <div>\n          <ion-icon style="font-size: 27px; margin-left: 20px; float: left; margin-top: 1px; margin-bottom: 1px;" name="menu" color="dark"></ion-icon>            \n          <ion-searchbar style="float: left;" animated="true" \n          placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>\n      </div>\n           -->\n      </ion-card>\n  \n    <!-- <p align="center" id="intitalstring">\n      <b>Edung Divinefavour</b><br>\n      Hourly rate - $12.5/hr<br>\n      Skills - Android | UI/UX\n      <br>\n      <br>\n      <button onclick="Window.myComponent.viewProfile()" class="contactbtn">View Profile</button>\n    </p> -->\n  </ion-content>\n  '/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/freelancers/freelancers.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__["a" /* AuthService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _g || Object])
     ], FreelancersPage);
     return FreelancersPage;
+    var _a, _b, _c, _d, _e, _f, _g;
 }());
 
 //# sourceMappingURL=freelancers.js.map
@@ -1602,6 +1616,7 @@ var SetupprofilePage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JobsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(626);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1613,9 +1628,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var JobsPage = (function () {
-    function JobsPage(navCtrl, toastCtrl) {
+    function JobsPage(navCtrl, geolocation, toastCtrl) {
         this.navCtrl = navCtrl;
+        this.geolocation = geolocation;
         this.toastCtrl = toastCtrl;
         Window["myComponent"] = this;
     }
@@ -1695,6 +1712,7 @@ var JobsPage = (function () {
         // this.navCtrl.push(DetailsfreelancerPage);
     };
     JobsPage.prototype.loadMap = function () {
+        var _this = this;
         var mapStyle = [
             {
                 featureType: "administrative",
@@ -1722,19 +1740,22 @@ var JobsPage = (function () {
                 ]
             }
         ];
-        var latLng = new google.maps.LatLng(-33.91722, 151.23064);
-        var mapOptions = {
-            center: latLng,
-            zoom: 16,
-            disableDefaultUI: true,
-            mapTypeId: 'terrain'
-        };
-        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-        this.map.set('styles', mapStyle);
-        this.addDefaultMarker(this.map, latLng);
-        this.populateMap(this.map);
-        this.map.addListener('click', function (e) {
-            console.log('Clicked');
+        this.geolocation.getCurrentPosition().then(function (resp) {
+            console.log(resp.coords);
+            var latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+            var mapOptions = {
+                center: latLng,
+                zoom: 16,
+                disableDefaultUI: true,
+                mapTypeId: 'terrain'
+            };
+            _this.map = new google.maps.Map(_this.mapElement.nativeElement, mapOptions);
+            _this.map.set('styles', mapStyle);
+            _this.addDefaultMarker(_this.map, latLng);
+            _this.populateMap(_this.map);
+            _this.map.addListener('click', function (e) {
+                console.log('Clicked');
+            });
         });
     };
     JobsPage.prototype.addDefaultMarker = function (map, position) {
@@ -1770,16 +1791,16 @@ var JobsPage = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('map'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _a || Object)
     ], JobsPage.prototype, "mapElement", void 0);
     JobsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'page-jobs',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/jobs/jobs.html"*/'<!-- <ion-header>\n  <ion-navbar color="transparent">\n    <ion-buttons start>\n      <button ion-button menuToggle>\n      <ion-icon name="menu" color="dark"></ion-icon>\n    </button>\n    </ion-buttons>\n\n    <ion-searchbar class="searchitem"\n    animated="true" \n   placeholder="Search for talents close to you"></ion-searchbar>\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="openSecondModal()">\n          <ion-icon  class="icon ion-home custom-icon" name="notifications"></ion-icon>\n      </button>\n  </ion-buttons>\n  </ion-navbar>\n</ion-header> -->\n\n<ion-content class="maincontent">\n\n\n\n\n\n  <ion-fab bottom right >\n    <button color="testone" ion-fab mini>\n      <ion-icon name="md-add"></ion-icon>\n    </button>\n  </ion-fab>\n\n  <ion-fab bottom right style="margin-right: 45px">\n    <button color="testone" ion-fab mini>\n      <ion-icon name="md-remove"></ion-icon>\n    </button>\n  </ion-fab>\n\n\n\n  <div  #map id="map">\n  </div>\n\n\n  <ion-card class="headercard">\n    <ion-grid style="height: 50px;">\n      <ion-row>\n        <ion-col col-1>\n        <ion-icon menuToggle style="font-size: 27px; margin-left: 10px; float: left;" \n        name="menu" color="dark"></ion-icon>                      \n        </ion-col>\n\n        <ion-col>\n          <ion-searchbar animated="true" \n          placeholder="Find jobs close to you" class="mysearch"></ion-searchbar>\n            <!-- <ion-searchbar animated="true" \n        placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>-->\n        </ion-col>\n\n        <ion-col col-1>\n        <ion-icon style="font-size: 27px; \n        margin-right: 10px; float: right;" name="notifications-outline" \n        color="dark"></ion-icon>                                  \n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <!-- <div>\n        <ion-icon style="font-size: 27px; margin-left: 20px; float: left; margin-top: 1px; margin-bottom: 1px;" name="menu" color="dark"></ion-icon>            \n        <ion-searchbar style="float: left;" animated="true" \n        placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>\n    </div>\n         -->\n    </ion-card>\n\n  <p align="center" id="intitalstring">\n    <b>Edung Divinefavour</b><br>\n    Hourly rate - $12.5/hr<br>\n    Skills - Android | UI/UX\n    <br>\n    <br>\n    <button onclick="Window.myComponent.viewProfile()" class="contactbtn">View Profile</button>\n  </p>\n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/jobs/jobs.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _d || Object])
     ], JobsPage);
     return JobsPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=jobs.js.map
@@ -2386,7 +2407,7 @@ var ProfileclientPage = (function () {
     ], ProfileclientPage.prototype, "emailbox", void 0);
     ProfileclientPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-profileclient',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/'<ion-header>\n    <ion-navbar ion-fixed align-title="center" color="light">\n        <button ion-button left menuToggle>\n            <ion-icon class="icon ion-home custom-icon" name="menu"></ion-icon>\n        </button>\n\n        <ion-title>\n            My Profile\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n\n    <div class="topdiv">\n\n        <div style="width: 100%; height: 10vh;"></div>\n\n        <div class="user-photo">\n            <img src="../../assets/one.jpg">\n        </div>\n\n    </div>\n\n    <br>\n    <div>\n        <ion-list>\n\n            <ion-item-divider>\n                Personal Info\n\n                <ion-icon *ngIf="isPersonalReadonly" name="ios-create-outline" (click)="makeEditable(1)" item-right></ion-icon>\n                <ion-icon *ngIf="!isPersonalReadonly" name="ios-checkmark-outline" (click)="stopEdit()" item-right></ion-icon>\n\n            </ion-item-divider>\n\n            <ion-item>\n                <ion-input #nameinput [readonly]="isPersonalReadonly" [(ngModel)]="fullname"></ion-input>\n                <ion-icon name="ios-person-outline" item-left></ion-icon>\n            </ion-item>\n            <ion-item>\n                <ion-input [readonly]="isPersonalReadonly" [(ngModel)]="email"></ion-input>\n                <ion-icon name="ios-mail-outline" item-left></ion-icon>\n            </ion-item>\n\n            <br>\n\n\n\n\n            <ion-item-divider>\n                Change Password\n                <ion-icon *ngIf="isPasswordReadOnly" name="ios-create-outline" (click)="makeEditable(2)" item-right></ion-icon>\n                <ion-icon *ngIf="!isPasswordReadOnly" name="ios-checkmark-outline" (click)="stopEdit()" item-right></ion-icon>\n            </ion-item-divider>\n\n            <ion-item>\n                <ion-input type="password" #emailinput [readonly]="isPasswordReadOnly" [(ngModel)]="password"></ion-input>\n                <ion-icon name="ios-lock-outline" item-left></ion-icon>\n            </ion-item>\n\n            <ion-item>\n                <ion-input type="password" placeholder="Enter Phone Number Here"\n                 [readonly]="isPasswordReadOnly" [(ngModel)]="confirmpassword"></ion-input>\n                <ion-icon name="ios-lock-outline" item-left></ion-icon>\n            </ion-item>\n\n            <ion-item-divider>\n                Connected Accounts\n                <ion-icon color="white" name="ios-create-outline" item-right></ion-icon>\n            </ion-item-divider>\n\n        </ion-list>\n    </div>\n\n    <p align="center">\n            <button ion-button outline (click)="saveprofile()" class="bsuccess">SAVE CHANGES</button>\n          </p>\n\n\n</ion-content>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/,
+            selector: 'page-profileclient',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/'<ion-header>\n    <ion-navbar ion-fixed align-title="center" color="light">\n        <button ion-button left menuToggle>\n            <ion-icon class="icon ion-home custom-icon" name="menu"></ion-icon>\n        </button>\n\n        <ion-title>\n            My Profile\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n\n    <div class="topdiv">\n\n        <div style="width: 100%; height: 10vh;"></div>\n\n        <div class="user-photo">\n            <img src="../../assets/one.jpg">\n        </div>\n\n    </div>\n\n    <br>\n    <div>\n        <ion-list>\n\n            <ion-item-divider>\n                Personal Info\n\n                <ion-icon *ngIf="isPersonalReadonly" name="ios-create-outline" (click)="makeEditable(1)" item-right></ion-icon>\n                <ion-icon *ngIf="!isPersonalReadonly" name="ios-checkmark-outline" (click)="stopEdit()" item-right></ion-icon>\n\n            </ion-item-divider>\n\n            <ion-item>\n                <ion-input #nameinput [readonly]="isPersonalReadonly" [(ngModel)]="fullname"></ion-input>\n                <ion-icon name="ios-person-outline" item-left></ion-icon>\n            </ion-item>\n            <ion-item>\n                <ion-input [readonly]="isPersonalReadonly" [(ngModel)]="email"></ion-input>\n                <ion-icon name="ios-mail-outline" item-left></ion-icon>\n            </ion-item>\n\n            <br>\n\n            <ion-item-divider>\n                Change Password\n                <ion-icon *ngIf="isPasswordReadOnly" name="ios-create-outline" (click)="makeEditable(2)" item-right></ion-icon>\n                <ion-icon *ngIf="!isPasswordReadOnly" name="ios-checkmark-outline" (click)="stopEdit()" item-right></ion-icon>\n            </ion-item-divider>\n\n            <ion-item>\n                <ion-input type="password" #emailinput [readonly]="isPasswordReadOnly" [(ngModel)]="password"></ion-input>\n                <ion-icon name="ios-lock-outline" item-left></ion-icon>\n            </ion-item>\n\n            <ion-item>\n                <ion-input type="password" placeholder="Enter Phone Number Here"\n                 [readonly]="isPasswordReadOnly" [(ngModel)]="confirmpassword"></ion-input>\n                <ion-icon name="ios-lock-outline" item-left></ion-icon>\n            </ion-item>\n\n            <ion-item-divider>\n                Connected Accounts\n                <ion-icon color="white" name="ios-create-outline" item-right></ion-icon>\n            </ion-item-divider>\n\n        </ion-list>\n    </div>\n\n    <p align="center">\n            <button ion-button outline (click)="saveprofile()" class="bsuccess">SAVE CHANGES</button>\n          </p>\n\n\n</ion-content>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/,
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _c || Object])
     ], ProfileclientPage);
@@ -2589,6 +2610,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_postjob_postjob__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_profileclient_profileclient__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_joblist_joblist__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__ionic_native_geolocation__ = __webpack_require__(626);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2603,6 +2625,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
  //importa o firebase app config
+
 
 
 
@@ -2710,6 +2733,7 @@ var AppModule = (function () {
             providers: [
                 __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth_service__["a" /* AuthService */],
                 __WEBPACK_IMPORTED_MODULE_11__providers_chat_chat_service__["a" /* ChatService */],
+                __WEBPACK_IMPORTED_MODULE_36__ionic_native_geolocation__["a" /* Geolocation */],
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__["a" /* SplashScreen */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* IonicErrorHandler */] },
@@ -3091,7 +3115,7 @@ var MyApp = (function () {
                     _this.email = user.email;
                     if (user.userType == "recruiter") {
                         _this.rootPage = __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__["a" /* TabsclientPage */];
-                        _this.rootPage = __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__["a" /* ProfileclientPage */];
+                        // this.rootPage = ProfileclientPage;           
                         _this.pages = [
                             { title: 'Home', icon: 'ios-home', component: __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__["a" /* TabsclientPage */], pageName: 'GotopremiumPage', index: 1 },
                             { title: 'Profile', icon: 'ios-person', component: __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__["a" /* ProfileclientPage */], pageName: 'GotopremiumPage', index: 0 },
@@ -3129,18 +3153,15 @@ var MyApp = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */]) === "function" && _a || Object)
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/app/app.html"*/'<ion-menu persistent="true" [content]="content" type="overlay">\n    <ion-header no-border>\n      <ion-toolbar>\n                <div class="container">\n                    <img class="userimage" src="../../assets/one.jpg">\n                    <b class="user-name">{{fullname}}</b>\n                    <div class="user-mail">{{email}}</div>\n                    <br>\n                    <br>\n                   \n                </div>\n  \n      </ion-toolbar>\n    </ion-header>\n    \n    <ion-content>\n  \n        <ion-list>\n          <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon item-start [name]="p.icon"></ion-icon>\n              <!-- <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon> -->\n              {{ p.title }}\n            </button>\n        </ion-list>\n  \n  <!-- \n              <ion-list>\n          <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon item-start [name]="p.icon"></ion-icon>\n              {{ p.title }}\n            </button>\n        </ion-list> -->\n      </ion-content>\n  </ion-menu>\n  \n  <!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n  <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
-            __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
-            __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__["a" /* UserService */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__["a" /* UserService */]) === "function" && _f || Object])
     ], MyApp);
     return MyApp;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=app.component.js.map
