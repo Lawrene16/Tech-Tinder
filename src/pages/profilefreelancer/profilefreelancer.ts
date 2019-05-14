@@ -1,9 +1,8 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 // import { CountriesapiProvider } from '../../providers/countriesapi/countriesapi';
 import { Keyboard } from 'ionic-angular';
 // import * as firebase from 'firebase/app';
-import { TabsfreelancerPage } from '../tabsfreelancer/tabsfreelancer';
 import { ModalController } from 'ionic-angular';
 import { ModalPage } from '../modal/modal';
 import firebase from 'firebase';

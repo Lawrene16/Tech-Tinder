@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 import { Keyboard } from 'ionic-angular';
 import * as firebase from 'firebase/app';
 import { TabsfreelancerPage } from '../tabsfreelancer/tabsfreelancer';

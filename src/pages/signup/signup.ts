@@ -13,7 +13,6 @@ import { UserService } from './../../providers/user/user.service';
 // import { User } from '../../models/user.model';
 
 import { TabsclientPage } from '../tabsclient/tabsclient';
-import { TabsfreelancerPage } from '../tabsfreelancer/tabsfreelancer';
 import { SetupprofilePage } from '../setupprofile/setupprofile';
 // import { emailValidator } from '../../validators/email';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -84,7 +83,6 @@ export class SignupPage {
 
     var fullname: string = formUser.name;
 
-    console.log(fullname);
 
     this.userService.userExists(username) // retorna um observable
       .first()  // recebe o primeiro valor recebido pelo observable, o resto será ignorado
@@ -111,6 +109,9 @@ export class SignupPage {
 
                 this.geolocation.getCurrentPosition().then((resp) =>{
                   console.log(resp.coords);
+
+                  console.log(this.userType);
+                  
                   this.firedata.ref('/users').child(userUniqueId).update({
                     userType: this.userType,
                     uid: userUniqueId,
@@ -126,6 +127,8 @@ export class SignupPage {
                         this.navCtrl.setRoot(TabsclientPage);
                     }
                   });
+                }).catch((err) =>{
+                  this.showAlert(err);
                 })                
               }).catch((error: any) => {
                 loading.dismiss();

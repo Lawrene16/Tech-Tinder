@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { FirebaseAuthState } from 'angularfire2';
 
 import { AuthService } from './../providers/auth/auth.service';
@@ -14,8 +13,9 @@ import { TabsfreelancerPage } from '../pages/tabsfreelancer/tabsfreelancer';
 import { PostjobPage } from '../pages/postjob/postjob';
 import { ProfileclientPage } from '../pages/profileclient/profileclient';
 import { JoblistPage } from '../pages/joblist/joblist';
-import { ProfilefreelancerPage } from '../pages/profilefreelancer/profilefreelancer';
 // import { FirebaseAuthState } from 'angularfire2/auth';
+import firebase from 'firebase';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -25,12 +25,13 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage: any;
   fullname;
+  firedata = firebase.database();
   email;
-  currentUser: User;
+  // currentUser: User;
   pages: Array<{ title: string, icon: string, component: any, pageName: string, index: any }>;
 
   constructor(
-    authService: AuthService,
+    public authService: AuthService,
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
@@ -41,9 +42,11 @@ export class MyApp {
       if (authState) {
         // this.rootPage = HomePage;
         userService.currentUser.subscribe((user: any) => {
-          this.currentUser = user;
 
-          this.fullname = user.name;
+          // console.log(user);
+          // this.currentUser = user;
+
+          this.fullname = user.username;
           this.email = user.email;
 
           if (user.userType == "recruiter") {
@@ -85,7 +88,14 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if(page.title == "Logout"){
+      this.authService.logOut().then(() =>{
+        this.nav.setRoot(page.component);        
+      });
+
+    }else{
+        this.nav.setRoot(page.component);
+    }
   }
 }
 

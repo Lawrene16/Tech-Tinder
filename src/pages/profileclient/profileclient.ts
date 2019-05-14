@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 // import { Dialogs } from '@ionic-native/dialogs';
 import { AlertController } from 'ionic-angular';
 import firebase from 'firebase';

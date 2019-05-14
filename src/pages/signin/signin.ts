@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AlertController, IonicPage, Loading, NavController, NavParams } from 'ionic-angular';
+import { AlertController, Loading, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import firebase from 'firebase';
 import { AuthService } from '../../providers/auth/auth.service';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
@@ -13,6 +13,7 @@ import { SignupPage } from './../signup/signup';
 })
 export class SigninPage {
 
+  firedata = firebase.database();
   signinForm: FormGroup;
 
   constructor(
@@ -44,10 +45,21 @@ export class SigninPage {
         if (isLogged) {
           console.log(user);
 
+
+          // this.firedata.ref('/users').orderByChild('value').once('value', (snapshot) => {
+          //   let result = snapshot.val();
+          //   let temparr = [];
+          //   for (var key in result) {
+          //     temparr.push(result[key]);
+          //   }
+
+          //   temparr.forEach((fireuser) => {
+          //     console.log(fireuser);
+          //   });
+          // })
+        
           // this.navCtrl.setRoot(HomePage);
           loading.dismiss();
-
-
 
         }
       })

@@ -52,7 +52,6 @@ export class FreelancersPage {
     public loadingCtrl: LoadingController) {
     Window["myComponent"] = this;
 
-    this.getLocation();
   }
 
   add(item: string, i) {
@@ -60,11 +59,6 @@ export class FreelancersPage {
     this.searchedtag = item;
   }
 
-  getLocation() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp.coords);
-    })
-  }
 
   ionViewCanEnter(): Promise<boolean> {
     return this.authService.authenticated;
@@ -155,6 +149,8 @@ export class FreelancersPage {
           });
         }
       });
+    }).catch((err) =>{
+      alert(err);
     });
   }
 
@@ -229,7 +225,6 @@ export class FreelancersPage {
     ];
 
     this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp.coords);
 
       let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       let mapOptions = {
@@ -246,6 +241,8 @@ export class FreelancersPage {
       this.map.addListener('click', (e) => {
         console.log(this.map.getZoom())
       });
+    }).catch((err) =>{
+      alert(err);
     })
 
 
