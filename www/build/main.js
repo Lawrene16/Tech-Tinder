@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 149:
+/***/ 150:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12,7 +12,7 @@ webpackJsonp([0],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_message_model__ = __webpack_require__(275);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_message_message_service__ = __webpack_require__(276);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -157,7 +157,7 @@ var ChatPage = (function () {
 
 /***/ }),
 
-/***/ 150:
+/***/ 151:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -167,7 +167,7 @@ var ChatPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth_service__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(152);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -248,21 +248,21 @@ var SigninPage = (function () {
 
 /***/ }),
 
-/***/ 151:
+/***/ 152:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__ = __webpack_require__(281);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -417,46 +417,6 @@ var SignupPage = (function () {
 
 /***/ }),
 
-/***/ 152:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsclientPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__chats_chats__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shortlisted_shortlisted__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__freelancers_freelancers__ = __webpack_require__(279);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var TabsclientPage = (function () {
-    function TabsclientPage() {
-        this.tab1Root = __WEBPACK_IMPORTED_MODULE_3__freelancers_freelancers__["a" /* FreelancersPage */];
-        this.tab2Root = __WEBPACK_IMPORTED_MODULE_1__chats_chats__["a" /* ChatsPage */];
-        this.tab3Root = __WEBPACK_IMPORTED_MODULE_2__shortlisted_shortlisted__["a" /* ShortlistedPage */];
-    }
-    TabsclientPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/tabsclient/tabsclient.html"*/'<ion-tabs>\n    <ion-tab [root]="tab1Root" tabTitle="Freelancers" tabIcon="ios-people"></ion-tab>\n    <ion-tab [root]="tab2Root" tabTitle="Chats" tabIcon="ios-chatbubbles"></ion-tab>\n    <ion-tab [root]="tab3Root" tabTitle="ShortListed" tabIcon="ios-contacts"></ion-tab>\n  </ion-tabs>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/tabsclient/tabsclient.html"*/,
-        }),
-        __metadata("design:paramtypes", [])
-    ], TabsclientPage);
-    return TabsclientPage;
-}());
-
-//# sourceMappingURL=tabsclient.js.map
-
-/***/ }),
-
 /***/ 153:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -466,7 +426,7 @@ var TabsclientPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_chat_chat_service__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_user_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__chat_chat__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__chat_chat__ = __webpack_require__(150);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -568,7 +528,7 @@ var TabsfreelancerPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModalPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup_signup__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup_signup__ = __webpack_require__(152);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -780,7 +740,7 @@ var MessageService = (function (_super) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return baseComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_signin_signin__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_signin_signin__ = __webpack_require__(151);
 
 // import { App } from 'ionic-angular/components/app/app';
 // import { MenuController } from 'ionic-angular/components/app/menu-controller';
@@ -870,7 +830,7 @@ var ShortlistedPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__detailsfreelancer_detailsfreelancer__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__ = __webpack_require__(28);
@@ -1261,8 +1221,8 @@ var AuthService = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_user_service__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_chat_model__ = __webpack_require__(620);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__chat_chat__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__chat_chat__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1373,7 +1333,7 @@ var DetailsfreelancerPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SetupprofilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabsfreelancer_tabsfreelancer__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modal_modal__ = __webpack_require__(155);
@@ -1833,9 +1793,9 @@ var JobsPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfilefreelancerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal_modal__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modal_modal__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1864,7 +1824,6 @@ var ProfilefreelancerPage = (function () {
         this.toastCtrl = toastCtrl;
         this.alertCtrl = alertCtrl;
         this.navParams = navParams;
-        this.firedata = __WEBPACK_IMPORTED_MODULE_2_firebase_app__["database"]();
         this.list = ['Android',
             'UI',
             'Photoshop',
@@ -1885,6 +1844,9 @@ var ProfilefreelancerPage = (function () {
         this.experienceslist = [];
         this.shouldhidetext = false;
         this.shouldhidetexttwo = false;
+        this.isContactsReadonly = true;
+        this.isPersonalReadonly = true;
+        this.firedata = __WEBPACK_IMPORTED_MODULE_3_firebase___default.a.database();
         this.getData = function (data) {
             return new Promise(function (resolve, reject) {
                 resolve();
@@ -1893,8 +1855,20 @@ var ProfilefreelancerPage = (function () {
                 _this.shouldhidetexttwo = true;
             });
         };
-        this.fullname = this.navParams.get('fullname');
-        this.hourlyrate = '0';
+        this.firedata.ref('/users').child(__WEBPACK_IMPORTED_MODULE_3_firebase___default.a.auth().currentUser.uid).once('value').then(function (res) {
+            console.log(res.val());
+            var user = res.val();
+            _this.fullname = user.name;
+            _this.writeup = user.aboutMe;
+            _this.hourlyrate = user.hourlyRate;
+            _this.email = user.email;
+            _this.city = "Mohart, India";
+            _this.phonenumber = user.phonenumber;
+            _this.skillsstring = user.skillsstring;
+            _this.experienceslist = user.experiences;
+        }).catch(function (err) {
+            _this.presentToast("Couldnt fetch user details");
+        });
     }
     ProfilefreelancerPage.prototype.add = function (item, i) {
         this.isshidden = false;
@@ -1905,20 +1879,6 @@ var ProfilefreelancerPage = (function () {
         currentskills.innerHTML = this.skillsstring;
         // console.log(item, i);
         this.skillstobeuploaded.push(item);
-        // }
-        // else{
-        //   this.skillstobeuploaded.forEach(skill => {
-        //       if(item == skill){
-        //           this.presentToast('You have already added this skill');
-        //       }else{
-        //         currentskills.innerHTML = item + " | " + currentskills.innerHTML;
-        //         console.log(item);
-        //         this.skillstobeuploaded.push(item);
-        //         this.countries = [];
-        //         this.list.splice(item);
-        //       }
-        //   });
-        // }
         this.countries = [];
         this.input = "";
     };
@@ -1930,6 +1890,26 @@ var ProfilefreelancerPage = (function () {
             this.shouldhidetexttwo = true;
         }
     };
+    ProfilefreelancerPage.prototype.makeEditable = function (index) {
+        switch (index) {
+            case 1:
+                this.isPersonalReadonly = false;
+                this.isContactsReadonly = true;
+                this.namebox.setFocus();
+                // this.emailbox.removeFocus();
+                break;
+            case 2:
+                this.isPersonalReadonly = true;
+                this.isContactsReadonly = false;
+                this.emailbox.setFocus();
+                // this.namebox.removeFocus();
+                break;
+        }
+    };
+    ProfilefreelancerPage.prototype.stopEdit = function () {
+        this.isPersonalReadonly = true;
+        this.isContactsReadonly = true;
+    };
     ProfilefreelancerPage.prototype.search = function () {
         var _this = this;
         if (!this.input.trim().length || !this.keyboard.isOpen()) {
@@ -1939,19 +1919,7 @@ var ProfilefreelancerPage = (function () {
         this.countries = this.list.filter(function (item) { return item.toUpperCase().includes(_this.input.toUpperCase()); });
     };
     ProfilefreelancerPage.prototype.presentModal = function () {
-        // const modal = this.modalCtrl.create(ModalPage);
-        // modal.onDidDismiss(data => {
-        //   console.log(data);
-        //   this.writeup == data;
-        //   });
-        // modal.present();
-        // this.navCtrl.push(ModalPage);
-        // callback...
-        // push page...
-        // this.navCtrl.push(ModalPage, {
-        // callback: this.myCallbackFunction
-        // });
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__modal_modal__["a" /* ModalPage */], {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__modal_modal__["a" /* ModalPage */], {
             // data: this.data,
             callback: this.getData
         });
@@ -2077,11 +2045,12 @@ var ProfilefreelancerPage = (function () {
     ProfilefreelancerPage.prototype.saveprofile = function () {
         var _this = this;
         var load = this.loadingCtrl.create({
-            content: 'Setting up your Profile',
+            content: 'Saving changes',
         });
         load.present();
-        this.firedata.ref('/users').child(__WEBPACK_IMPORTED_MODULE_2_firebase_app__["auth"]().currentUser.uid).update({
-            hourlyRate: '$' + this.hourlyrate + '/hr',
+        this.firedata.ref('/users').child(__WEBPACK_IMPORTED_MODULE_3_firebase___default.a.auth().currentUser.uid).update({
+            hourlyRate: this.hourlyrate,
+            name: this.fullname,
             skillstags: this.skillstobeuploaded,
             experiences: this.experienceslist,
             aboutMe: this.writeup
@@ -2094,9 +2063,17 @@ var ProfilefreelancerPage = (function () {
             load.dismiss();
         });
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('nameinput'),
+        __metadata("design:type", Object)
+    ], ProfilefreelancerPage.prototype, "namebox", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('emailinput'),
+        __metadata("design:type", Object)
+    ], ProfilefreelancerPage.prototype, "emailbox", void 0);
     ProfilefreelancerPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-profilefreelancer',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/profilefreelancer/profilefreelancer.html"*/'<ion-header>\n  <ion-navbar color="light">\n    <ion-buttons start>\n      <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    </ion-buttons>\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="openSecondModal()">\n          <ion-icon  class="icon ion-home custom-icon" name="ios-search"></ion-icon>\n      </button>\n  </ion-buttons>\n    <ion-title>My Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <p align="center">\n    <!-- <div class="user-photo"> -->\n      <img class="user-photo"\n       src="../../assets/one.jpg">\n    <!-- </div> -->\n  </p>\n\n  <div (click)="showBox(0)">\n      <h4 align="center">{{fullname}}\n          <ion-icon item-right name="ios-create-outline"></ion-icon></h4>\n  </div>\n\n  <div [hidden]="isshidden" (click)="revert()">\n      <p style="margin-left: 30px;margin-right:30px" id="currentskills" align="center">\n          <ion-icon item-right name="ios-remove-circle-outline"></ion-icon>\n        </p>\n\n  </div>\n\n  <div (click)="showBox(1)">\n      <p align="center">Hourly Rate - ${{hourlyrate}}/hr\n          <ion-icon item-right name="ios-create-outline"></ion-icon>\n        </p>\n  </div>\n\n  <br>\n    <ion-list>\n\n        <ion-list-header>Skills\n        </ion-list-header>\n\n            <div class="autocomplete">\n                <ion-item>\n                  <ion-input  type="text" \n                              placeholder="Search skill tags here"\n                              [(ngModel)]="input"\n                              (ionChange)="search()"\n                              (ionBlur)="removeFocus()"\n                              debounce=500>\n                            </ion-input>\n                </ion-item>\n                <ion-list>\n                  <ion-item *ngFor="let country of countries" (click)="add(country, i)">\n                    {{country}}\n                  </ion-item>\n                </ion-list>\n          </div>\n\n      <ion-list-header (click)="showBox(2)">My Experiences\n          <ion-icon item-right name="ios-create-outline"></ion-icon>\n      </ion-list-header>\n\n      <p [hidden]="shouldhidetext" style="margin-left: 20px">No Experiences Added Yet, Click the icon above to add experiences</p>\n\n      <ion-item *ngFor="let experience of experienceslist; let i= index">\n        <ion-avatar item-left>\n          <img src="../../assets/upwork.png">\n        </ion-avatar>\n        <b>{{experience.role}}</b><br>\n        {{experience.company}}\n        <ion-icon \n        name="ios-remove-circle-outline" (click)="removeExperience(experience, i)" item-right></ion-icon>\n      </ion-item>\n<!--   \n      <ion-item>\n          <ion-avatar item-left>\n            <img src="../../assets/upwork.png">\n          </ion-avatar>\n          <b>Android Developer</b><br>\n          Upwork\n        <ion-icon name="ios-remove-circle-outline" item-right></ion-icon>\n        </ion-item>\n -->\n\n\n\n\n\n\n\n        <br>\n        <ion-list-header (click)="showBox(3)">About Me\n          <ion-icon item-right name="ios-create-outline"></ion-icon>\n        </ion-list-header>\n\n      <p [hidden]="shouldhidetexttwo" style="margin-left: 20px">Click the button above to tell the Tech-Tinder community about yourself</p>\n\n        <div id="writeup" style="margin: 15px; font-size: 16px">\n           {{writeup}}\n        </div>\n    </ion-list>\n\n    <p align="center">\n        <button ion-button outline (click)="saveprofile()" class="bsuccess">SAVE PROFILE</button>\n    </p>\n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/profilefreelancer/profilefreelancer.html"*/,
+            selector: 'page-profilefreelancer',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/profilefreelancer/profilefreelancer.html"*/'<ion-header>\n  <ion-navbar color="light">\n    <ion-buttons start>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n\n    <ion-title>My Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <p align="center">\n    <!-- <div class="user-photo"> -->\n    <img class="user-photo" src="../../assets/one.jpg">\n    <!-- </div> -->\n  </p>\n\n  <div [hidden]="isshidden" (click)="revert()">\n    <p style="margin-left: 30px;margin-right:30px" id="currentskills" align="center">\n      <ion-icon item-right name="ios-remove-circle-outline"></ion-icon>\n    </p>\n\n  </div>\n\n  <br>\n  <ion-list>\n\n    <ion-item-divider>\n      Personal Info\n      \n      <ion-icon *ngIf="isPersonalReadonly" name="ios-create-outline" (click)="makeEditable(1)" item-right></ion-icon>\n      <ion-icon *ngIf="!isPersonalReadonly"  name="ios-checkmark-outline" (click)="stopEdit()" item-right></ion-icon>\n      \n    </ion-item-divider>\n\n    <ion-item>\n      <ion-input #nameinput [readonly]="isPersonalReadonly" [(ngModel)]="fullname"></ion-input>\n      <ion-icon name="ios-person-outline" item-left></ion-icon>\n    </ion-item>\n    <ion-item>\n      <ion-input [readonly]="isPersonalReadonly" [(ngModel)]="city"></ion-input>\n      <ion-icon name="ios-pin-outline" item-left></ion-icon>\n    </ion-item>\n    <ion-item>\n      <ion-input [readonly]="isPersonalReadonly" [(ngModel)]="hourlyrate"></ion-input>\n      <ion-icon name="ios-clock-outline" item-left></ion-icon>\n    </ion-item>\n\n    <br>\n    <ion-item-divider>\n      Contact Details\n      <ion-icon *ngIf="isContactsReadonly" name="ios-create-outline" (click)="makeEditable(2)" item-right></ion-icon>\n      <ion-icon *ngIf="!isContactsReadonly"  name="ios-checkmark-outline" (click)="stopEdit()" item-right></ion-icon>\n    </ion-item-divider>\n\n    <ion-item>\n        <ion-input #emailinput [readonly]="isContactsReadonly" [(ngModel)]="email"></ion-input>\n      <ion-icon name="ios-mail-outline" item-left></ion-icon>\n    </ion-item>\n\n    <ion-item>\n        <ion-input placeholder="Enter Phone Number Here" [readonly]="isContactsReadonly" [(ngModel)]="phonenumber"></ion-input>\n      <ion-icon name="ios-call-outline" item-left></ion-icon>\n    </ion-item>\n\n\n    <br>\n    <ion-item-divider>Skills\n    </ion-item-divider>\n\n    <div class="autocomplete">\n      <ion-item>\n        <ion-input type="text" placeholder="Search skill tags here" [(ngModel)]="input" (ionChange)="search()" (ionBlur)="removeFocus()"\n          debounce=500>\n        </ion-input>\n      </ion-item>\n      <ion-list>\n        <ion-item *ngFor="let country of countries" (click)="add(country, i)">\n          {{country}}\n        </ion-item>\n      </ion-list>\n    </div>\n\n    <ion-item-divider (click)="showBox(2)">My Experiences\n      <ion-icon item-right name="ios-create-outline"></ion-icon>\n    </ion-item-divider>\n\n    <p [hidden]="shouldhidetext" style="margin-left: 20px">No Experiences Added Yet, Click the icon above to add experiences</p>\n\n    <ion-item *ngFor="let experience of experienceslist; let i= index">\n      <ion-avatar item-left>\n        <img src="../../assets/upwork.png">\n      </ion-avatar>\n      <b>{{experience.role}}</b>\n      <br> {{experience.company}}\n      <ion-icon name="ios-remove-circle-outline" (click)="removeExperience(experience, i)" item-right></ion-icon>\n    </ion-item>\n    <!--   \n      <ion-item>\n          <ion-avatar item-left>\n            <img src="../../assets/upwork.png">\n          </ion-avatar>\n          <b>Android Developer</b><br>\n          Upwork\n        <ion-icon name="ios-remove-circle-outline" item-right></ion-icon>\n        </ion-item>\n -->\n\n\n\n\n\n\n\n    <br>\n    <ion-item-divider (click)="showBox(3)">About Me\n      <ion-icon item-right name="ios-create-outline"></ion-icon>\n    </ion-item-divider>\n\n    <p [hidden]="shouldhidetexttwo" style="margin-left: 20px">Click the button above to tell the Tech-Tinder community about yourself</p>\n\n    <div id="writeup" style="margin: 15px; font-size: 16px">\n      {{writeup}}\n    </div>\n  </ion-list>\n\n  <p align="center">\n    <button ion-button outline (click)="saveprofile()" class="bsuccess">SAVE PROFILE</button>\n  </p>\n</ion-content>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/profilefreelancer/profilefreelancer.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
@@ -2120,9 +2097,9 @@ var ProfilefreelancerPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostjobPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabsclient_tabsclient__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabsclient_tabsclient__ = __webpack_require__(94);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2263,16 +2240,19 @@ var PostjobPage = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('myInput'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
     ], PostjobPage.prototype, "myInput", void 0);
     PostjobPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'page-postjob',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/postjob/postjob.html"*/'<ion-header>\n  <ion-navbar color="light">\n    <ion-buttons start>\n      <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    </ion-buttons>\n\n    <ion-title>Post Job</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content class="maincontent">\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n            <ion-card\n            class="cardss"\n            (click)="setShort()"            \n            [ngStyle]="{\'outline-color\': isshortcolor}">\n                <p style="margin-top: 20px" align="center"><ion-icon name="ios-clock-outline"></ion-icon></p>\n                <p style="margin-top: 5px"  align="center">Short term or part time work</p>\n                <p style="margin-top: 5px" align="center">Less than 30 hrs/week</p>\n                <p style="margin-bottom: 20px; margin-top: 5px" align="center">Less than 3 months</p>\n            </ion-card>\n        </ion-col>\n\n        <ion-col>\n            <ion-card class="cardss"\n            (click)="setLong()"\n            [ngStyle]="{\'outline-color\': islongcolor}">\n                <p style="margin-top: 20px" align="center"><ion-icon name="ios-calendar-outline"></ion-icon></p>\n                <p style="margin-top: 5px"  align="center">Dedicated Long term work</p>\n                <p style="margin-top: 5px" align="center">More than 30 hrs/week</p>\n                <p style="margin-bottom: 20px; margin-top: 5px" align="center">3+ months</p>\n            </ion-card>\n        </ion-col>\n      </ion-row>\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 7px; ">Enter the title of your job post here</b>\n      <ion-row class="itemclass">\n          <ion-input\n          [(ngModel)]="title"\n            placeholder="Enter Job Title Here" required></ion-input>  \n      </ion-row>\n\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 1px; ">\n        Job Category</b>\n      \n      <ion-card>\n            <ion-item>\n                    <ion-label style="opacity: 0.7; margin: 10px">Select Job Category </ion-label>\n                    <ion-select [(ngModel)]="category">\n                      <ion-option>Function QA</ion-option>\n                      <ion-option>Translation</ion-option>\n                      <ion-option>Writing</ion-option>\n                      <ion-option>IT & Networking</ion-option>\n                      <ion-option>Accounting & Consulting</ion-option>\n                      <ion-option>Data Science & Analytics</ion-option>\n                      <ion-option>Legal</ion-option>\n                      <ion-option>Sales & Marketing</ion-option>\n                      <ion-option>Web, Mobile & Software Dev</ion-option>\n                      <ion-option>Engineering & Architecture</ion-option>\n                      <ion-option>Admin Support</ion-option>\n                      <ion-option>Design & Creative</ion-option>\n                      <ion-option>Customer Service</ion-option>\n                      \n                    </ion-select>\n            </ion-item>\n         \n      </ion-card>\n\n\n\n       <!-- <ion-auto-complete [dataProvider]="CompletetestProvider"></ion-auto-complete>-->\n\n<!-- \n    <br>\n      <b style="margin-left: 13px; margin-bottom: 7px; ">\nAdd skill tags</b>\n\n    <div class="autocomplete">\n      <ion-item>\n        <ion-input  type="text" \n                    placeholder="Search skill tags here"\n                    [(ngModel)]="input"\n                    (ionChange)="search()"\n                    (ionBlur)="removeFocus()"\n                    debounce=500></ion-input>\n      </ion-item>\n      <ion-list>\n        <ion-item *ngFor="let country of countries" (click)="add(country)">\n          {{country}}\n        </ion-item>\n      </ion-list>\n</div> -->\n\n<div class="skillsdiv">\n  <ion-grid>\n    <ion-row *ngFor="let row of grid">\n      <ion-col width-50 *ngFor="let skill of row">\n        {{skill}}\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</div>\n\n\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 7px; ">Enter job description here</b>\n      <ion-row class="item2class" >\n          <ion-textarea\n            #myInput id="myInput" rows="1" maxLength="500" (keyup)="resize()" [(ngModel)]="description"\n            placeholder="Enter Job Description Here" required></ion-textarea>  \n      </ion-row>\n\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 1px; ">Project URL</b>\n      <ion-row class="itemclass">\n        <ion-input\n        [(ngModel)]="url"\n          placeholder="Enter URL to project files here" required></ion-input>  \n    </ion-row>\n\n      <br>\n    <button ion-button color="testone" (click)="postJob()" style="margin-left: 50px; margin-right: 50px">\n        Post Job\n    </button>    \n    <br>  \n\n    </ion-grid>  \n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/postjob/postjob.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */]) === "function" && _f || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */]])
     ], PostjobPage);
     return PostjobPage;
-    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=postjob.js.map
@@ -2286,6 +2266,8 @@ var PostjobPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileclientPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2299,6 +2281,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 // import { Dialogs } from '@ionic-native/dialogs';
 
+
 /**
  * Generated class for the ProfileclientPage page.
  *
@@ -2307,12 +2290,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var ProfileclientPage = (function () {
     function ProfileclientPage(navCtrl, alertCtrl, navParams) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.alertCtrl = alertCtrl;
         this.navParams = navParams;
+        this.firedata = __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.database();
+        this.isPasswordReadOnly = true;
+        this.isPersonalReadonly = true;
+        this.password = "dkjgkdflgjdlf";
+        this.confirmpassword = "dfkgjdfkgjhfj";
+        this.firedata.ref('/users').child(__WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.uid).once('value').then(function (res) {
+            console.log(res.val());
+            var user = res.val();
+            _this.fullname = user.name;
+            _this.email = user.email;
+        }).catch(function (err) {
+            alert("Couldnt fetch user details");
+        });
     }
     ProfileclientPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ProfileclientPage');
+    };
+    ProfileclientPage.prototype.makeEditable = function (index) {
+        switch (index) {
+            case 1:
+                this.isPersonalReadonly = false;
+                this.isPasswordReadOnly = true;
+                this.namebox.setFocus();
+                // this.emailbox.removeFocus();
+                break;
+            case 2:
+                this.isPersonalReadonly = true;
+                this.isPasswordReadOnly = false;
+                this.emailbox.setFocus();
+                // this.namebox.removeFocus();
+                break;
+        }
+    };
+    ProfileclientPage.prototype.stopEdit = function () {
+        this.isPersonalReadonly = true;
+        this.isPasswordReadOnly = true;
     };
     ProfileclientPage.prototype.showBox = function (index) {
         var placeholder;
@@ -2357,15 +2374,24 @@ var ProfileclientPage = (function () {
         });
         alert.present();
     };
+    ProfileclientPage.prototype.saveprofile = function () {
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('nameinput'),
+        __metadata("design:type", Object)
+    ], ProfileclientPage.prototype, "namebox", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('emailinput'),
+        __metadata("design:type", Object)
+    ], ProfileclientPage.prototype, "emailbox", void 0);
     ProfileclientPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-profileclient',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/'<ion-header>\n  <ion-navbar ion-fixed align-title="center"  color="light">\n      <button ion-button left menuToggle>\n            <ion-icon class="icon ion-home custom-icon" name="menu"></ion-icon>\n      </button>\n\n      <ion-title>  \n        My Profile\n      </ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n\n  <div class="topdiv" >\n\n    <div style="width: 100%; height: 7vh;"></div>\n\n    <div class="user-photo">\n      <img src="../../assets/one.jpg">\n    </div>\n\n  </div>\n\n  <div>\n    <ion-list>\n      \n          <ion-item-divider>\n              Account Info \n              <ion-icon color="white" name="ios-create-outline" \n              \n              item-right></ion-icon>   \n          </ion-item-divider>\n\n          <ion-item detail-push (click)="showBox(0)">\n              Edung\n              <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   \n          </ion-item>\n\n          <ion-item detail-push (click)="showBox(1)">\n              Divinefavour \n              <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   \n          </ion-item>\n\n          <ion-item detail-push (click)="showBox(2)">\n              lawrenedickson49@gmail.com \n              <ion-icon color="white" name="ios-mail-outline" item-left></ion-icon>   \n          </ion-item>\n\n\n\n\n\n          <ion-item-divider>\n              Change Password\n              <ion-icon color="white" name="ios-create-outline" \n              item-right></ion-icon>   \n          </ion-item-divider>\n\n          <ion-item detail-push (click)="showBox(3)">\n              New Password\n              <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   \n          </ion-item>\n\n          <ion-item detail-push (click)="showBox(4)">\n              Confirm Password \n              <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   \n          </ion-item>\n\n\n          <ion-item-divider>\n              Connected Accounts\n              <ion-icon color="white" name="ios-create-outline" \n              item-right></ion-icon>   \n          </ion-item-divider>\n\n    </ion-list>\n  </div>\n\n  \n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/,
+            selector: 'page-profileclient',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/'<ion-header>\n    <ion-navbar ion-fixed align-title="center" color="light">\n        <button ion-button left menuToggle>\n            <ion-icon class="icon ion-home custom-icon" name="menu"></ion-icon>\n        </button>\n\n        <ion-title>\n            My Profile\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n\n    <div class="topdiv">\n\n        <div style="width: 100%; height: 10vh;"></div>\n\n        <div class="user-photo">\n            <img src="../../assets/one.jpg">\n        </div>\n\n    </div>\n\n    <br>\n    <div>\n        <ion-list>\n\n            <ion-item-divider>\n                Personal Info\n\n                <ion-icon *ngIf="isPersonalReadonly" name="ios-create-outline" (click)="makeEditable(1)" item-right></ion-icon>\n                <ion-icon *ngIf="!isPersonalReadonly" name="ios-checkmark-outline" (click)="stopEdit()" item-right></ion-icon>\n\n            </ion-item-divider>\n\n            <ion-item>\n                <ion-input #nameinput [readonly]="isPersonalReadonly" [(ngModel)]="fullname"></ion-input>\n                <ion-icon name="ios-person-outline" item-left></ion-icon>\n            </ion-item>\n            <ion-item>\n                <ion-input [readonly]="isPersonalReadonly" [(ngModel)]="email"></ion-input>\n                <ion-icon name="ios-mail-outline" item-left></ion-icon>\n            </ion-item>\n\n            <br>\n\n\n\n\n            <ion-item-divider>\n                Change Password\n                <ion-icon *ngIf="isPasswordReadOnly" name="ios-create-outline" (click)="makeEditable(2)" item-right></ion-icon>\n                <ion-icon *ngIf="!isPasswordReadOnly" name="ios-checkmark-outline" (click)="stopEdit()" item-right></ion-icon>\n            </ion-item-divider>\n\n            <ion-item>\n                <ion-input type="password" #emailinput [readonly]="isPasswordReadOnly" [(ngModel)]="password"></ion-input>\n                <ion-icon name="ios-lock-outline" item-left></ion-icon>\n            </ion-item>\n\n            <ion-item>\n                <ion-input type="password" placeholder="Enter Phone Number Here"\n                 [readonly]="isPasswordReadOnly" [(ngModel)]="confirmpassword"></ion-input>\n                <ion-icon name="ios-lock-outline" item-left></ion-icon>\n            </ion-item>\n\n            <ion-item-divider>\n                Connected Accounts\n                <ion-icon color="white" name="ios-create-outline" item-right></ion-icon>\n            </ion-item-divider>\n\n        </ion-list>\n    </div>\n\n    <p align="center">\n            <button ion-button outline (click)="saveprofile()" class="bsuccess">SAVE CHANGES</button>\n          </p>\n\n\n</ion-content>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _c || Object])
     ], ProfileclientPage);
     return ProfileclientPage;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=profileclient.js.map
@@ -2537,20 +2563,20 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth_service__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pipes_capitalize_capitalize__ = __webpack_require__(618);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_chat__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_chat__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_chat_chat_service__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_custom_logged_header_custom_logged_header_component__ = __webpack_require__(619);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_message_box_message_box_component__ = __webpack_require__(621);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_message_message_service__ = __webpack_require__(276);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__app_component__ = __webpack_require__(622);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_progress_bar_progress_bar_component__ = __webpack_require__(623);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_signup_signup__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_signin_signin__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_signup_signup__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_signin_signin__ = __webpack_require__(151);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_user_info_user_info_component__ = __webpack_require__(624);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_user_menu_user_menu_component__ = __webpack_require__(625);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_user_user_service__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_user_profile_user_profile__ = __webpack_require__(287);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_tabsclient_tabsclient__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_tabsclient_tabsclient__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_tabsfreelancer_tabsfreelancer__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_jobs_jobs__ = __webpack_require__(282);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_profilefreelancer_profilefreelancer__ = __webpack_require__(283);
@@ -3024,14 +3050,13 @@ var MessageBoxComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(251);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(246);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_signin_signin__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_signin_signin__ = __webpack_require__(151);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabsfreelancer_tabsfreelancer__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_postjob_postjob__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_joblist_joblist__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_profilefreelancer_profilefreelancer__ = __webpack_require__(283);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3053,7 +3078,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 // import { FirebaseAuthState } from 'angularfire2/auth';
 var MyApp = (function () {
     function MyApp(authService, platform, statusBar, splashScreen, userService) {
@@ -3063,9 +3087,11 @@ var MyApp = (function () {
                 // this.rootPage = HomePage;
                 userService.currentUser.subscribe(function (user) {
                     _this.currentUser = user;
+                    _this.fullname = user.name;
+                    _this.email = user.email;
                     if (user.userType == "recruiter") {
-                        // this.rootPage = TabsclientPage;
-                        _this.rootPage = __WEBPACK_IMPORTED_MODULE_12__pages_profilefreelancer_profilefreelancer__["a" /* ProfilefreelancerPage */];
+                        _this.rootPage = __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__["a" /* TabsclientPage */];
+                        _this.rootPage = __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__["a" /* ProfileclientPage */];
                         _this.pages = [
                             { title: 'Home', icon: 'ios-home', component: __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__["a" /* TabsclientPage */], pageName: 'GotopremiumPage', index: 1 },
                             { title: 'Profile', icon: 'ios-person', component: __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__["a" /* ProfileclientPage */], pageName: 'GotopremiumPage', index: 0 },
@@ -3076,6 +3102,7 @@ var MyApp = (function () {
                     }
                     else if (user.userType == "freelancer") {
                         _this.rootPage = __WEBPACK_IMPORTED_MODULE_8__pages_tabsfreelancer_tabsfreelancer__["a" /* TabsfreelancerPage */];
+                        // this.rootPage = ProfilefreelancerPage;
                         _this.pages = [
                             { title: 'Search Jobs', icon: 'ios-search', component: __WEBPACK_IMPORTED_MODULE_8__pages_tabsfreelancer_tabsfreelancer__["a" /* TabsfreelancerPage */], pageName: 'GotopremiumPage', index: 0 },
                             { title: 'Job Posts', icon: 'ios-pricetags', component: __WEBPACK_IMPORTED_MODULE_11__pages_joblist_joblist__["a" /* JoblistPage */], pageName: 'GotopremiumPage', index: 1 },
@@ -3102,15 +3129,18 @@ var MyApp = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/app/app.html"*/'<ion-menu persistent="true" [content]="content" type="overlay">\n    <ion-header no-border>\n      <ion-toolbar>\n                <div class="container">\n                    <img class="userimage" src="../../assets/one.jpg">\n                    <b class="user-name">Edung Divinefavour</b>\n                    <div class="user-mail">lawrenedickson49@gmail.com</div>\n                    <br>\n                    <br>\n                   \n                </div>\n  \n      </ion-toolbar>\n    </ion-header>\n    \n    <ion-content>\n  \n        <ion-list>\n          <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon item-start [name]="p.icon"></ion-icon>\n              <!-- <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon> -->\n              {{ p.title }}\n            </button>\n        </ion-list>\n  \n  <!-- \n              <ion-list>\n          <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon item-start [name]="p.icon"></ion-icon>\n              {{ p.title }}\n            </button>\n        </ion-list> -->\n      </ion-content>\n  </ion-menu>\n  \n  <!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n  <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/app/app.html"*/'<ion-menu persistent="true" [content]="content" type="overlay">\n    <ion-header no-border>\n      <ion-toolbar>\n                <div class="container">\n                    <img class="userimage" src="../../assets/one.jpg">\n                    <b class="user-name">{{fullname}}</b>\n                    <div class="user-mail">{{email}}</div>\n                    <br>\n                    <br>\n                   \n                </div>\n  \n      </ion-toolbar>\n    </ion-header>\n    \n    <ion-content>\n  \n        <ion-list>\n          <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon item-start [name]="p.icon"></ion-icon>\n              <!-- <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon> -->\n              {{ p.title }}\n            </button>\n        </ion-list>\n  \n  <!-- \n              <ion-list>\n          <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">\n              <ion-icon item-start [name]="p.icon"></ion-icon>\n              {{ p.title }}\n            </button>\n        </ion-list> -->\n      </ion-content>\n  </ion-menu>\n  \n  <!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n  <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__["a" /* UserService */]) === "function" && _f || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+            __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__["a" /* UserService */]])
     ], MyApp);
     return MyApp;
-    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=app.component.js.map
@@ -3397,6 +3427,46 @@ var ChatService = (function (_super) {
 }(__WEBPACK_IMPORTED_MODULE_4__base_base_service__["a" /* BaseService */]));
 
 //# sourceMappingURL=chat.service.js.map
+
+/***/ }),
+
+/***/ 94:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsclientPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__chats_chats__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shortlisted_shortlisted__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__freelancers_freelancers__ = __webpack_require__(279);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var TabsclientPage = (function () {
+    function TabsclientPage() {
+        this.tab1Root = __WEBPACK_IMPORTED_MODULE_3__freelancers_freelancers__["a" /* FreelancersPage */];
+        this.tab2Root = __WEBPACK_IMPORTED_MODULE_1__chats_chats__["a" /* ChatsPage */];
+        this.tab3Root = __WEBPACK_IMPORTED_MODULE_2__shortlisted_shortlisted__["a" /* ShortlistedPage */];
+    }
+    TabsclientPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/tabsclient/tabsclient.html"*/'<ion-tabs>\n    <ion-tab [root]="tab1Root" tabTitle="Freelancers" tabIcon="ios-people"></ion-tab>\n    <ion-tab [root]="tab2Root" tabTitle="Chats" tabIcon="ios-chatbubbles"></ion-tab>\n    <ion-tab [root]="tab3Root" tabTitle="ShortListed" tabIcon="ios-contacts"></ion-tab>\n  </ion-tabs>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/tabsclient/tabsclient.html"*/,
+        }),
+        __metadata("design:paramtypes", [])
+    ], TabsclientPage);
+    return TabsclientPage;
+}());
+
+//# sourceMappingURL=tabsclient.js.map
 
 /***/ })
 

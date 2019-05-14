@@ -24,6 +24,8 @@ export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
   rootPage: any;
+  fullname;
+  email;
   currentUser: User;
   pages: Array<{ title: string, icon: string, component: any, pageName: string, index: any }>;
 
@@ -40,9 +42,13 @@ export class MyApp {
         // this.rootPage = HomePage;
         userService.currentUser.subscribe((user: any) => {
           this.currentUser = user;
+
+          this.fullname = user.name;
+          this.email = user.email;
+
           if (user.userType == "recruiter") {
-            // this.rootPage = TabsclientPage;
-            this.rootPage = ProfilefreelancerPage;
+            this.rootPage = TabsclientPage;
+            this.rootPage = ProfileclientPage;           
             
             this.pages = [
               { title: 'Home', icon: 'ios-home', component: TabsclientPage, pageName: 'GotopremiumPage', index: 1 },
@@ -53,6 +59,8 @@ export class MyApp {
             ];
           } else if (user.userType == "freelancer") {
             this.rootPage = TabsfreelancerPage;
+            // this.rootPage = ProfilefreelancerPage;
+            
             this.pages = [
               { title: 'Search Jobs', icon: 'ios-search', component: TabsfreelancerPage, pageName: 'GotopremiumPage', index: 0 },
               { title: 'Job Posts', icon: 'ios-pricetags', component: JoblistPage, pageName: 'GotopremiumPage', index: 1 },

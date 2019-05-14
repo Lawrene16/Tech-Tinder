@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 // import { Dialogs } from '@ionic-native/dialogs';
 import { AlertController } from 'ionic-angular';
+import firebase from 'firebase';
+
 
 /**
  * Generated class for the ProfileclientPage page.
@@ -16,14 +18,63 @@ import { AlertController } from 'ionic-angular';
 })
 export class ProfileclientPage {
 
+  firedata = firebase.database();  
+  @ViewChild('nameinput') namebox;
+  @ViewChild('emailinput') emailbox;
+  isPasswordReadOnly = true;
+  isPersonalReadonly = true;
+  fullname;
+  email;
+  password = "dkjgkdflgjdlf";
+  confirmpassword = "dfkgjdfkgjhfj";
+
+
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
      public navParams: NavParams) {
+
+      this.firedata.ref('/users').child(firebase.auth().currentUser.uid).once('value').then((res) =>{
+        console.log(res.val());
+
+        var user = res.val();
+        this.fullname = user.name;
+        this.email = user.email;
+      }).catch((err) =>{
+        alert("Couldnt fetch user details");
+      });
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfileclientPage');
   }
+
+  makeEditable(index){
+    switch (index) {
+      case 1:
+        this.isPersonalReadonly = false;
+        this.isPasswordReadOnly = true;
+        this.namebox.setFocus();
+        // this.emailbox.removeFocus();
+        break;
+    
+      
+    
+      case 2:
+      this.isPersonalReadonly = true;
+      this.isPasswordReadOnly = false;
+      this.emailbox.setFocus();
+      // this.namebox.removeFocus();
+        break;
+
+    }
+  }
+
+  stopEdit(){
+    this.isPersonalReadonly = true;
+    this.isPasswordReadOnly = true;
+  }
+
 
   showBox(index){
     var placeholder;
@@ -73,6 +124,11 @@ export class ProfileclientPage {
       ]
     });
     alert.present();
+  }
+
+
+  saveprofile(){
+
   }
 
 }
