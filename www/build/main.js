@@ -1,16 +1,173 @@
 webpackJsonp([0],{
 
-/***/ 151:
+/***/ 149:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_message_model__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_message_message_service__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_firebase__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var ChatPage = (function () {
+    function ChatPage(authService, chatService, messageService, navCtrl, navParams, userService) {
+        this.authService = authService;
+        this.chatService = chatService;
+        this.messageService = messageService;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.userService = userService;
+    }
+    ChatPage.prototype.ionViewCanEnter = function () {
+        return this.authService.authenticated;
+    };
+    ChatPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.recipient = this.navParams.get('recipientUser'); //recebe de parametro na home.ts
+        this.pageTitle = this.recipient.name;
+        this.userService.currentUser
+            .first()
+            .subscribe(function (currentUser) {
+            _this.sender = currentUser;
+            // pega os chats para o remetente e para o destinatário
+            _this.chat1 = _this.chatService.getDeepChat(_this.sender.$key, _this.recipient.$key);
+            _this.chat2 = _this.chatService.getDeepChat(_this.recipient.$key, _this.sender.$key);
+            // atualizar a foto do usuário
+            if (_this.recipient.photo) {
+                _this.chat1
+                    .first()
+                    .subscribe(function (chat) {
+                    _this.chatService.updatePhoto(_this.chat1, chat.photo, _this.recipient.photo);
+                });
+            }
+            var doSubscription = function () {
+                _this.messages.subscribe(function (messages) {
+                    _this.scrollToBottom();
+                });
+            };
+            var updateSenderReadMessage = function () {
+                _this.messages.subscribe(function (message) {
+                    message.filter(function (msg) {
+                        if ((msg.read == false || msg.read == undefined) && msg.userId != _this.sender.$key) {
+                            _this.messageService.setMessageRead(_this.sender.$key, _this.recipient.$key, msg.$key);
+                        }
+                    });
+                });
+            };
+            var updateRecipientReadMessage = function () {
+                _this.messages.subscribe(function (message) {
+                    message.filter(function (msg) {
+                        if ((msg.read == false || msg.read == undefined) && msg.userId != _this.sender.$key) {
+                            _this.messageService.setMessageRead(_this.recipient.$key, _this.sender.$key, msg.$key);
+                        }
+                    });
+                });
+            };
+            //  busca de mensagens do chat: (tem q ver se a ordem do usuario está certa
+            //  as vezes o remetente (id 1) na vdd é o destinatário (id 2) e vice-versa
+            _this.messages = _this.messageService.getMessages(_this.sender.$key, _this.recipient.$key);
+            //verifica se há alguma mensagem nesse tipo de chat
+            _this.messages
+                .first()
+                .subscribe(function (messageList) {
+                if (messageList.length === 0) {
+                    //faz a busca com os ID's trocados de ordem
+                    _this.messages = _this.messageService.getMessages(_this.recipient.$key, _this.sender.$key);
+                    updateRecipientReadMessage();
+                }
+                else {
+                    // se o NÓ do chat é o ID do sender primeiro dps o do recipient
+                    updateSenderReadMessage();
+                }
+                doSubscription();
+            });
+        });
+    };
+    ChatPage.prototype.sendMessage = function (newMessage) {
+        var _this = this;
+        if (newMessage) {
+            var currentTimeStamp_1 = __WEBPACK_IMPORTED_MODULE_7_firebase___default.a.database.ServerValue.TIMESTAMP;
+            this.messageService
+                .create(// parametros do metodo create
+            new __WEBPACK_IMPORTED_MODULE_4__models_message_model__["a" /* Message */](this.sender.$key, newMessage, currentTimeStamp_1, false), this.messages).then(function () {
+                //atualiza lastMessage e timestamp dos 2 chats
+                _this.chat1
+                    .update({
+                    lastMessage: newMessage,
+                    timeStamp: currentTimeStamp_1
+                });
+                _this.chat2
+                    .update({
+                    lastMessage: newMessage,
+                    timeStamp: currentTimeStamp_1
+                });
+            });
+        }
+    };
+    // parametro opcional de duração da animação
+    ChatPage.prototype.scrollToBottom = function (duration) {
+        var _this = this;
+        setTimeout(function () {
+            if (_this.content) {
+                _this.content.scrollToBottom(duration || 300);
+            }
+        }, 50);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */])
+    ], ChatPage.prototype, "content", void 0);
+    ChatPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-chat',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/chat/chat.html"*/'<ion-header>\n\n  <custom-logged-header [title]="pageTitle" [user]="recipient"></custom-logged-header>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list no-lines>\n    <!-- <ion-item *ngFor="let message of messages | async">{{message.text}}</ion-item> -->\n    <message-box *ngFor="let message of messages | async" [message]="message" \n                  [isFromSender]="(message.userId == sender.$key)" [alreadyRead]="(message.read)">\n                  <!-- Se o id do usuario (sender.$key) for igual ao id do dono da mensagem (message.userId)\n                       então vai retornar true -->\n    </message-box>\n  </ion-list>\n</ion-content>\n\n<ion-footer>\n\n  <ion-toolbar>\n    <ion-item no-lines>\n      <ion-input type="text" (keyup.enter)="sendMessage(newMessage); newMessage = \'\' "\n                 placeholder="Type here..." [(ngModel)]="newMessage">\n                 <!-- key up detecta se pressionar enter ativa a funçao de enviar msg -->\n      </ion-input>\n      <button ion-button item-right (click)="sendMessage(newMessage); newMessage = \'\' "> \n        <!-- dps q chamar a funçao, o new message vira uma string vazia-->\n        <ion-icon name="send"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-toolbar>\n\n</ion-footer>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/chat/chat.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__["a" /* ChatService */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_message_message_service__["a" /* MessageService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__["a" /* UserService */]])
+    ], ChatPage);
+    return ChatPage;
+}());
+
+//# sourceMappingURL=chat.js.map
+
+/***/ }),
+
+/***/ 150:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SigninPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(151);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -77,13 +234,186 @@ var SigninPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'page-signin',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/signin/signin.html"*/'<ion-content padding>\n\n    <br>\n    <br>\n    <br>\n    <p align="center">\n      <img src="../../assets/icon.png" height="110">\n      <!-- <b style="font-size: 35px; color: white">ech-Tinder</b> -->\n    </p>\n  \n    <br>\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="signinForm">\n\n      <ion-item class="listt">\n          <ion-label floating>E-mail or Phone</ion-label>\n          <ion-input type="email" formControlName="email"></ion-input>\n        </ion-item>\n    \n        <ion-item class="listt">\n            <ion-label floating>Password</ion-label>\n            <ion-input type="password" formControlName="password"></ion-input>          \n        </ion-item>\n\n        <button  ion-button type="submit" [disabled]="signinForm.invalid" class="btn success">SIGN IN</button>\n    \n  </form>\n  \n    <!-- <p align="center"><b >Or</b></p> -->\n    <button ion-button \n    block style="border-radius: 5px;\n    margin-top: 20px;\n    margin-left: 30px;\n    width: 75vw;" \n    color="testone">\n    <ion-icon style="font-size: 30px;\n     position: absolute; left: 20px;" name="logo-linkedin"></ion-icon>                    \n     Sign in with LinkedIn\n</button>\n\n    <br>\n    <br>\n    \n    <div>\n      <b class="forgotp">FORGOT PASSWORD?</b>\n      <b class="joinn" (click)="onSignUp()">JOIN NOW</b>\n    </div>\n\n\n\n\n\n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/signin/signin.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _f || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
     ], SigninPage);
     return SigninPage;
-    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=signin.js.map
+
+/***/ }),
+
+/***/ 151:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__ = __webpack_require__(281);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+// import { User } from '../../models/user.model';
+
+
+// import { emailValidator } from '../../validators/email';
+var SignupPage = (function () {
+    function SignupPage(alertCtrl, authService, // service de criação de usuario de autenticação
+        formBuilder, // para trabalhar com formulário
+        loadingCtrl, // mostrar o loading
+        navCtrl, navParams, userService) {
+        this.alertCtrl = alertCtrl;
+        this.authService = authService;
+        this.formBuilder = formBuilder;
+        this.loadingCtrl = loadingCtrl;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.userService = userService;
+        this.checkingEmail = true;
+        this.firedata = __WEBPACK_IMPORTED_MODULE_2_firebase_app__["database"]();
+        this.cardbackgroundr = "#ffffff";
+        this.cardbackgroundf = "#ffffff";
+        this.cardtextf = "#000000";
+        this.cardtextr = "#000000";
+        // variavel com a expressão regular de validação de e-mail
+        // let emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+        var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        this.signupForm = this.formBuilder.group({
+            // o primeiro item do array é o valor inicial, o segundo é o array de validators
+            name: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(3)]],
+            username: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(3)]],
+            // email: ['', Validators.compose([Validators.required, Validators.pattern(emailRegex)]), emailValidator.checkEmail ], // validator tem q ser obrigatório E seguir a expressão regular do emailRegex
+            email: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].pattern(emailRegex)])],
+            password: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(6)]],
+        });
+    }
+    SignupPage.prototype.isRecruiter = function () {
+        this.userType = "recruiter";
+        this.cardbackgroundr = "#006096";
+        this.cardbackgroundf = "#ffffff";
+        this.cardtextr = "#ffffff";
+        this.cardtextf = "#000000";
+    };
+    SignupPage.prototype.isFreelancer = function () {
+        this.userType = "freelancer";
+        this.cardbackgroundf = "#006096";
+        this.cardbackgroundr = "#ffffff";
+        this.cardtextf = "#ffffff";
+        this.cardtextr = "#000000";
+    };
+    SignupPage.prototype.onSubmit = function () {
+        var _this = this;
+        var loading = this.showLoading();
+        // para pegar os atributos do formulario: this.signupForm.value (retorna o objeto inteiro)
+        // let user: User = this.signupForm.value; não é mais do tipo User pq tirou a senha do model
+        var formUser = this.signupForm.value;
+        var username = formUser.username;
+        var fullname = formUser.name;
+        console.log(fullname);
+        this.userService.userExists(username) // retorna um observable
+            .first() // recebe o primeiro valor recebido pelo observable, o resto será ignorado
+            .subscribe(function (userExists) {
+            if (!userExists) {
+                _this.authService.createAuthUser({
+                    // cria o objeto de usuario para criar um usuário de autenticação no service Auth
+                    email: formUser.email,
+                    password: formUser.password,
+                }).then(function (authState) {
+                    //depois de cadastrar o usuário de autenticação:
+                    // pra não ter que passar o atributo PASSWORD do objeto formUser, tem q deletar este atributo
+                    delete formUser.password;
+                    // tem q adicionar o uid (id Único) criado na criação de usuário de autenticação (funçao createAuthUser)
+                    // formUser.uid = authState.auth.uid;
+                    var userUniqueId = authState.auth.uid;
+                    _this.userService.create(formUser, userUniqueId) // cria usuario (nó no database)
+                        .then(function () {
+                        _this.firedata.ref('/users').child(userUniqueId).update({
+                            userType: _this.userType,
+                            uid: userUniqueId
+                        }).then(function () {
+                            loading.dismiss();
+                            if (_this.userType == "freelancer") {
+                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__["a" /* SetupprofilePage */], { "fullname": fullname });
+                            }
+                            else if (_this.userType == "recruiter") {
+                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__["a" /* TabsclientPage */]);
+                            }
+                        });
+                    }).catch(function (error) {
+                        loading.dismiss();
+                        _this.showAlert(error);
+                    });
+                }).catch(function (error) {
+                    loading.dismiss();
+                    _this.showAlert(error);
+                });
+            }
+            else {
+                _this.showAlert("Username already in use! Pick another one.");
+                loading.dismiss();
+            }
+        });
+    };
+    SignupPage.prototype.showLoading = function () {
+        var loading = this.loadingCtrl.create({
+            content: "Please wait..."
+        });
+        loading.present();
+        return loading;
+    };
+    SignupPage.prototype.showAlert = function (message) {
+        this.alertCtrl.create({
+            message: message,
+            buttons: ['Ok']
+        }).present();
+    };
+    SignupPage.prototype.alreadyaMember = function () {
+        this.navCtrl.pop();
+    };
+    SignupPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-signup',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/signup/signup.html"*/'<ion-content padding>\n    <p align="center">\n        <img src="../../assets/icon.png" height="110">\n        <!-- <b style="font-size: 35px; color: white">ech-Tinder</b> -->\n      </p>\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">\n  \n    <ion-item [class.invalid]="!signupForm.controls.name.valid && signupForm.controls.name.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.name.valid && signupForm.controls.name.dirty" name="person" item-left color="primary"></ion-icon>\n      <ion-input type="text" placeholder="Name" formControlName="name"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.name.valid  && signupForm.controls.name.dirty">\n      <p class="invalid-icon" *ngIf="signupForm.controls.name.errors.required">Please enter a valid name.</p>\n      <p class="invalid-icon" *ngIf="signupForm.controls.name.errors.minlength">Your name must have at least 3 characteres</p>\n    </ion-item>\n    \n    <ion-item [class.invalid]="!signupForm.controls.username.valid && signupForm.controls.username.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.username.valid && signupForm.controls.username.dirty" name="at" item-left color="primary"></ion-icon>\n      <ion-input type="text" placeholder="Username" formControlName="username"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.username.valid  && (signupForm.controls.username.dirty || signupForm.controls.username.touched)">\n      <p class="invalid-icon" *ngIf="signupForm.controls.username.errors.required">Please enter a valid username.</p>\n      <p class="invalid-icon" *ngIf="signupForm.controls.username.errors.minlength">Your username must have at least 3 characteres.</p>\n    </ion-item>\n    \n    <ion-item [class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.email.valid && signupForm.controls.email.dirty" name="mail" item-left color="primary"></ion-icon>\n      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input> \n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.email.valid && (signupForm.controls.email.dirty || signupForm.controls.email.touched)">\n      <p class="invalid-icon" *ngIf="!signupForm.controls.email.pending">Please enter a valid email.</p>\n    </ion-item>\n    <!-- <ion-item *ngIf="signupForm.controls.email.pending">\n      <p>Checking email</p>\n    </ion-item> -->\n    \n    <ion-item [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.password.valid && signupForm.controls.password.dirty" name="lock" item-left color="primary"></ion-icon>\n      <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.password.valid  && (signupForm.controls.password.dirty || signupForm.controls.password.touched)">\n      <p class="invalid-icon" *ngIf="signupForm.controls.password.errors.required">Please enter a valid password.</p>\n      <p class="invalid-icon" *ngIf="signupForm.controls.password.errors.minlength">Your password must have at least 6 characters.</p>\n    </ion-item>\n    <br>\n\n    <h5 style="text-align: center; opacity: 0.7">I want to be a </h5>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n            <ion-card\n            [ngStyle]="{\'background-color\': cardbackgroundr}"\n            (click)="isRecruiter()"\n             class="choosecard">\n             <h2 \n            [ngStyle]="{\'color\': cardtextr}"             \n             style="opacity: 0.8">Recruiter\n            </h2></ion-card>\n        </ion-col>\n        <ion-col>\n            <ion-card \n            [ngStyle]="{\'background-color\': cardbackgroundf}"            \n            (click)="isFreelancer()" class="choosecard">\n            <h2\n            [ngStyle]="{\'color\': cardtextf}"             \n             style="opacity: 0.8">Freelancer</h2>\n          </ion-card>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    \n\n    <button ion-button block class="btn success" type="submit" [disabled]="signupForm.invalid">Create Account</button>\n    <!-- se o signupForm for inválido, vai retornar TRUE e DESABILITAR o botão -->\n    \n  </form>\n\n  <button ion-button \n  (click)="linkedinsignup()"\n  block style="border-radius: 5px;\n  margin-top: 20px;\n  margin-left: 30px;\n  width: 75vw;" \n  color="testone">\n  <ion-icon style="font-size: 30px;\n   position: absolute; left: 20px;" name="logo-linkedin"></ion-icon>                    \n   Join now with LinkedIn!\n</button>\n\n<br>\n    <div>\n      <!-- <b class="forgotp">F?</b> -->\n      <b class="joinn" (click)="alreadyaMember()">ALREADY A MEMBER?</b>\n    </div>\n\n  \n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/signup/signup.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__["a" /* UserService */]])
+    ], SignupPage);
+    return SignupPage;
+}());
+
+//# sourceMappingURL=signup.js.map
 
 /***/ }),
 
@@ -94,8 +424,8 @@ var SigninPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsclientPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__chats_chats__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shortlisted_shortlisted__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__freelancers_freelancers__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shortlisted_shortlisted__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__freelancers_freelancers__ = __webpack_require__(279);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -133,10 +463,10 @@ var TabsclientPage = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_chat_chat_service__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_user_service__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__chat_chat__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_chat_chat_service__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_user_service__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__chat_chat__ = __webpack_require__(149);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -198,8 +528,8 @@ var ChatsPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsfreelancerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__chats_chats__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__jobs_jobs__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profilefreelancer_profilefreelancer__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__jobs_jobs__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profilefreelancer_profilefreelancer__ = __webpack_require__(283);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -235,6 +565,70 @@ var TabsfreelancerPage = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModalPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup_signup__ = __webpack_require__(151);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ModalPage = (function () {
+    function ModalPage(navCtrl, view, element, navParams) {
+        this.navCtrl = navCtrl;
+        this.view = view;
+        this.element = element;
+        this.navParams = navParams;
+        this.writeup = "";
+        this.callback = this.navParams.get('callback');
+    }
+    ModalPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ModalPage');
+    };
+    ModalPage.prototype.goPrevious = function () {
+        var _this = this;
+        this.callback(this.writeup).then(function () {
+            _this.navCtrl.pop();
+        });
+    };
+    ModalPage.prototype.doit = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__signup_signup__["a" /* SignupPage */]);
+    };
+    ModalPage.prototype.autoSizeDescription = function () {
+        var textArea = this.element.nativeElement.getElementsByTagName('textarea')[0];
+        textArea.style.overflow = 'hidden';
+        textArea.style.height = 'auto';
+        textArea.style.height = textArea.scrollHeight + 'px';
+        return;
+    };
+    ModalPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-modal',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/modal/modal.html"*/'<!--\n  Generated template for the ModalPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-navbar color="light">\n      <ion-title>Write about yourself</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content padding>\n      <!-- <ion-textarea style="height: 40vh" placeholder="Write about yourself here">\n  \n      </ion-textarea> -->\n  \n      <ion-textarea placeholder="Write about yourself here" type="text" [(ngModel)]="writeup" (input)="autoSizeDescription($event);"></ion-textarea>\n  \n  \n      <button ion-button block (click)="goPrevious()">Save</button>\n  </ion-content>\n  '/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/modal/modal.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */],
+            __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+    ], ModalPage);
+    return ModalPage;
+}());
+
+//# sourceMappingURL=modal.js.map
+
+/***/ }),
+
+/***/ 156:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
 var User = (function () {
     function User(name, username, email, 
@@ -254,7 +648,7 @@ var User = (function () {
 
 /***/ }),
 
-/***/ 165:
+/***/ 166:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -267,11 +661,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 165;
+webpackEmptyAsyncContext.id = 166;
 
 /***/ }),
 
-/***/ 205:
+/***/ 206:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -284,97 +678,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 205;
+webpackEmptyAsyncContext.id = 206;
 
 /***/ }),
 
-/***/ 26:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(89);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-var AuthService = (function (_super) {
-    __extends(AuthService, _super);
-    function AuthService(auth, http) {
-        var _this = _super.call(this) || this;
-        _this.auth = auth;
-        _this.http = http;
-        return _this;
-    }
-    AuthService.prototype.createAuthUser = function (user) {
-        // função com parametro objeto user, retorna uma firebase promise do tipo firebaseauthstate
-        // cria um usuario de autenticação com o serviço Angular Fire Auth
-        return this.auth.createUser(user)
-            .catch(this.handlePromiseError); //o erro do catch passa pra função handlePromiseError do BaseService
-    };
-    AuthService.prototype.signInWithEmail = function (user) {
-        return this.auth.login(user)
-            .then(function (authState) {
-            return authState != null; // retorna true se o authState for diferente de nulo (ou seja, logou)
-        })
-            .catch(this.handlePromiseError);
-    };
-    AuthService.prototype.logOut = function () {
-        return this.auth.logout();
-    };
-    Object.defineProperty(AuthService.prototype, "authenticated", {
-        get: function () {
-            var _this = this;
-            return new Promise(function (resolve, reject) {
-                _this.auth
-                    .first() // pega apenas a primeira alteração
-                    .subscribe(function (authState) {
-                    // (authState) ? resolve(true) : reject(false);  // se o authState for verdadeiro, retorna true
-                    (authState) ? resolve(true) : reject(Error); // se o authState for verdadeiro, retorna true
-                });
-            });
-        },
-        enumerable: true,
-        configurable: true
-    });
-    AuthService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */],
-            __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
-    ], AuthService);
-    return AuthService;
-}(__WEBPACK_IMPORTED_MODULE_4__base_base_service__["a" /* BaseService */]));
-
-//# sourceMappingURL=auth.service.js.map
-
-/***/ }),
-
-/***/ 274:
+/***/ 275:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -393,7 +701,7 @@ var Message = (function () {
 
 /***/ }),
 
-/***/ 275:
+/***/ 276:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -402,8 +710,8 @@ var Message = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_base_service__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_base_service__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2__ = __webpack_require__(83);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -467,12 +775,12 @@ var MessageService = (function (_super) {
 
 /***/ }),
 
-/***/ 276:
+/***/ 277:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return baseComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_signin_signin__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_signin_signin__ = __webpack_require__(150);
 
 // import { App } from 'ionic-angular/components/app/app';
 // import { MenuController } from 'ionic-angular/components/app/menu-controller';
@@ -519,29 +827,9 @@ var baseComponent = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Chat; });
-var Chat = (function () {
-    // não passa no construtor pq esse $key é gerado automaticamente no firebase e ia dar conflito na hora de criar o chat
-    function Chat(lastMessage, timeStamp, title, photo) {
-        this.lastMessage = lastMessage;
-        this.timeStamp = timeStamp;
-        this.title = title;
-        this.photo = photo;
-    }
-    return Chat;
-}());
-
-//# sourceMappingURL=chat.model.js.map
-
-/***/ }),
-
-/***/ 279:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ShortlistedPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -574,18 +862,18 @@ var ShortlistedPage = (function () {
 
 /***/ }),
 
-/***/ 280:
+/***/ 279:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FreelancersPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__detailsfreelancer_detailsfreelancer__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__detailsfreelancer_detailsfreelancer__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__ = __webpack_require__(28);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -876,19 +1164,105 @@ var FreelancersPage = (function () {
 
 /***/ }),
 
-/***/ 281:
+/***/ 28:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(88);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var AuthService = (function (_super) {
+    __extends(AuthService, _super);
+    function AuthService(auth, http) {
+        var _this = _super.call(this) || this;
+        _this.auth = auth;
+        _this.http = http;
+        return _this;
+    }
+    AuthService.prototype.createAuthUser = function (user) {
+        // função com parametro objeto user, retorna uma firebase promise do tipo firebaseauthstate
+        // cria um usuario de autenticação com o serviço Angular Fire Auth
+        return this.auth.createUser(user)
+            .catch(this.handlePromiseError); //o erro do catch passa pra função handlePromiseError do BaseService
+    };
+    AuthService.prototype.signInWithEmail = function (user) {
+        return this.auth.login(user)
+            .then(function (authState) {
+            return authState != null; // retorna true se o authState for diferente de nulo (ou seja, logou)
+        })
+            .catch(this.handlePromiseError);
+    };
+    AuthService.prototype.logOut = function () {
+        return this.auth.logout();
+    };
+    Object.defineProperty(AuthService.prototype, "authenticated", {
+        get: function () {
+            var _this = this;
+            return new Promise(function (resolve, reject) {
+                _this.auth
+                    .first() // pega apenas a primeira alteração
+                    .subscribe(function (authState) {
+                    // (authState) ? resolve(true) : reject(false);  // se o authState for verdadeiro, retorna true
+                    (authState) ? resolve(true) : reject(Error); // se o authState for verdadeiro, retorna true
+                });
+            });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AuthService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+    ], AuthService);
+    return AuthService;
+}(__WEBPACK_IMPORTED_MODULE_4__base_base_service__["a" /* BaseService */]));
+
+//# sourceMappingURL=auth.service.js.map
+
+/***/ }),
+
+/***/ 280:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DetailsfreelancerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_user_service__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_chat_model__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__chat_chat__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_user_service__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_chat_model__ = __webpack_require__(620);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__chat_chat__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -992,17 +1366,17 @@ var DetailsfreelancerPage = (function () {
 
 /***/ }),
 
-/***/ 282:
+/***/ 281:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SetupprofilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabsfreelancer_tabsfreelancer__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modal_modal__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modal_modal__ = __webpack_require__(155);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1261,13 +1635,13 @@ var SetupprofilePage = (function () {
 
 /***/ }),
 
-/***/ 283:
+/***/ 282:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JobsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1280,18 +1654,170 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var JobsPage = (function () {
-    function JobsPage(navCtrl, navParams) {
+    function JobsPage(navCtrl, toastCtrl) {
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
+        this.toastCtrl = toastCtrl;
+        Window["myComponent"] = this;
     }
     JobsPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad JobsPage');
+        this.loadMap();
     };
+    JobsPage.prototype.populateMap = function (map) {
+        var icon = {
+            url: '../../assets/icon/dot.png',
+            scaledSize: new google.maps.Size(40, 40),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 0) // anchor
+        };
+        var text = document.getElementById("intitalstring");
+        var initialwindow = new google.maps.InfoWindow({
+            content: text
+        });
+        var features = [
+            {
+                position: new google.maps.LatLng(-33.91721, 151.22630),
+                type: 'info',
+            }, {
+                position: new google.maps.LatLng(-33.91539, 151.22820),
+                type: 'info'
+            }, {
+                position: new google.maps.LatLng(-33.91747, 151.22912),
+                type: 'info'
+            }, {
+                position: new google.maps.LatLng(-33.91910, 151.22907),
+                type: 'info'
+            }, {
+                position: new google.maps.LatLng(-33.91872, 151.23089),
+                type: 'info'
+            }, {
+                position: new google.maps.LatLng(-33.91784, 151.23094),
+                type: 'info'
+            }, {
+                position: new google.maps.LatLng(-33.91682, 151.23149),
+                type: 'info'
+            }, {
+                position: new google.maps.LatLng(-33.91790, 151.23463),
+                type: 'info'
+            }, {
+                position: new google.maps.LatLng(-33.91666, 151.23468),
+                type: 'info'
+            }, {
+                position: new google.maps.LatLng(-33.916988, 151.233640),
+                type: 'info'
+            }, {
+                position: new google.maps.LatLng(-33.91662347903106, 151.22879464019775),
+                type: 'parking'
+            }
+        ];
+        var markerslist = [];
+        for (var i = 0; i < features.length; i++) {
+            var marker = new google.maps.Marker({
+                position: features[i].position,
+                icon: icon,
+                map: map
+            });
+            markerslist.push(marker);
+        }
+        ;
+        // console.log(markerslist);
+        // for(var i = 0; i < markerslist.length; i++){
+        //   marker.addListener('click', (event) =>  {
+        //     // initialwindow.open(map, marker);
+        //   });
+        // }
+        markerslist.forEach(function (mymarker) {
+            mymarker.addListener('click', function (event) {
+                initialwindow.open(map, mymarker);
+            });
+        });
+    };
+    JobsPage.prototype.viewProfile = function () {
+        // this.navCtrl.push(DetailsfreelancerPage);
+    };
+    JobsPage.prototype.loadMap = function () {
+        var mapStyle = [
+            {
+                featureType: "administrative",
+                elementType: "labels",
+                stylers: [
+                    { visibility: "off" }
+                ]
+            }, {
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [
+                    { visibility: "off" }
+                ]
+            }, {
+                featureType: "water",
+                elementType: "labels",
+                stylers: [
+                    { visibility: "off" }
+                ]
+            }, {
+                featureType: "road",
+                elementType: "labels",
+                stylers: [
+                    { visibility: "off" }
+                ]
+            }
+        ];
+        var latLng = new google.maps.LatLng(-33.91722, 151.23064);
+        var mapOptions = {
+            center: latLng,
+            zoom: 16,
+            disableDefaultUI: true,
+            mapTypeId: 'terrain'
+        };
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        this.map.set('styles', mapStyle);
+        this.addDefaultMarker(this.map, latLng);
+        this.populateMap(this.map);
+        this.map.addListener('click', function (e) {
+            console.log('Clicked');
+        });
+    };
+    JobsPage.prototype.addDefaultMarker = function (map, position) {
+        var icon = {
+            url: '../../assets/icon/red.png',
+            scaledSize: new google.maps.Size(40, 40),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 0) // anchor
+        };
+        var defmarker = new google.maps.Marker({
+            position: position,
+            map: map,
+            // icon: icon,
+            // animation: google.maps.Animation.BOUNCE,
+            title: 'Hello World!'
+        });
+        defmarker.addListener('click', function () {
+            map.setZoom(15);
+            map.panTo(defmarker.getPosition());
+        });
+        return defmarker;
+    };
+    JobsPage.prototype.presentToast = function (message) {
+        var toast = this.toastCtrl.create({
+            message: message,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.onDidDismiss(function () {
+            console.log('Dismissed toast');
+        });
+        toast.present();
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('map'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
+    ], JobsPage.prototype, "mapElement", void 0);
     JobsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'page-jobs',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/jobs/jobs.html"*/'<!-- <ion-header>\n  <ion-navbar color="transparent">\n    <ion-buttons start>\n      <button ion-button menuToggle>\n      <ion-icon name="menu" color="dark"></ion-icon>\n    </button>\n    </ion-buttons>\n\n    <ion-searchbar class="searchitem"\n    animated="true" \n   placeholder="Search for talents close to you"></ion-searchbar>\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="openSecondModal()">\n          <ion-icon  class="icon ion-home custom-icon" name="notifications"></ion-icon>\n      </button>\n  </ion-buttons>\n  </ion-navbar>\n</ion-header> -->\n\n<ion-content class="maincontent">\n\n\n\n\n\n  <ion-fab bottom right >\n    <button color="testone" ion-fab mini>\n      <ion-icon name="md-add"></ion-icon>\n    </button>\n  </ion-fab>\n\n  <ion-fab bottom right style="margin-right: 45px">\n    <button color="testone" ion-fab mini>\n      <ion-icon name="md-remove"></ion-icon>\n    </button>\n  </ion-fab>\n\n\n\n  <div  #map id="map">\n  </div>\n\n\n  <ion-card class="headercard">\n    <ion-grid style="height: 50px;">\n      <ion-row>\n        <ion-col col-1>\n        <ion-icon menuToggle style="font-size: 27px; margin-left: 10px; float: left;" \n        name="menu" color="dark"></ion-icon>                      \n        </ion-col>\n\n        <ion-col>\n          <ion-searchbar animated="true" \n          placeholder="Find jobs close to you" class="mysearch"></ion-searchbar>\n            <!-- <ion-searchbar animated="true" \n        placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>-->\n        </ion-col>\n\n        <ion-col col-1>\n        <ion-icon style="font-size: 27px; \n        margin-right: 10px; float: right;" name="notifications-outline" \n        color="dark"></ion-icon>                                  \n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <!-- <div>\n        <ion-icon style="font-size: 27px; margin-left: 20px; float: left; margin-top: 1px; margin-bottom: 1px;" name="menu" color="dark"></ion-icon>            \n        <ion-searchbar style="float: left;" animated="true" \n        placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>\n    </div>\n         -->\n    </ion-card>\n\n  <p align="center" id="intitalstring">\n    <b>Edung Divinefavour</b><br>\n    Hourly rate - $12.5/hr<br>\n    Skills - Android | UI/UX\n    <br>\n    <br>\n    <button onclick="Window.myComponent.viewProfile()" class="contactbtn">View Profile</button>\n  </p>\n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/jobs/jobs.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]])
     ], JobsPage);
     return JobsPage;
 }());
@@ -1300,16 +1826,16 @@ var JobsPage = (function () {
 
 /***/ }),
 
-/***/ 284:
+/***/ 283:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfilefreelancerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal_modal__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal_modal__ = __webpack_require__(155);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1572,24 +2098,31 @@ var ProfilefreelancerPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'page-profilefreelancer',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/profilefreelancer/profilefreelancer.html"*/'<ion-header>\n  <ion-navbar color="light">\n    <ion-buttons start>\n      <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    </ion-buttons>\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="openSecondModal()">\n          <ion-icon  class="icon ion-home custom-icon" name="ios-search"></ion-icon>\n      </button>\n  </ion-buttons>\n    <ion-title>My Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <p align="center">\n    <!-- <div class="user-photo"> -->\n      <img class="user-photo"\n       src="../../assets/one.jpg">\n    <!-- </div> -->\n  </p>\n\n  <div (click)="showBox(0)">\n      <h4 align="center">{{fullname}}\n          <ion-icon item-right name="ios-create-outline"></ion-icon></h4>\n  </div>\n\n  <div [hidden]="isshidden" (click)="revert()">\n      <p style="margin-left: 30px;margin-right:30px" id="currentskills" align="center">\n          <ion-icon item-right name="ios-remove-circle-outline"></ion-icon>\n        </p>\n\n  </div>\n\n  <div (click)="showBox(1)">\n      <p align="center">Hourly Rate - ${{hourlyrate}}/hr\n          <ion-icon item-right name="ios-create-outline"></ion-icon>\n        </p>\n  </div>\n\n  <br>\n    <ion-list>\n\n        <ion-list-header>Skills\n        </ion-list-header>\n\n            <div class="autocomplete">\n                <ion-item>\n                  <ion-input  type="text" \n                              placeholder="Search skill tags here"\n                              [(ngModel)]="input"\n                              (ionChange)="search()"\n                              (ionBlur)="removeFocus()"\n                              debounce=500>\n                            </ion-input>\n                </ion-item>\n                <ion-list>\n                  <ion-item *ngFor="let country of countries" (click)="add(country, i)">\n                    {{country}}\n                  </ion-item>\n                </ion-list>\n          </div>\n\n      <ion-list-header (click)="showBox(2)">My Experiences\n          <ion-icon item-right name="ios-create-outline"></ion-icon>\n      </ion-list-header>\n\n      <p [hidden]="shouldhidetext" style="margin-left: 20px">No Experiences Added Yet, Click the icon above to add experiences</p>\n\n      <ion-item *ngFor="let experience of experienceslist; let i= index">\n        <ion-avatar item-left>\n          <img src="../../assets/upwork.png">\n        </ion-avatar>\n        <b>{{experience.role}}</b><br>\n        {{experience.company}}\n        <ion-icon \n        name="ios-remove-circle-outline" (click)="removeExperience(experience, i)" item-right></ion-icon>\n      </ion-item>\n<!--   \n      <ion-item>\n          <ion-avatar item-left>\n            <img src="../../assets/upwork.png">\n          </ion-avatar>\n          <b>Android Developer</b><br>\n          Upwork\n        <ion-icon name="ios-remove-circle-outline" item-right></ion-icon>\n        </ion-item>\n -->\n\n\n\n\n\n\n\n        <br>\n        <ion-list-header (click)="showBox(3)">About Me\n          <ion-icon item-right name="ios-create-outline"></ion-icon>\n        </ion-list-header>\n\n      <p [hidden]="shouldhidetexttwo" style="margin-left: 20px">Click the button above to tell the Tech-Tinder community about yourself</p>\n\n        <div id="writeup" style="margin: 15px; font-size: 16px">\n           {{writeup}}\n        </div>\n    </ion-list>\n\n    <p align="center">\n        <button ion-button outline (click)="saveprofile()" class="bsuccess">SAVE PROFILE</button>\n    </p>\n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/profilefreelancer/profilefreelancer.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _g || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
     ], ProfilefreelancerPage);
     return ProfilefreelancerPage;
-    var _a, _b, _c, _d, _e, _f, _g;
 }());
 
 //# sourceMappingURL=profilefreelancer.js.map
 
 /***/ }),
 
-/***/ 285:
+/***/ 284:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModalPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostjobPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup_signup__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabsclient_tabsclient__ = __webpack_require__(152);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1602,47 +2135,240 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var ModalPage = (function () {
-    function ModalPage(navCtrl, view, element, navParams) {
+
+
+var PostjobPage = (function () {
+    function PostjobPage(navCtrl, element, loadingCtrl, toastCtrl, keyboard) {
         this.navCtrl = navCtrl;
-        this.view = view;
         this.element = element;
-        this.navParams = navParams;
-        this.writeup = "";
-        this.callback = this.navParams.get('callback');
+        this.loadingCtrl = loadingCtrl;
+        this.toastCtrl = toastCtrl;
+        this.keyboard = keyboard;
+        this.list = ['Android',
+            'UI',
+            'Photoshop',
+            'Excel',
+            'Xcode',
+            'Ionic',
+            'Visual Studio',
+            'React',
+            'Vue',
+            'iOS',
+            'Swift',
+            'Project Management',
+            'Swift'];
+        this.input = '';
+        this.countries = [];
+        this.isshortcolor = "#ffffff";
+        this.islongcolor = "#ffffff";
+        this.duration = "";
+        this.description = "";
+        this.title = "";
+        this.category = "";
+        this.url = "";
+        this.firedata = __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.database();
+        // console.log("Current Date ",date.getTime()) 
     }
-    ModalPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ModalPage');
+    PostjobPage.prototype.add = function (item) {
+        this.input = item;
+        this.countries = [];
     };
-    ModalPage.prototype.goPrevious = function () {
+    PostjobPage.prototype.setShort = function () {
+        this.isshortcolor = '#006096';
+        this.islongcolor = '#ffffff';
+        this.duration = "longterm";
+    };
+    PostjobPage.prototype.resize = function () {
+        var element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
+        var scrollHeight = element.scrollHeight;
+        element.style.height = scrollHeight + 'px';
+        this.myInput['_elementRef'].nativeElement.style.height = (scrollHeight + 16) + 'px';
+    };
+    PostjobPage.prototype.setLong = function () {
+        this.isshortcolor = '#ffffff';
+        this.islongcolor = '#006096';
+        this.duration = "shortterm";
+    };
+    PostjobPage.prototype.removeFocus = function () {
+        this.keyboard.close();
+    };
+    PostjobPage.prototype.search = function () {
         var _this = this;
-        this.callback(this.writeup).then(function () {
-            _this.navCtrl.pop();
+        if (!this.input.trim().length || !this.keyboard.isOpen()) {
+            this.countries = [];
+            return;
+        }
+        this.countries = this.list.filter(function (item) { return item.toUpperCase().includes(_this.input.toUpperCase()); });
+    };
+    PostjobPage.prototype.postJob = function () {
+        var _this = this;
+        console.log(this.duration);
+        console.log(this.title);
+        console.log(this.category);
+        console.log(this.description);
+        console.log(this.url);
+        if (this.duration == "") {
+            this.presentToast("Please select a job duration");
+        }
+        else if (this.title == "") {
+            this.presentToast("Please Enter a Job Title");
+        }
+        else if (this.category == "") {
+            this.presentToast("Please select a job category");
+        }
+        else if (this.description == "") {
+            this.presentToast("Please Enter a Job Description");
+        }
+        else if (this.description.length < 15) {
+            this.presentToast("Job Description should be atleast 15 words");
+        }
+        else if (this.url == "" || this.url.length < 3 || !this.url.includes(".")) {
+            this.presentToast("Please Enter a valid url for project files");
+        }
+        else {
+            this.timeposted = new Date();
+            var load_1 = this.loadingCtrl.create({
+                content: 'Logging you in',
+            });
+            load_1.present();
+            this.pinuid = this.firedata.ref('/users').push().key;
+            this.firedata.ref('/jobs').child(this.pinuid).set({
+                duration: this.duration,
+                title: this.title,
+                category: this.category,
+                description: this.description,
+                timeposted: this.timeposted.getTime(),
+                url: this.url,
+                jobposter: __WEBPACK_IMPORTED_MODULE_2_firebase___default.a.auth().currentUser.uid
+            }).then(function () {
+                _this.presentToast("Your Job Post is Live!!!");
+                load_1.dismiss();
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__tabsclient_tabsclient__["a" /* TabsclientPage */]);
+            }).catch(function (err) {
+                load_1.dismiss();
+                _this.presentToast(err);
+            });
+        }
+    };
+    PostjobPage.prototype.presentToast = function (message) {
+        var toast = this.toastCtrl.create({
+            message: message,
+            duration: 3000,
+            position: 'top'
         });
+        toast.onDidDismiss(function () {
+            console.log('Dismissed toast');
+        });
+        toast.present();
     };
-    ModalPage.prototype.doit = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__signup_signup__["a" /* SignupPage */]);
-    };
-    ModalPage.prototype.autoSizeDescription = function () {
-        var textArea = this.element.nativeElement.getElementsByTagName('textarea')[0];
-        textArea.style.overflow = 'hidden';
-        textArea.style.height = 'auto';
-        textArea.style.height = textArea.scrollHeight + 'px';
-        return;
-    };
-    ModalPage = __decorate([
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('myInput'),
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _a || Object)
+    ], PostjobPage.prototype, "myInput", void 0);
+    PostjobPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-modal',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/modal/modal.html"*/'<!--\n  Generated template for the ModalPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-navbar color="light">\n      <ion-title>Write about yourself</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content padding>\n      <!-- <ion-textarea style="height: 40vh" placeholder="Write about yourself here">\n  \n      </ion-textarea> -->\n  \n      <ion-textarea placeholder="Write about yourself here" type="text" [(ngModel)]="writeup" (input)="autoSizeDescription($event);"></ion-textarea>\n  \n  \n      <button ion-button block (click)="goPrevious()">Save</button>\n  </ion-content>\n  '/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/modal/modal.html"*/,
+            selector: 'page-postjob',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/postjob/postjob.html"*/'<ion-header>\n  <ion-navbar color="light">\n    <ion-buttons start>\n      <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    </ion-buttons>\n\n    <ion-title>Post Job</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content class="maincontent">\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n            <ion-card\n            class="cardss"\n            (click)="setShort()"            \n            [ngStyle]="{\'outline-color\': isshortcolor}">\n                <p style="margin-top: 20px" align="center"><ion-icon name="ios-clock-outline"></ion-icon></p>\n                <p style="margin-top: 5px"  align="center">Short term or part time work</p>\n                <p style="margin-top: 5px" align="center">Less than 30 hrs/week</p>\n                <p style="margin-bottom: 20px; margin-top: 5px" align="center">Less than 3 months</p>\n            </ion-card>\n        </ion-col>\n\n        <ion-col>\n            <ion-card class="cardss"\n            (click)="setLong()"\n            [ngStyle]="{\'outline-color\': islongcolor}">\n                <p style="margin-top: 20px" align="center"><ion-icon name="ios-calendar-outline"></ion-icon></p>\n                <p style="margin-top: 5px"  align="center">Dedicated Long term work</p>\n                <p style="margin-top: 5px" align="center">More than 30 hrs/week</p>\n                <p style="margin-bottom: 20px; margin-top: 5px" align="center">3+ months</p>\n            </ion-card>\n        </ion-col>\n      </ion-row>\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 7px; ">Enter the title of your job post here</b>\n      <ion-row class="itemclass">\n          <ion-input\n          [(ngModel)]="title"\n            placeholder="Enter Job Title Here" required></ion-input>  \n      </ion-row>\n\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 1px; ">\n        Job Category</b>\n      \n      <ion-card>\n            <ion-item>\n                    <ion-label style="opacity: 0.7; margin: 10px">Select Job Category </ion-label>\n                    <ion-select [(ngModel)]="category">\n                      <ion-option>Function QA</ion-option>\n                      <ion-option>Translation</ion-option>\n                      <ion-option>Writing</ion-option>\n                      <ion-option>IT & Networking</ion-option>\n                      <ion-option>Accounting & Consulting</ion-option>\n                      <ion-option>Data Science & Analytics</ion-option>\n                      <ion-option>Legal</ion-option>\n                      <ion-option>Sales & Marketing</ion-option>\n                      <ion-option>Web, Mobile & Software Dev</ion-option>\n                      <ion-option>Engineering & Architecture</ion-option>\n                      <ion-option>Admin Support</ion-option>\n                      <ion-option>Design & Creative</ion-option>\n                      <ion-option>Customer Service</ion-option>\n                      \n                    </ion-select>\n            </ion-item>\n         \n      </ion-card>\n\n\n\n       <!-- <ion-auto-complete [dataProvider]="CompletetestProvider"></ion-auto-complete>-->\n\n<!-- \n    <br>\n      <b style="margin-left: 13px; margin-bottom: 7px; ">\nAdd skill tags</b>\n\n    <div class="autocomplete">\n      <ion-item>\n        <ion-input  type="text" \n                    placeholder="Search skill tags here"\n                    [(ngModel)]="input"\n                    (ionChange)="search()"\n                    (ionBlur)="removeFocus()"\n                    debounce=500></ion-input>\n      </ion-item>\n      <ion-list>\n        <ion-item *ngFor="let country of countries" (click)="add(country)">\n          {{country}}\n        </ion-item>\n      </ion-list>\n</div> -->\n\n<div class="skillsdiv">\n  <ion-grid>\n    <ion-row *ngFor="let row of grid">\n      <ion-col width-50 *ngFor="let skill of row">\n        {{skill}}\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</div>\n\n\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 7px; ">Enter job description here</b>\n      <ion-row class="item2class" >\n          <ion-textarea\n            #myInput id="myInput" rows="1" maxLength="500" (keyup)="resize()" [(ngModel)]="description"\n            placeholder="Enter Job Description Here" required></ion-textarea>  \n      </ion-row>\n\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 1px; ">Project URL</b>\n      <ion-row class="itemclass">\n        <ion-input\n        [(ngModel)]="url"\n          placeholder="Enter URL to project files here" required></ion-input>  \n    </ion-row>\n\n      <br>\n    <button ion-button color="testone" (click)="postJob()" style="margin-left: 50px; margin-right: 50px">\n        Post Job\n    </button>    \n    <br>  \n\n    </ion-grid>  \n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/postjob/postjob.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
-    ], ModalPage);
-    return ModalPage;
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */]) === "function" && _f || Object])
+    ], PostjobPage);
+    return PostjobPage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
-//# sourceMappingURL=modal.js.map
+//# sourceMappingURL=postjob.js.map
+
+/***/ }),
+
+/***/ 285:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileclientPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+// import { Dialogs } from '@ionic-native/dialogs';
+
+/**
+ * Generated class for the ProfileclientPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ProfileclientPage = (function () {
+    function ProfileclientPage(navCtrl, alertCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.alertCtrl = alertCtrl;
+        this.navParams = navParams;
+    }
+    ProfileclientPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ProfileclientPage');
+    };
+    ProfileclientPage.prototype.showBox = function (index) {
+        var placeholder;
+        switch (index) {
+            case 0:
+                placeholder = "First Name";
+                break;
+            case 1:
+                placeholder = "Last Name";
+                break;
+            case 2:
+                placeholder = "E-mail";
+                break;
+            case 3:
+                placeholder = "New Password";
+                break;
+            case 4:
+                placeholder = "Confirm Password";
+                break;
+        }
+        var alert = this.alertCtrl.create({
+            inputs: [
+                {
+                    name: 'clickedsumtn',
+                    placeholder: placeholder
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: function (data) {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Ok',
+                    handler: function (data) {
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
+    ProfileclientPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-profileclient',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/'<ion-header>\n  <ion-navbar ion-fixed align-title="center"  color="light">\n      <button ion-button left menuToggle>\n            <ion-icon class="icon ion-home custom-icon" name="menu"></ion-icon>\n      </button>\n\n      <ion-title>  \n        My Profile\n      </ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n\n  <div class="topdiv" >\n\n    <div style="width: 100%; height: 7vh;"></div>\n\n    <div class="user-photo">\n      <img src="../../assets/one.jpg">\n    </div>\n\n  </div>\n\n  <div>\n    <ion-list>\n      \n          <ion-item-divider>\n              Account Info \n              <ion-icon color="white" name="ios-create-outline" \n              \n              item-right></ion-icon>   \n          </ion-item-divider>\n\n          <ion-item detail-push (click)="showBox(0)">\n              Edung\n              <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   \n          </ion-item>\n\n          <ion-item detail-push (click)="showBox(1)">\n              Divinefavour \n              <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   \n          </ion-item>\n\n          <ion-item detail-push (click)="showBox(2)">\n              lawrenedickson49@gmail.com \n              <ion-icon color="white" name="ios-mail-outline" item-left></ion-icon>   \n          </ion-item>\n\n\n\n\n\n          <ion-item-divider>\n              Change Password\n              <ion-icon color="white" name="ios-create-outline" \n              item-right></ion-icon>   \n          </ion-item-divider>\n\n          <ion-item detail-push (click)="showBox(3)">\n              New Password\n              <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   \n          </ion-item>\n\n          <ion-item detail-push (click)="showBox(4)">\n              Confirm Password \n              <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   \n          </ion-item>\n\n\n          <ion-item-divider>\n              Connected Accounts\n              <ion-icon color="white" name="ios-create-outline" \n              item-right></ion-icon>   \n          </ion-item-divider>\n\n    </ion-list>\n  </div>\n\n  \n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+    ], ProfileclientPage);
+    return ProfileclientPage;
+}());
+
+//# sourceMappingURL=profileclient.js.map
 
 /***/ }),
 
@@ -1650,11 +2376,50 @@ var ModalPage = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JoblistPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var JoblistPage = (function () {
+    function JoblistPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    JoblistPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad JoblistPage');
+    };
+    JoblistPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-joblist',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/joblist/joblist.html"*/'<ion-header>\n    <ion-navbar color="light">\n      <ion-buttons start>\n        <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      </ion-buttons>\n  \n     \n    <ion-buttons end>\n        <button ion-button icon-only (click)="openSecondModal()">\n            <ion-icon  class="icon ion-home custom-icon" name="ios-search"></ion-icon>\n        </button>\n    </ion-buttons>\n      <ion-title>Find Jobs</ion-title>\n    </ion-navbar>\n  </ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item>\n      <div style="margin-top: 10px">\n          <h2 style="color: #287AB0">Developer needed for creating site</h2>\n          <ion-icon style="position: absolute; z-index: 5;\n          top: 20px;\n           right: 20px;" name="ios-heart-outline"></ion-icon>\n      </div>\n      \n      <br>\n      <div><b>Hourly</b> - Just now</div>\n      <br>\n      <div>\n          <p>Skill Level</p>\n          <p>Intermediate</p>\n          <p style="position: absolute; z-index: 5;\n          bottom: 20px;\n           right: 20px;">3/5(19)</p>\n      </div>\n      \n      <div></div>\n    </ion-item>\n\n    <ion-item>\n        <div style="margin-top: 10px">\n            <h2 style="color: #287AB0">Developer needed for creating site</h2>\n            <ion-icon style="position: absolute; z-index: 5;\n            top: 20px;\n             right: 20px;" name="ios-heart-outline"></ion-icon>\n        </div>\n        \n        <br>\n        <div><b>Hourly</b> - 5minutes ago</div>\n        <br>\n        <div>\n            <p>Skill Level</p>\n            <p>Intermediate</p>\n            <p style="position: absolute; z-index: 5;\n            bottom: 20px;\n             right: 20px;">3/5(19)</p>\n        </div>\n        \n        <div></div>\n      </ion-item>\n\n      <ion-item>\n          <div style="margin-top: 10px">\n              <h2 style="color: #287AB0">Developer needed for creating site</h2>\n              <ion-icon style="position: absolute; z-index: 5;\n              top: 20px;\n               right: 20px;" name="ios-heart-outline"></ion-icon>\n          </div>\n          \n          <br>\n          <div><b>Hourly</b> - 19minutes ago</div>\n          <br>\n          <div>\n              <p>Skill Level</p>\n              <p>Intermediate</p>\n              <p style="position: absolute; z-index: 5;\n              bottom: 20px;\n               right: 20px;">3/5(19)</p>\n          </div>\n          \n          <div></div>\n        </ion-item>\n\n        <ion-item>\n            <div style="margin-top: 10px">\n                <h2 style="color: #287AB0">Developer needed for creating site</h2>\n                <ion-icon style="position: absolute; z-index: 5;\n                top: 20px;\n                 right: 20px;" name="ios-heart-outline"></ion-icon>\n            </div>\n            \n            <br>\n            <div><b>Hourly</b> - 19minutes ago</div>\n            <br>\n            <div>\n                <p>Skill Level</p>\n                <p>Intermediate</p>\n                <p style="position: absolute; z-index: 5;\n                bottom: 20px;\n                 right: 20px;">3/5(19)</p>\n            </div>\n            \n            <div></div>\n          </ion-item>\n\n          <ion-item>\n              <div style="margin-top: 10px">\n                  <h2 style="color: #287AB0">Developer needed for creating site</h2>\n                  <ion-icon style="position: absolute; z-index: 5;\n                  top: 20px;\n                   right: 20px;" name="ios-heart-outline"></ion-icon>\n              </div>\n              \n              <br>\n              <div><b>Hourly</b> - 19minutes ago</div>\n              <br>\n              <div>\n                  <p>Skill Level</p>\n                  <p>Intermediate</p>\n                  <p style="position: absolute; z-index: 5;\n                  bottom: 20px;\n                   right: 20px;">3/5(19)</p>\n              </div>\n              \n              <div></div>\n            </ion-item>\n\n            <ion-item>\n                <div style="margin-top: 10px">\n                    <h2 style="color: #287AB0">Developer needed for creating site</h2>\n                    <ion-icon style="position: absolute; z-index: 5;\n                    top: 20px;\n                     right: 20px;" name="ios-heart-outline"></ion-icon>\n                </div>\n                \n                <br>\n                <div><b>Hourly</b> - 19minutes ago</div>\n                <br>\n                <div>\n                    <p>Skill Level</p>\n                    <p>Intermediate</p>\n                    <p style="position: absolute; z-index: 5;\n                    bottom: 20px;\n                     right: 20px;">3/5(19)</p>\n                </div>\n                \n                <div></div>\n              </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/joblist/joblist.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+    ], JoblistPage);
+    return JoblistPage;
+}());
+
+//# sourceMappingURL=joblist.js.map
+
+/***/ }),
+
+/***/ 287:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserProfilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_user_service__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_user_service__ = __webpack_require__(49);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1743,13 +2508,13 @@ var UserProfilePage = (function () {
 
 /***/ }),
 
-/***/ 287:
+/***/ 288:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(293);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -1757,47 +2522,47 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 292:
+/***/ 293:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(250);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pipes_capitalize_capitalize__ = __webpack_require__(617);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_chat__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_chat_chat_service__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_custom_logged_header_custom_logged_header_component__ = __webpack_require__(618);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_message_box_message_box_component__ = __webpack_require__(619);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_message_message_service__ = __webpack_require__(275);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__app_component__ = __webpack_require__(620);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_progress_bar_progress_bar_component__ = __webpack_require__(621);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_signup_signup__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_signin_signin__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_user_info_user_info_component__ = __webpack_require__(622);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_user_menu_user_menu_component__ = __webpack_require__(623);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_user_user_service__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_user_profile_user_profile__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pipes_capitalize_capitalize__ = __webpack_require__(618);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_chat__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_chat_chat_service__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_custom_logged_header_custom_logged_header_component__ = __webpack_require__(619);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_message_box_message_box_component__ = __webpack_require__(621);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_message_message_service__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__app_component__ = __webpack_require__(622);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_progress_bar_progress_bar_component__ = __webpack_require__(623);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_signup_signup__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_signin_signin__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_user_info_user_info_component__ = __webpack_require__(624);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_user_menu_user_menu_component__ = __webpack_require__(625);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_user_user_service__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_user_profile_user_profile__ = __webpack_require__(287);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_tabsclient_tabsclient__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_tabsfreelancer_tabsfreelancer__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_jobs_jobs__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_profilefreelancer_profilefreelancer__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_freelancers_freelancers__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_shortlisted_shortlisted__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_jobs_jobs__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_profilefreelancer_profilefreelancer__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_freelancers_freelancers__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_shortlisted_shortlisted__ = __webpack_require__(278);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_chats_chats__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_setupprofile_setupprofile__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_modal_modal__ = __webpack_require__(285);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_detailsfreelancer_detailsfreelancer__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_postjob_postjob__ = __webpack_require__(624);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_profileclient_profileclient__ = __webpack_require__(625);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_joblist_joblist__ = __webpack_require__(626);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_setupprofile_setupprofile__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_modal_modal__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_detailsfreelancer_detailsfreelancer__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_postjob_postjob__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_profileclient_profileclient__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_joblist_joblist__ = __webpack_require__(286);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1934,7 +2699,7 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 43:
+/***/ 49:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1943,8 +2708,8 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(88);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -2067,7 +2832,7 @@ var UserService = (function (_super) {
 
 /***/ }),
 
-/***/ 617:
+/***/ 618:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2107,16 +2872,16 @@ var CapitalizePipe = (function () {
 
 /***/ }),
 
-/***/ 618:
+/***/ 619:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomLoggedHeaderComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__base_component__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user_model__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__base_component__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user_model__ = __webpack_require__(156);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -2176,13 +2941,33 @@ var CustomLoggedHeaderComponent = (function (_super) {
 
 /***/ }),
 
-/***/ 619:
+/***/ 620:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Chat; });
+var Chat = (function () {
+    // não passa no construtor pq esse $key é gerado automaticamente no firebase e ia dar conflito na hora de criar o chat
+    function Chat(lastMessage, timeStamp, title, photo) {
+        this.lastMessage = lastMessage;
+        this.timeStamp = timeStamp;
+        this.title = title;
+        this.photo = photo;
+    }
+    return Chat;
+}());
+
+//# sourceMappingURL=chat.model.js.map
+
+/***/ }),
+
+/***/ 621:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MessageBoxComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_message_model__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_message_model__ = __webpack_require__(275);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2229,23 +3014,24 @@ var MessageBoxComponent = (function () {
 
 /***/ }),
 
-/***/ 620:
+/***/ 622:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(250);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_signin_signin__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_signin_signin__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabsfreelancer_tabsfreelancer__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_postjob_postjob__ = __webpack_require__(624);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__ = __webpack_require__(625);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_joblist_joblist__ = __webpack_require__(626);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_postjob_postjob__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_joblist_joblist__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_profilefreelancer_profilefreelancer__ = __webpack_require__(283);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2255,6 +3041,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -2277,7 +3064,8 @@ var MyApp = (function () {
                 userService.currentUser.subscribe(function (user) {
                     _this.currentUser = user;
                     if (user.userType == "recruiter") {
-                        _this.rootPage = __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__["a" /* TabsclientPage */];
+                        // this.rootPage = TabsclientPage;
+                        _this.rootPage = __WEBPACK_IMPORTED_MODULE_12__pages_profilefreelancer_profilefreelancer__["a" /* ProfilefreelancerPage */];
                         _this.pages = [
                             { title: 'Home', icon: 'ios-home', component: __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__["a" /* TabsclientPage */], pageName: 'GotopremiumPage', index: 1 },
                             { title: 'Profile', icon: 'ios-person', component: __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__["a" /* ProfileclientPage */], pageName: 'GotopremiumPage', index: 0 },
@@ -2329,7 +3117,7 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 621:
+/***/ 623:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2365,13 +3153,13 @@ var ProgressBarComponent = (function () {
 
 /***/ }),
 
-/***/ 622:
+/***/ 624:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserInfoComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_user_model__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_user_model__ = __webpack_require__(156);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2408,17 +3196,17 @@ var UserInfoComponent = (function () {
 
 /***/ }),
 
-/***/ 623:
+/***/ 625:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserMenuComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_component__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user_model__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_user_profile_user_profile__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_component__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user_model__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_user_profile_user_profile__ = __webpack_require__(287);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -2477,206 +3265,48 @@ var UserMenuComponent = (function (_super) {
 
 /***/ }),
 
-/***/ 624:
+/***/ 88:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostjobPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__(357);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
 
 
-
-var PostjobPage = (function () {
-    function PostjobPage(navCtrl, keyboard) {
-        this.navCtrl = navCtrl;
-        this.keyboard = keyboard;
-        this.list = ['Android',
-            'UI',
-            'Photoshop',
-            'Excel',
-            'Xcode',
-            'Ionic',
-            'Visual Studio',
-            'React',
-            'Vue',
-            'iOS',
-            'Swift',
-            'Project Management',
-            'Swift'];
-        this.input = '';
-        this.countries = [];
+var extractError = function (error) {
+    // In a real world app, we might use a remote logging infrastructure
+    var errMsg;
+    if (error instanceof __WEBPACK_IMPORTED_MODULE_0__angular_http__["c" /* Response */]) {
+        var body = error.json() || '';
+        var err = body.error || JSON.stringify(body);
+        errMsg = error.status + " - " + (error.statusText || '') + " " + err;
     }
-    PostjobPage.prototype.add = function (item) {
-        this.input = item;
-        this.countries = [];
+    else {
+        errMsg = error.message ? error.message : error.toString();
+    }
+    console.error(errMsg);
+    return errMsg;
+};
+var BaseService = (function () {
+    function BaseService() {
+    }
+    // exportando classe abstrata que não pode ser instanciada. Ela só precisa ser HERDADA por outras classes!
+    BaseService.prototype.handlePromiseError = function (error) {
+        return Promise.reject(extractError(error));
     };
-    PostjobPage.prototype.removeFocus = function () {
-        this.keyboard.close();
+    BaseService.prototype.handleObservableError = function (error) {
+        return __WEBPACK_IMPORTED_MODULE_1_rxjs__["Observable"].throw(extractError(error));
     };
-    PostjobPage.prototype.search = function () {
-        var _this = this;
-        if (!this.input.trim().length || !this.keyboard.isOpen()) {
-            this.countries = [];
-            return;
-        }
-        this.countries = this.list.filter(function (item) { return item.toUpperCase().includes(_this.input.toUpperCase()); });
-    };
-    PostjobPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-postjob',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/postjob/postjob.html"*/'<ion-header>\n  <ion-navbar color="light">\n    <ion-buttons start>\n      <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    </ion-buttons>\n\n    <ion-title>Post Job</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content class="maincontent">\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n            <ion-card>\n                <p style="margin-top: 20px" align="center"><ion-icon name="ios-clock-outline"></ion-icon></p>\n                <p style="margin-top: 5px"  align="center">Short term or part time work</p>\n                <p style="margin-top: 5px" align="center">Less than 30 hrs/week</p>\n                <p style="margin-bottom: 20px; margin-top: 5px" align="center">Less than 3 months</p>\n            </ion-card>\n        </ion-col>\n\n        <ion-col>\n            <ion-card>\n                <p style="margin-top: 20px" align="center"><ion-icon name="ios-calendar-outline"></ion-icon></p>\n                <p style="margin-top: 5px"  align="center">Dedicated Long term work</p>\n                <p style="margin-top: 5px" align="center">More than 30 hrs/week</p>\n                <p style="margin-bottom: 20px; margin-top: 5px" align="center">3+ months</p>\n            </ion-card>\n        </ion-col>\n      </ion-row>\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 7px; ">Enter the title of your job post here</b>\n      <ion-row class="itemclass">\n          <ion-input\n            placeholder="Enter Job Description Here" required></ion-input>  \n      </ion-row>\n\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 1px; ">\n        Job Category</b>\n      \n      <ion-card>\n            <ion-item>\n                    <ion-label style="opacity: 0.7; margin: 10px">Select Job Category </ion-label>\n                    <ion-select>\n                      <ion-option>Function QA</ion-option>\n                      <ion-option>Translation</ion-option>\n                      <ion-option>Writing</ion-option>\n                      <ion-option>IT & Networking</ion-option>\n                      <ion-option>Accounting & Consulting</ion-option>\n                      <ion-option>Data Science & Analytics</ion-option>\n                      <ion-option>Legal</ion-option>\n                      <ion-option>Sales & Marketing</ion-option>\n                      <ion-option>Web, Mobile & Software Dev</ion-option>\n                      <ion-option>Engineering & Architecture</ion-option>\n                      <ion-option>Admin Support</ion-option>\n                      <ion-option>Design & Creative</ion-option>\n                      <ion-option>Customer Service</ion-option>\n                      \n                    </ion-select>\n            </ion-item>\n         \n      </ion-card>\n\n\n\n       <!-- <ion-auto-complete [dataProvider]="CompletetestProvider"></ion-auto-complete>-->\n\n\n    <br>\n      <b style="margin-left: 13px; margin-bottom: 7px; ">\nAdd skill tags</b>\n\n    <div class="autocomplete">\n      <ion-item>\n        <ion-input  type="text" \n                    placeholder="Search skill tags here"\n                    [(ngModel)]="input"\n                    (ionChange)="search()"\n                    (ionBlur)="removeFocus()"\n                    debounce=500></ion-input>\n      </ion-item>\n      <ion-list>\n        <ion-item *ngFor="let country of countries" (click)="add(country)">\n          {{country}}\n        </ion-item>\n      </ion-list>\n</div>\n\n<div class="skillsdiv">\n  <ion-grid>\n    <ion-row *ngFor="let row of grid">\n      <ion-col width-50 *ngFor="let skill of row">\n        {{skill}}\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</div>\n\n\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 7px; ">Enter job description here</b>\n      <ion-row class="item2class">\n          <ion-input\n            placeholder="Enter Job Description Here" required></ion-input>  \n      </ion-row>\n\n\n      <br>\n      <b style="margin-left: 11px; margin-bottom: 1px; ">Additional project files</b>\n      <ion-card>\n          <ion-item>\n              <ion-icon name="add" item-left></ion-icon>\n                <div>Upload</div>                \n          </ion-item>\n      </ion-card>\n\n      <br>\n    <button ion-button color="testone" style="margin-left: 50px; margin-right: 50px">\n        Post Job\n    </button>    \n    <br>  \n\n    </ion-grid>  \n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/postjob/postjob.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */]])
-    ], PostjobPage);
-    return PostjobPage;
+    return BaseService;
 }());
 
-//# sourceMappingURL=postjob.js.map
+//# sourceMappingURL=base.service.js.map
 
 /***/ }),
 
-/***/ 625:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileclientPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-// import { Dialogs } from '@ionic-native/dialogs';
-
-/**
- * Generated class for the ProfileclientPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ProfileclientPage = (function () {
-    function ProfileclientPage(navCtrl, alertCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.alertCtrl = alertCtrl;
-        this.navParams = navParams;
-    }
-    ProfileclientPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ProfileclientPage');
-    };
-    ProfileclientPage.prototype.showBox = function (index) {
-        var placeholder;
-        switch (index) {
-            case 0:
-                placeholder = "First Name";
-                break;
-            case 1:
-                placeholder = "Last Name";
-                break;
-            case 2:
-                placeholder = "E-mail";
-                break;
-            case 3:
-                placeholder = "New Password";
-                break;
-            case 4:
-                placeholder = "Confirm Password";
-                break;
-        }
-        var alert = this.alertCtrl.create({
-            inputs: [
-                {
-                    name: 'clickedsumtn',
-                    placeholder: placeholder
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: function (data) {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Ok',
-                    handler: function (data) {
-                    }
-                }
-            ]
-        });
-        alert.present();
-    };
-    ProfileclientPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-profileclient',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/'<ion-header>\n  <ion-navbar ion-fixed align-title="center"  color="light">\n      <button ion-button left menuToggle>\n            <ion-icon class="icon ion-home custom-icon" name="menu"></ion-icon>\n      </button>\n\n      <ion-title>  \n        My Profile\n      </ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n\n  <div class="topdiv" >\n\n    <div style="width: 100%; height: 7vh;"></div>\n\n    <div class="user-photo">\n      <img src="../../assets/one.jpg">\n    </div>\n\n  </div>\n\n  <div>\n    <ion-list>\n      \n          <ion-item-divider>\n              Account Info \n              <ion-icon color="white" name="ios-create-outline" \n              \n              item-right></ion-icon>   \n          </ion-item-divider>\n\n          <ion-item detail-push (click)="showBox(0)">\n              Edung\n              <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   \n          </ion-item>\n\n          <ion-item detail-push (click)="showBox(1)">\n              Divinefavour \n              <ion-icon color="white" name="ios-contact-outline" item-left></ion-icon>   \n          </ion-item>\n\n          <ion-item detail-push (click)="showBox(2)">\n              lawrenedickson49@gmail.com \n              <ion-icon color="white" name="ios-mail-outline" item-left></ion-icon>   \n          </ion-item>\n\n\n\n\n\n          <ion-item-divider>\n              Change Password\n              <ion-icon color="white" name="ios-create-outline" \n              item-right></ion-icon>   \n          </ion-item-divider>\n\n          <ion-item detail-push (click)="showBox(3)">\n              New Password\n              <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   \n          </ion-item>\n\n          <ion-item detail-push (click)="showBox(4)">\n              Confirm Password \n              <ion-icon color="white" name="ios-lock-outline" item-left></ion-icon>   \n          </ion-item>\n\n\n          <ion-item-divider>\n              Connected Accounts\n              <ion-icon color="white" name="ios-create-outline" \n              item-right></ion-icon>   \n          </ion-item-divider>\n\n    </ion-list>\n  </div>\n\n  \n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/profileclient/profileclient.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
-    ], ProfileclientPage);
-    return ProfileclientPage;
-}());
-
-//# sourceMappingURL=profileclient.js.map
-
-/***/ }),
-
-/***/ 626:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JoblistPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var JoblistPage = (function () {
-    function JoblistPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-    }
-    JoblistPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad JoblistPage');
-    };
-    JoblistPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-joblist',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/joblist/joblist.html"*/'<ion-header>\n    <ion-navbar color="light">\n      <ion-buttons start>\n        <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      </ion-buttons>\n  \n     \n    <ion-buttons end>\n        <button ion-button icon-only (click)="openSecondModal()">\n            <ion-icon  class="icon ion-home custom-icon" name="ios-search"></ion-icon>\n        </button>\n    </ion-buttons>\n      <ion-title>Find Jobs</ion-title>\n    </ion-navbar>\n  </ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item>\n      <div style="margin-top: 10px">\n          <h2 style="color: #287AB0">Developer needed for creating site</h2>\n          <ion-icon style="position: absolute; z-index: 5;\n          top: 20px;\n           right: 20px;" name="ios-heart-outline"></ion-icon>\n      </div>\n      \n      <br>\n      <div><b>Hourly</b> - Just now</div>\n      <br>\n      <div>\n          <p>Skill Level</p>\n          <p>Intermediate</p>\n          <p style="position: absolute; z-index: 5;\n          bottom: 20px;\n           right: 20px;">3/5(19)</p>\n      </div>\n      \n      <div></div>\n    </ion-item>\n\n    <ion-item>\n        <div style="margin-top: 10px">\n            <h2 style="color: #287AB0">Developer needed for creating site</h2>\n            <ion-icon style="position: absolute; z-index: 5;\n            top: 20px;\n             right: 20px;" name="ios-heart-outline"></ion-icon>\n        </div>\n        \n        <br>\n        <div><b>Hourly</b> - 5minutes ago</div>\n        <br>\n        <div>\n            <p>Skill Level</p>\n            <p>Intermediate</p>\n            <p style="position: absolute; z-index: 5;\n            bottom: 20px;\n             right: 20px;">3/5(19)</p>\n        </div>\n        \n        <div></div>\n      </ion-item>\n\n      <ion-item>\n          <div style="margin-top: 10px">\n              <h2 style="color: #287AB0">Developer needed for creating site</h2>\n              <ion-icon style="position: absolute; z-index: 5;\n              top: 20px;\n               right: 20px;" name="ios-heart-outline"></ion-icon>\n          </div>\n          \n          <br>\n          <div><b>Hourly</b> - 19minutes ago</div>\n          <br>\n          <div>\n              <p>Skill Level</p>\n              <p>Intermediate</p>\n              <p style="position: absolute; z-index: 5;\n              bottom: 20px;\n               right: 20px;">3/5(19)</p>\n          </div>\n          \n          <div></div>\n        </ion-item>\n\n        <ion-item>\n            <div style="margin-top: 10px">\n                <h2 style="color: #287AB0">Developer needed for creating site</h2>\n                <ion-icon style="position: absolute; z-index: 5;\n                top: 20px;\n                 right: 20px;" name="ios-heart-outline"></ion-icon>\n            </div>\n            \n            <br>\n            <div><b>Hourly</b> - 19minutes ago</div>\n            <br>\n            <div>\n                <p>Skill Level</p>\n                <p>Intermediate</p>\n                <p style="position: absolute; z-index: 5;\n                bottom: 20px;\n                 right: 20px;">3/5(19)</p>\n            </div>\n            \n            <div></div>\n          </ion-item>\n\n          <ion-item>\n              <div style="margin-top: 10px">\n                  <h2 style="color: #287AB0">Developer needed for creating site</h2>\n                  <ion-icon style="position: absolute; z-index: 5;\n                  top: 20px;\n                   right: 20px;" name="ios-heart-outline"></ion-icon>\n              </div>\n              \n              <br>\n              <div><b>Hourly</b> - 19minutes ago</div>\n              <br>\n              <div>\n                  <p>Skill Level</p>\n                  <p>Intermediate</p>\n                  <p style="position: absolute; z-index: 5;\n                  bottom: 20px;\n                   right: 20px;">3/5(19)</p>\n              </div>\n              \n              <div></div>\n            </ion-item>\n\n            <ion-item>\n                <div style="margin-top: 10px">\n                    <h2 style="color: #287AB0">Developer needed for creating site</h2>\n                    <ion-icon style="position: absolute; z-index: 5;\n                    top: 20px;\n                     right: 20px;" name="ios-heart-outline"></ion-icon>\n                </div>\n                \n                <br>\n                <div><b>Hourly</b> - 19minutes ago</div>\n                <br>\n                <div>\n                    <p>Skill Level</p>\n                    <p>Intermediate</p>\n                    <p style="position: absolute; z-index: 5;\n                    bottom: 20px;\n                     right: 20px;">3/5(19)</p>\n                </div>\n                \n                <div></div>\n              </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/joblist/joblist.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
-    ], JoblistPage);
-    return JoblistPage;
-}());
-
-//# sourceMappingURL=joblist.js.map
-
-/***/ }),
-
-/***/ 67:
+/***/ 93:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2685,8 +3315,8 @@ var JoblistPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(88);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -2768,369 +3398,7 @@ var ChatService = (function (_super) {
 
 //# sourceMappingURL=chat.service.js.map
 
-/***/ }),
-
-/***/ 89:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__(356);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
-
-
-var extractError = function (error) {
-    // In a real world app, we might use a remote logging infrastructure
-    var errMsg;
-    if (error instanceof __WEBPACK_IMPORTED_MODULE_0__angular_http__["c" /* Response */]) {
-        var body = error.json() || '';
-        var err = body.error || JSON.stringify(body);
-        errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-    }
-    else {
-        errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return errMsg;
-};
-var BaseService = (function () {
-    function BaseService() {
-    }
-    // exportando classe abstrata que não pode ser instanciada. Ela só precisa ser HERDADA por outras classes!
-    BaseService.prototype.handlePromiseError = function (error) {
-        return Promise.reject(extractError(error));
-    };
-    BaseService.prototype.handleObservableError = function (error) {
-        return __WEBPACK_IMPORTED_MODULE_1_rxjs__["Observable"].throw(extractError(error));
-    };
-    return BaseService;
-}());
-
-//# sourceMappingURL=base.service.js.map
-
-/***/ }),
-
-/***/ 94:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_message_model__ = __webpack_require__(274);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_message_message_service__ = __webpack_require__(275);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_firebase__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-var ChatPage = (function () {
-    function ChatPage(authService, chatService, messageService, navCtrl, navParams, userService) {
-        this.authService = authService;
-        this.chatService = chatService;
-        this.messageService = messageService;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.userService = userService;
-    }
-    ChatPage.prototype.ionViewCanEnter = function () {
-        return this.authService.authenticated;
-    };
-    ChatPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.recipient = this.navParams.get('recipientUser'); //recebe de parametro na home.ts
-        this.pageTitle = this.recipient.name;
-        this.userService.currentUser
-            .first()
-            .subscribe(function (currentUser) {
-            _this.sender = currentUser;
-            // pega os chats para o remetente e para o destinatário
-            _this.chat1 = _this.chatService.getDeepChat(_this.sender.$key, _this.recipient.$key);
-            _this.chat2 = _this.chatService.getDeepChat(_this.recipient.$key, _this.sender.$key);
-            // atualizar a foto do usuário
-            if (_this.recipient.photo) {
-                _this.chat1
-                    .first()
-                    .subscribe(function (chat) {
-                    _this.chatService.updatePhoto(_this.chat1, chat.photo, _this.recipient.photo);
-                });
-            }
-            var doSubscription = function () {
-                _this.messages.subscribe(function (messages) {
-                    _this.scrollToBottom();
-                });
-            };
-            var updateSenderReadMessage = function () {
-                _this.messages.subscribe(function (message) {
-                    message.filter(function (msg) {
-                        if ((msg.read == false || msg.read == undefined) && msg.userId != _this.sender.$key) {
-                            _this.messageService.setMessageRead(_this.sender.$key, _this.recipient.$key, msg.$key);
-                        }
-                    });
-                });
-            };
-            var updateRecipientReadMessage = function () {
-                _this.messages.subscribe(function (message) {
-                    message.filter(function (msg) {
-                        if ((msg.read == false || msg.read == undefined) && msg.userId != _this.sender.$key) {
-                            _this.messageService.setMessageRead(_this.recipient.$key, _this.sender.$key, msg.$key);
-                        }
-                    });
-                });
-            };
-            //  busca de mensagens do chat: (tem q ver se a ordem do usuario está certa
-            //  as vezes o remetente (id 1) na vdd é o destinatário (id 2) e vice-versa
-            _this.messages = _this.messageService.getMessages(_this.sender.$key, _this.recipient.$key);
-            //verifica se há alguma mensagem nesse tipo de chat
-            _this.messages
-                .first()
-                .subscribe(function (messageList) {
-                if (messageList.length === 0) {
-                    //faz a busca com os ID's trocados de ordem
-                    _this.messages = _this.messageService.getMessages(_this.recipient.$key, _this.sender.$key);
-                    updateRecipientReadMessage();
-                }
-                else {
-                    // se o NÓ do chat é o ID do sender primeiro dps o do recipient
-                    updateSenderReadMessage();
-                }
-                doSubscription();
-            });
-        });
-    };
-    ChatPage.prototype.sendMessage = function (newMessage) {
-        var _this = this;
-        if (newMessage) {
-            var currentTimeStamp_1 = __WEBPACK_IMPORTED_MODULE_7_firebase___default.a.database.ServerValue.TIMESTAMP;
-            this.messageService
-                .create(// parametros do metodo create
-            new __WEBPACK_IMPORTED_MODULE_4__models_message_model__["a" /* Message */](this.sender.$key, newMessage, currentTimeStamp_1, false), this.messages).then(function () {
-                //atualiza lastMessage e timestamp dos 2 chats
-                _this.chat1
-                    .update({
-                    lastMessage: newMessage,
-                    timeStamp: currentTimeStamp_1
-                });
-                _this.chat2
-                    .update({
-                    lastMessage: newMessage,
-                    timeStamp: currentTimeStamp_1
-                });
-            });
-        }
-    };
-    // parametro opcional de duração da animação
-    ChatPage.prototype.scrollToBottom = function (duration) {
-        var _this = this;
-        setTimeout(function () {
-            if (_this.content) {
-                _this.content.scrollToBottom(duration || 300);
-            }
-        }, 50);
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */])
-    ], ChatPage.prototype, "content", void 0);
-    ChatPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-chat',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/chat/chat.html"*/'<ion-header>\n\n  <custom-logged-header [title]="pageTitle" [user]="recipient"></custom-logged-header>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list no-lines>\n    <!-- <ion-item *ngFor="let message of messages | async">{{message.text}}</ion-item> -->\n    <message-box *ngFor="let message of messages | async" [message]="message" \n                  [isFromSender]="(message.userId == sender.$key)" [alreadyRead]="(message.read)">\n                  <!-- Se o id do usuario (sender.$key) for igual ao id do dono da mensagem (message.userId)\n                       então vai retornar true -->\n    </message-box>\n  </ion-list>\n</ion-content>\n\n<ion-footer>\n\n  <ion-toolbar>\n    <ion-item no-lines>\n      <ion-input type="text" (keyup.enter)="sendMessage(newMessage); newMessage = \'\' "\n                 placeholder="Type here..." [(ngModel)]="newMessage">\n                 <!-- key up detecta se pressionar enter ativa a funçao de enviar msg -->\n      </ion-input>\n      <button ion-button item-right (click)="sendMessage(newMessage); newMessage = \'\' "> \n        <!-- dps q chamar a funçao, o new message vira uma string vazia-->\n        <ion-icon name="send"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-toolbar>\n\n</ion-footer>'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/chat/chat.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__["a" /* ChatService */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_message_message_service__["a" /* MessageService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__["a" /* UserService */]])
-    ], ChatPage);
-    return ChatPage;
-}());
-
-//# sourceMappingURL=chat.js.map
-
-/***/ }),
-
-/***/ 95:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__ = __webpack_require__(282);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-// import { User } from '../../models/user.model';
-
-
-// import { emailValidator } from '../../validators/email';
-var SignupPage = (function () {
-    function SignupPage(alertCtrl, authService, // service de criação de usuario de autenticação
-        formBuilder, // para trabalhar com formulário
-        loadingCtrl, // mostrar o loading
-        navCtrl, navParams, userService) {
-        this.alertCtrl = alertCtrl;
-        this.authService = authService;
-        this.formBuilder = formBuilder;
-        this.loadingCtrl = loadingCtrl;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.userService = userService;
-        this.checkingEmail = true;
-        this.firedata = __WEBPACK_IMPORTED_MODULE_2_firebase_app__["database"]();
-        this.cardbackgroundr = "#ffffff";
-        this.cardbackgroundf = "#ffffff";
-        this.cardtextf = "#000000";
-        this.cardtextr = "#000000";
-        // variavel com a expressão regular de validação de e-mail
-        // let emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-        var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        this.signupForm = this.formBuilder.group({
-            // o primeiro item do array é o valor inicial, o segundo é o array de validators
-            name: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(3)]],
-            username: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(3)]],
-            // email: ['', Validators.compose([Validators.required, Validators.pattern(emailRegex)]), emailValidator.checkEmail ], // validator tem q ser obrigatório E seguir a expressão regular do emailRegex
-            email: ['', __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].pattern(emailRegex)])],
-            password: ['', [__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(6)]],
-        });
-    }
-    SignupPage.prototype.isRecruiter = function () {
-        this.userType = "recruiter";
-        this.cardbackgroundr = "#006096";
-        this.cardbackgroundf = "#ffffff";
-        this.cardtextr = "#ffffff";
-        this.cardtextf = "#000000";
-    };
-    SignupPage.prototype.isFreelancer = function () {
-        this.userType = "freelancer";
-        this.cardbackgroundf = "#006096";
-        this.cardbackgroundr = "#ffffff";
-        this.cardtextf = "#ffffff";
-        this.cardtextr = "#000000";
-    };
-    SignupPage.prototype.onSubmit = function () {
-        var _this = this;
-        var loading = this.showLoading();
-        // para pegar os atributos do formulario: this.signupForm.value (retorna o objeto inteiro)
-        // let user: User = this.signupForm.value; não é mais do tipo User pq tirou a senha do model
-        var formUser = this.signupForm.value;
-        var username = formUser.username;
-        var fullname = formUser.name;
-        console.log(fullname);
-        this.userService.userExists(username) // retorna um observable
-            .first() // recebe o primeiro valor recebido pelo observable, o resto será ignorado
-            .subscribe(function (userExists) {
-            if (!userExists) {
-                _this.authService.createAuthUser({
-                    // cria o objeto de usuario para criar um usuário de autenticação no service Auth
-                    email: formUser.email,
-                    password: formUser.password,
-                }).then(function (authState) {
-                    //depois de cadastrar o usuário de autenticação:
-                    // pra não ter que passar o atributo PASSWORD do objeto formUser, tem q deletar este atributo
-                    delete formUser.password;
-                    // tem q adicionar o uid (id Único) criado na criação de usuário de autenticação (funçao createAuthUser)
-                    // formUser.uid = authState.auth.uid;
-                    var userUniqueId = authState.auth.uid;
-                    _this.userService.create(formUser, userUniqueId) // cria usuario (nó no database)
-                        .then(function () {
-                        _this.firedata.ref('/users').child(userUniqueId).update({
-                            userType: _this.userType,
-                            uid: userUniqueId
-                        }).then(function () {
-                            loading.dismiss();
-                            if (_this.userType == "freelancer") {
-                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__["a" /* SetupprofilePage */], { "fullname": fullname });
-                            }
-                            else if (_this.userType == "recruiter") {
-                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__["a" /* TabsclientPage */]);
-                            }
-                        });
-                    }).catch(function (error) {
-                        loading.dismiss();
-                        _this.showAlert(error);
-                    });
-                }).catch(function (error) {
-                    loading.dismiss();
-                    _this.showAlert(error);
-                });
-            }
-            else {
-                _this.showAlert("Username already in use! Pick another one.");
-                loading.dismiss();
-            }
-        });
-    };
-    SignupPage.prototype.showLoading = function () {
-        var loading = this.loadingCtrl.create({
-            content: "Please wait..."
-        });
-        loading.present();
-        return loading;
-    };
-    SignupPage.prototype.showAlert = function (message) {
-        this.alertCtrl.create({
-            message: message,
-            buttons: ['Ok']
-        }).present();
-    };
-    SignupPage.prototype.alreadyaMember = function () {
-        this.navCtrl.pop();
-    };
-    SignupPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-signup',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/signup/signup.html"*/'<ion-content padding>\n    <p align="center">\n        <img src="../../assets/icon.png" height="110">\n        <!-- <b style="font-size: 35px; color: white">ech-Tinder</b> -->\n      </p>\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">\n  \n    <ion-item [class.invalid]="!signupForm.controls.name.valid && signupForm.controls.name.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.name.valid && signupForm.controls.name.dirty" name="person" item-left color="primary"></ion-icon>\n      <ion-input type="text" placeholder="Name" formControlName="name"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.name.valid  && signupForm.controls.name.dirty">\n      <p class="invalid-icon" *ngIf="signupForm.controls.name.errors.required">Please enter a valid name.</p>\n      <p class="invalid-icon" *ngIf="signupForm.controls.name.errors.minlength">Your name must have at least 3 characteres</p>\n    </ion-item>\n    \n    <ion-item [class.invalid]="!signupForm.controls.username.valid && signupForm.controls.username.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.username.valid && signupForm.controls.username.dirty" name="at" item-left color="primary"></ion-icon>\n      <ion-input type="text" placeholder="Username" formControlName="username"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.username.valid  && (signupForm.controls.username.dirty || signupForm.controls.username.touched)">\n      <p class="invalid-icon" *ngIf="signupForm.controls.username.errors.required">Please enter a valid username.</p>\n      <p class="invalid-icon" *ngIf="signupForm.controls.username.errors.minlength">Your username must have at least 3 characteres.</p>\n    </ion-item>\n    \n    <ion-item [class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.email.valid && signupForm.controls.email.dirty" name="mail" item-left color="primary"></ion-icon>\n      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input> \n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.email.valid && (signupForm.controls.email.dirty || signupForm.controls.email.touched)">\n      <p class="invalid-icon" *ngIf="!signupForm.controls.email.pending">Please enter a valid email.</p>\n    </ion-item>\n    <!-- <ion-item *ngIf="signupForm.controls.email.pending">\n      <p>Checking email</p>\n    </ion-item> -->\n    \n    <ion-item [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">\n      <ion-icon [class.invalid-icon]="!signupForm.controls.password.valid && signupForm.controls.password.dirty" name="lock" item-left color="primary"></ion-icon>\n      <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="!signupForm.controls.password.valid  && (signupForm.controls.password.dirty || signupForm.controls.password.touched)">\n      <p class="invalid-icon" *ngIf="signupForm.controls.password.errors.required">Please enter a valid password.</p>\n      <p class="invalid-icon" *ngIf="signupForm.controls.password.errors.minlength">Your password must have at least 6 characters.</p>\n    </ion-item>\n    <br>\n\n    <h5 style="text-align: center; opacity: 0.7">I want to be a </h5>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n            <ion-card\n            [ngStyle]="{\'background-color\': cardbackgroundr}"\n            (click)="isRecruiter()"\n             class="choosecard">\n             <h2 \n            [ngStyle]="{\'color\': cardtextr}"             \n             style="opacity: 0.8">Recruiter\n            </h2></ion-card>\n        </ion-col>\n        <ion-col>\n            <ion-card \n            [ngStyle]="{\'background-color\': cardbackgroundf}"            \n            (click)="isFreelancer()" class="choosecard">\n            <h2\n            [ngStyle]="{\'color\': cardtextf}"             \n             style="opacity: 0.8">Freelancer</h2>\n          </ion-card>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    \n\n    <button ion-button block class="btn success" type="submit" [disabled]="signupForm.invalid">Create Account</button>\n    <!-- se o signupForm for inválido, vai retornar TRUE e DESABILITAR o botão -->\n    \n  </form>\n\n  <button ion-button \n  (click)="linkedinsignup()"\n  block style="border-radius: 5px;\n  margin-top: 20px;\n  margin-left: 30px;\n  width: 75vw;" \n  color="testone">\n  <ion-icon style="font-size: 30px;\n   position: absolute; left: 20px;" name="logo-linkedin"></ion-icon>                    \n   Join now with LinkedIn!\n</button>\n\n<br>\n    <div>\n      <!-- <b class="forgotp">F?</b> -->\n      <b class="joinn" (click)="alreadyaMember()">ALREADY A MEMBER?</b>\n    </div>\n\n  \n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/signup/signup.html"*/,
-        }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__["a" /* UserService */]) === "function" && _g || Object])
-    ], SignupPage);
-    return SignupPage;
-    var _a, _b, _c, _d, _e, _f, _g;
-}());
-
-//# sourceMappingURL=signup.js.map
-
 /***/ })
 
-},[287]);
+},[288]);
 //# sourceMappingURL=main.js.map

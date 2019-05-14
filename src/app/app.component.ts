@@ -14,6 +14,7 @@ import { TabsfreelancerPage } from '../pages/tabsfreelancer/tabsfreelancer';
 import { PostjobPage } from '../pages/postjob/postjob';
 import { ProfileclientPage } from '../pages/profileclient/profileclient';
 import { JoblistPage } from '../pages/joblist/joblist';
+import { ProfilefreelancerPage } from '../pages/profilefreelancer/profilefreelancer';
 // import { FirebaseAuthState } from 'angularfire2/auth';
 
 @Component({
@@ -40,7 +41,9 @@ export class MyApp {
         userService.currentUser.subscribe((user: any) => {
           this.currentUser = user;
           if (user.userType == "recruiter") {
-            this.rootPage = TabsclientPage;
+            // this.rootPage = TabsclientPage;
+            this.rootPage = ProfilefreelancerPage;
+            
             this.pages = [
               { title: 'Home', icon: 'ios-home', component: TabsclientPage, pageName: 'GotopremiumPage', index: 1 },
               { title: 'Profile', icon: 'ios-person', component: ProfileclientPage, pageName: 'GotopremiumPage', index: 0 },

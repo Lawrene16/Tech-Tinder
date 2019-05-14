@@ -15,7 +15,10 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-            <ion-card>
+            <ion-card
+            class="cardss"
+            (click)="setShort()"            
+            [ngStyle]="{'outline-color': isshortcolor}">
                 <p style="margin-top: 20px" align="center"><ion-icon name="ios-clock-outline"></ion-icon></p>
                 <p style="margin-top: 5px"  align="center">Short term or part time work</p>
                 <p style="margin-top: 5px" align="center">Less than 30 hrs/week</p>
@@ -24,7 +27,9 @@
         </ion-col>
 
         <ion-col>
-            <ion-card>
+            <ion-card class="cardss"
+            (click)="setLong()"
+            [ngStyle]="{'outline-color': islongcolor}">
                 <p style="margin-top: 20px" align="center"><ion-icon name="ios-calendar-outline"></ion-icon></p>
                 <p style="margin-top: 5px"  align="center">Dedicated Long term work</p>
                 <p style="margin-top: 5px" align="center">More than 30 hrs/week</p>
@@ -37,7 +42,8 @@
       <b style="margin-left: 11px; margin-bottom: 7px; ">Enter the title of your job post here</b>
       <ion-row class="itemclass">
           <ion-input
-            placeholder="Enter Job Description Here" required></ion-input>  
+          [(ngModel)]="title"
+            placeholder="Enter Job Title Here" required></ion-input>  
       </ion-row>
 
 
@@ -48,7 +54,7 @@
       <ion-card>
             <ion-item>
                     <ion-label style="opacity: 0.7; margin: 10px">Select Job Category </ion-label>
-                    <ion-select>
+                    <ion-select [(ngModel)]="category">
                       <ion-option>Function QA</ion-option>
                       <ion-option>Translation</ion-option>
                       <ion-option>Writing</ion-option>
@@ -72,7 +78,7 @@
 
        <!-- <ion-auto-complete [dataProvider]="CompletetestProvider"></ion-auto-complete>-->
 
-
+<!-- 
     <br>
       <b style="margin-left: 13px; margin-bottom: 7px; ">
 Add skill tags</b>
@@ -91,7 +97,7 @@ Add skill tags</b>
           {{country}}
         </ion-item>
       </ion-list>
-</div>
+</div> -->
 
 <div class="skillsdiv">
   <ion-grid>
@@ -107,23 +113,23 @@ Add skill tags</b>
 
       <br>
       <b style="margin-left: 11px; margin-bottom: 7px; ">Enter job description here</b>
-      <ion-row class="item2class">
-          <ion-input
-            placeholder="Enter Job Description Here" required></ion-input>  
+      <ion-row class="item2class" >
+          <ion-textarea
+            #myInput id="myInput" rows="1" maxLength="500" (keyup)="resize()" [(ngModel)]="description"
+            placeholder="Enter Job Description Here" required></ion-textarea>  
       </ion-row>
 
 
       <br>
-      <b style="margin-left: 11px; margin-bottom: 1px; ">Additional project files</b>
-      <ion-card>
-          <ion-item>
-              <ion-icon name="add" item-left></ion-icon>
-                <div>Upload</div>                
-          </ion-item>
-      </ion-card>
+      <b style="margin-left: 11px; margin-bottom: 1px; ">Project URL</b>
+      <ion-row class="itemclass">
+        <ion-input
+        [(ngModel)]="url"
+          placeholder="Enter URL to project files here" required></ion-input>  
+    </ion-row>
 
       <br>
-    <button ion-button color="testone" style="margin-left: 50px; margin-right: 50px">
+    <button ion-button color="testone" (click)="postJob()" style="margin-left: 50px; margin-right: 50px">
         Post Job
     </button>    
     <br>  

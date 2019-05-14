@@ -9,6 +9,8 @@ page-postjob {
       }
   }
 
+
+
   ion-list {
       position: absolute;
       width: 95%;
@@ -55,7 +57,7 @@ page-postjob {
     }
 
     .item2class{
-      height: 21vh;
+      height: auto;
       align-content: center;
       margin-left: 10px;
       outline-color: black;
@@ -69,4 +71,11 @@ page-postjob {
       outline-style: auto;
       outline-color: #c3c3c3;
   }
+
+  .cardss{
+        border: 1px;
+      outline-style: auto;
+    //   outline-color: red;
+    // background-color: aqua;
+      }
 }
