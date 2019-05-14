@@ -84,4 +84,8 @@
     <plugin name="cordova-plugin-geolocation" spec="4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
+    <plugin name="cordova-plugin-linkedin" spec="1.2.1">
+        <variable name="APP_ID" value="7744odfo1v6u9k" />
+    </plugin>
+    <engine name="browser" spec="5.0.4" />
 </widget>

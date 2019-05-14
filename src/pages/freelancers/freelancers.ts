@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, Content } from 'ionic-angular';
 import { DetailsfreelancerPage } from '../detailsfreelancer/detailsfreelancer';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
@@ -16,6 +16,7 @@ declare var google: any;
 export class FreelancersPage {
 
   @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('mymap') mapscroller: Content;
 
   map: any;
   firedata = firebase.database();
@@ -79,6 +80,10 @@ export class FreelancersPage {
   applyFilters(){
     this.shouldshowfilterlist = false;
     this.searchedtag = "";
+    // this.loadMap();
+    this.mapscroller.scrollToTop().then(() =>{
+      this.loadMap();
+    });
   }
 
 

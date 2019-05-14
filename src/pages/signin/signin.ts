@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import firebase from 'firebase';
 import { AuthService } from '../../providers/auth/auth.service';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
-
+import { LinkedIn, LinkedInLoginScopes } from '@ionic-native/linkedin';
 import { SignupPage } from './../signup/signup';
 
 @Component({
@@ -15,11 +15,13 @@ export class SigninPage {
 
   firedata = firebase.database();
   signinForm: FormGroup;
+  scopes: LinkedInLoginScopes[] = ['r_basicprofile', 'r_emailaddress', 'rw_company_admin', 'w_share'];
 
   constructor(
     public alertCtrl: AlertController,
     public authService: AuthService,
     public formBuilder: FormBuilder,
+    private linkedin: LinkedIn,
     public loadingCtrl: LoadingController,
     public navCtrl: NavController,
     public navParams: NavParams
@@ -34,6 +36,14 @@ export class SigninPage {
 
   onSignUp(): void {
     this.navCtrl.push(SignupPage);
+  }
+
+  linkedinlogin() {
+    this.linkedin.login(this.scopes, true)
+      .then(() => console.log('Logged in!'))
+      .catch(e => console.log('Error logging in', e));
+
+      // console.log("dlkjdlfkjdf");
   }
 
   onSubmit(): void {

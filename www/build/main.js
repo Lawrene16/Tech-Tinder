@@ -8,9 +8,9 @@ webpackJsonp([0],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_message_model__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_message_message_service__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_message_model__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_message_message_service__ = __webpack_require__(278);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_firebase__);
@@ -169,7 +169,8 @@ var ChatPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__signup_signup__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_linkedin__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__signup_signup__ = __webpack_require__(154);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -186,15 +187,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var SigninPage = (function () {
-    function SigninPage(alertCtrl, authService, formBuilder, loadingCtrl, navCtrl, navParams) {
+    function SigninPage(alertCtrl, authService, formBuilder, linkedin, loadingCtrl, navCtrl, navParams) {
         this.alertCtrl = alertCtrl;
         this.authService = authService;
         this.formBuilder = formBuilder;
+        this.linkedin = linkedin;
         this.loadingCtrl = loadingCtrl;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.firedata = __WEBPACK_IMPORTED_MODULE_3_firebase___default.a.database();
+        this.scopes = ['r_basicprofile', 'r_emailaddress', 'rw_company_admin', 'w_share'];
         var emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
         this.signinForm = this.formBuilder.group({
             email: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern(emailRegex)])],
@@ -202,7 +206,13 @@ var SigninPage = (function () {
         });
     }
     SigninPage.prototype.onSignUp = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__signup_signup__["a" /* SignupPage */]);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_7__signup_signup__["a" /* SignupPage */]);
+    };
+    SigninPage.prototype.linkedinlogin = function () {
+        this.linkedin.login(this.scopes, true)
+            .then(function () { return console.log('Logged in!'); })
+            .catch(function (e) { return console.log('Error logging in', e); });
+        // console.log("dlkjdlfkjdf");
     };
     SigninPage.prototype.onSubmit = function () {
         var _this = this;
@@ -246,11 +256,12 @@ var SigninPage = (function () {
     };
     SigninPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-signin',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/signin/signin.html"*/'<ion-content padding>\n\n    <br>\n    <br>\n    <br>\n    <p align="center">\n      <img src="../../assets/icon.png" height="110">\n      <!-- <b style="font-size: 35px; color: white">ech-Tinder</b> -->\n    </p>\n  \n    <br>\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="signinForm">\n\n      <ion-item class="listt">\n          <ion-label floating>E-mail or Phone</ion-label>\n          <ion-input type="email" formControlName="email"></ion-input>\n        </ion-item>\n    \n        <ion-item class="listt">\n            <ion-label floating>Password</ion-label>\n            <ion-input type="password" formControlName="password"></ion-input>          \n        </ion-item>\n\n        <button  ion-button type="submit" [disabled]="signinForm.invalid" class="btn success">SIGN IN</button>\n    \n  </form>\n  \n    <!-- <p align="center"><b >Or</b></p> -->\n    <button ion-button \n    block style="border-radius: 5px;\n    margin-top: 20px;\n    margin-left: 30px;\n    width: 75vw;" \n    color="testone">\n    <ion-icon style="font-size: 30px;\n     position: absolute; left: 20px;" name="logo-linkedin"></ion-icon>                    \n     Sign in with LinkedIn\n</button>\n\n    <br>\n    <br>\n    \n    <div>\n      <b class="forgotp">FORGOT PASSWORD?</b>\n      <b class="joinn" (click)="onSignUp()">JOIN NOW</b>\n    </div>\n\n\n\n\n\n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/signin/signin.html"*/,
+            selector: 'page-signin',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/signin/signin.html"*/'<ion-content padding>\n\n    <br>\n    <br>\n    <br>\n    <p align="center">\n      <img src="../../assets/icon.png" height="110">\n      <!-- <b style="font-size: 35px; color: white">ech-Tinder</b> -->\n    </p>\n  \n    <br>\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="signinForm">\n\n      <ion-item class="listt">\n          <ion-label floating>E-mail or Phone</ion-label>\n          <ion-input type="email" formControlName="email"></ion-input>\n        </ion-item>\n    \n        <ion-item class="listt">\n            <ion-label floating>Password</ion-label>\n            <ion-input type="password" formControlName="password"></ion-input>          \n        </ion-item>\n\n        <button  ion-button type="submit" [disabled]="signinForm.invalid" class="btn success">SIGN IN</button>\n    \n  </form>\n  \n    <!-- <p align="center"><b >Or</b></p> -->\n    <button ion-button \n    (click)="linkedinlogin()"\n    block style="border-radius: 5px;\n    margin-top: 20px;\n    margin-left: 30px;\n    width: 75vw;" \n    color="testone">\n    <ion-icon style="font-size: 30px;\n     position: absolute; left: 20px;" name="logo-linkedin"></ion-icon>                    \n     Sign in with LinkedIn\n</button>\n\n    <br>\n    <br>\n    \n    <div>\n      <b class="forgotp">FORGOT PASSWORD?</b>\n      <b class="joinn" (click)="onSignUp()">JOIN NOW</b>\n    </div>\n\n\n\n\n\n</ion-content>\n'/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/signin/signin.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
             __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_6__ionic_native_linkedin__["a" /* LinkedIn */],
             __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
@@ -272,13 +283,13 @@ var SigninPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__ = __webpack_require__(96);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -449,7 +460,7 @@ var SignupPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_chat_chat_service__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_chat_chat_service__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_user_service__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__chat_chat__ = __webpack_require__(152);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -513,8 +524,8 @@ var ChatsPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsfreelancerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__chats_chats__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__jobs_jobs__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profilefreelancer_profilefreelancer__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__jobs_jobs__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profilefreelancer_profilefreelancer__ = __webpack_require__(285);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -667,7 +678,7 @@ webpackEmptyAsyncContext.id = 208;
 
 /***/ }),
 
-/***/ 276:
+/***/ 277:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -686,7 +697,7 @@ var Message = (function () {
 
 /***/ }),
 
-/***/ 277:
+/***/ 278:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -695,8 +706,8 @@ var Message = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_base_service__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_base_service__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2__ = __webpack_require__(84);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -760,7 +771,7 @@ var MessageService = (function (_super) {
 
 /***/ }),
 
-/***/ 278:
+/***/ 279:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -808,7 +819,7 @@ var baseComponent = (function () {
 
 /***/ }),
 
-/***/ 279:
+/***/ 280:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -847,19 +858,19 @@ var ShortlistedPage = (function () {
 
 /***/ }),
 
-/***/ 280:
+/***/ 281:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FreelancersPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__detailsfreelancer_detailsfreelancer__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__detailsfreelancer_detailsfreelancer__ = __webpack_require__(282);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(253);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__ = __webpack_require__(96);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -925,8 +936,13 @@ var FreelancersPage = (function () {
         return this.authService.authenticated;
     };
     FreelancersPage.prototype.applyFilters = function () {
+        var _this = this;
         this.shouldshowfilterlist = false;
         this.searchedtag = "";
+        // this.loadMap();
+        this.mapscroller.scrollToTop().then(function () {
+            _this.loadMap();
+        });
     };
     FreelancersPage.prototype.search = function () {
         var _this = this;
@@ -1157,21 +1173,25 @@ var FreelancersPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('map'),
         __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _a || Object)
     ], FreelancersPage.prototype, "mapElement", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('mymap'),
+        __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */]) === "function" && _b || Object)
+    ], FreelancersPage.prototype, "mapscroller", void 0);
     FreelancersPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-freelancers',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/freelancers/freelancers.html"*/'<ion-content class="maincontent">\n\n    <ion-fab *ngIf="!shouldshowfilterlist" bottom right (click)="increase()" >\n      <button color="testone" ion-fab mini>\n        <ion-icon name="md-add"></ion-icon>\n      </button>\n    </ion-fab>\n  \n    <ion-input *ngIf="!shouldshowfilterlist" [(ngModel)]="radius" (keypress)="eventHandler($event.keyCode)" class="bottominput" bottom right placeholder="radius">\n        \n    </ion-input>\n  \n    <ion-fab *ngIf="!shouldshowfilterlist" bottom (click)="reduce()" right style="margin-right: 85px">\n      <button color="testone" ion-fab mini>\n        <ion-icon name="md-remove"></ion-icon>\n      </button>\n    </ion-fab>\n  \n  \n  \n    <div *ngIf="!shouldshowfilterlist"  #map id="map">\n    </div>\n  \n    <ion-list *ngIf="shouldshowskillslist" class="floatinglist">\n      <ion-item *ngFor="let country of countries" (click)="add(country, i)">\n        {{country}}\n        <ion-icon item-right name="ios-options-outline"></ion-icon>\n      </ion-item>\n    </ion-list>\n  \n    <ion-card class="headercard">\n      <ion-grid style="height: 50px;">\n        <ion-row>\n          <ion-col col-1>\n          <ion-icon menuToggle style="font-size: 27px; margin-left: 10px; float: left;" \n          name="menu" color="dark"></ion-icon>                      \n          </ion-col>\n  \n          <ion-col>\n            <ion-searchbar animated="true" \n            placeholder="Find talents close to you"\n            (ionChange)="search()"\n            (click)="showit()"\n            (ionBlur)="removeFocus()"\n            debounce=500 [(ngModel)]="searchedtag" class="mysearch"></ion-searchbar>\n              <!-- <ion-searchbar animated="true" \n          placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>-->\n          </ion-col>\n  \n  \n          <ion-col col-1>\n          <ion-icon style="font-size: 27px; \n          margin-right: 10px; float: right;" name="notifications-outline" \n          color="dark"></ion-icon>                                  \n          </ion-col>\n        </ion-row>\n      </ion-grid>\n  \n      <!-- <div>\n          <ion-icon style="font-size: 27px; margin-left: 20px; float: left; margin-top: 1px; margin-bottom: 1px;" name="menu" color="dark"></ion-icon>            \n          <ion-searchbar style="float: left;" animated="true" \n          placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>\n      </div>\n           -->\n      </ion-card>\n\n    <ion-list *ngIf="shouldshowfilterlist" class="floatinglist">\n        <ion-list-header>Minimum Salary</ion-list-header>\n        <ion-list radio-group [(ngModel)]="minimumsalary">\n            <ion-item>\n              <ion-label>$10k - $20k / year</ion-label>\n              <ion-radio value="10to20"></ion-radio>\n            </ion-item>\n            <ion-item>\n              <ion-label>$21k - 30k / year</ion-label>\n              <ion-radio value="21to30"></ion-radio>\n            </ion-item>\n            <ion-item>\n              <ion-label>$31k - $50k / year</ion-label>\n              <ion-radio value="31to50"></ion-radio>\n            </ion-item>\n            <ion-item>\n              <ion-label>$51k+</ion-label>\n              <ion-radio value="51plus"></ion-radio>\n            </ion-item>\n          </ion-list>\n          <ion-list-header>Hourly Rate</ion-list-header>\n          <ion-list radio-group [(ngModel)]="minimumsalary">\n              <ion-item>\n                <ion-label>Any hourly rate</ion-label>\n                <ion-radio value="10to20"></ion-radio>\n              </ion-item>\n              <ion-item>\n                <ion-label>$10 and below</ion-label>\n                <ion-radio value="10below"></ion-radio>\n              </ion-item>\n              <ion-item>\n                <ion-label>$11 to $30</ion-label>\n                <ion-radio value="11to30"></ion-radio>\n              </ion-item>\n              <ion-item>\n                <ion-label>$31 to $60</ion-label>\n                <ion-radio value="30to60"></ion-radio>\n              </ion-item>\n              <ion-item>\n                  <ion-label>$61 and above</ion-label>\n                  <ion-radio value="61plus"></ion-radio>\n                </ion-item>\n            </ion-list>\n\n            <p align="center"><button (click)="applyFilters()" ion-button >Apply filters</button></p>\n    </ion-list>  \n  \n    <!-- <p align="center" id="intitalstring">\n      <b>Edung Divinefavour</b><br>\n      Hourly rate - $12.5/hr<br>\n      Skills - Android | UI/UX\n      <br>\n      <br>\n      <button onclick="Window.myComponent.viewProfile()" class="contactbtn">View Profile</button>\n    </p> -->\n  </ion-content>\n  '/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/freelancers/freelancers.html"*/,
+            selector: 'page-freelancers',template:/*ion-inline-start:"/home/lawrene/Tech-Tinder/src/pages/freelancers/freelancers.html"*/'<ion-content #mymap class="maincontent">\n\n    <ion-fab *ngIf="!shouldshowfilterlist" bottom right (click)="increase()" >\n      <button color="testone" ion-fab mini>\n        <ion-icon name="md-add"></ion-icon>\n      </button>\n    </ion-fab>\n  \n    <ion-input *ngIf="!shouldshowfilterlist" [(ngModel)]="radius" (keypress)="eventHandler($event.keyCode)" class="bottominput" bottom right placeholder="radius">\n        \n    </ion-input>\n  \n    <ion-fab *ngIf="!shouldshowfilterlist" bottom (click)="reduce()" right style="margin-right: 85px">\n      <button color="testone" ion-fab mini>\n        <ion-icon name="md-remove"></ion-icon>\n      </button>\n    </ion-fab>\n  \n  \n  \n    <div *ngIf="!shouldshowfilterlist"  #map id="map">\n    </div>\n  \n    <ion-list *ngIf="shouldshowskillslist" class="floatinglist">\n      <ion-item *ngFor="let country of countries" (click)="add(country, i)">\n        {{country}}\n        <ion-icon item-right name="ios-options-outline"></ion-icon>\n      </ion-item>\n    </ion-list>\n  \n    <ion-card class="headercard">\n      <ion-grid style="height: 50px;">\n        <ion-row>\n          <ion-col col-1>\n          <ion-icon menuToggle style="font-size: 27px; margin-left: 10px; float: left;" \n          name="menu" color="dark"></ion-icon>                      \n          </ion-col>\n  \n          <ion-col>\n            <ion-searchbar animated="true" \n            placeholder="Find talents close to you"\n            (ionChange)="search()"\n            (click)="showit()"\n            (ionBlur)="removeFocus()"\n            debounce=500 [(ngModel)]="searchedtag" class="mysearch"></ion-searchbar>\n              <!-- <ion-searchbar animated="true" \n          placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>-->\n          </ion-col>\n  \n  \n          <ion-col col-1>\n          <ion-icon style="font-size: 27px; \n          margin-right: 10px; float: right;" name="notifications-outline" \n          color="dark"></ion-icon>                                  \n          </ion-col>\n        </ion-row>\n      </ion-grid>\n  \n      <!-- <div>\n          <ion-icon style="font-size: 27px; margin-left: 20px; float: left; margin-top: 1px; margin-bottom: 1px;" name="menu" color="dark"></ion-icon>            \n          <ion-searchbar style="float: left;" animated="true" \n          placeholder="Search for talents close to you" class="mysearchbar"></ion-searchbar>\n      </div>\n           -->\n      </ion-card>\n\n    <ion-list *ngIf="shouldshowfilterlist" class="floatinglist">\n        <ion-list-header>Minimum Salary</ion-list-header>\n        <ion-list radio-group [(ngModel)]="minimumsalary">\n            <ion-item>\n              <ion-label>$10k - $20k / year</ion-label>\n              <ion-radio value="10to20"></ion-radio>\n            </ion-item>\n            <ion-item>\n              <ion-label>$21k - 30k / year</ion-label>\n              <ion-radio value="21to30"></ion-radio>\n            </ion-item>\n            <ion-item>\n              <ion-label>$31k - $50k / year</ion-label>\n              <ion-radio value="31to50"></ion-radio>\n            </ion-item>\n            <ion-item>\n              <ion-label>$51k+</ion-label>\n              <ion-radio value="51plus"></ion-radio>\n            </ion-item>\n          </ion-list>\n          <ion-list-header>Hourly Rate</ion-list-header>\n          <ion-list radio-group [(ngModel)]="minimumsalary">\n              <ion-item>\n                <ion-label>Any hourly rate</ion-label>\n                <ion-radio value="10to20"></ion-radio>\n              </ion-item>\n              <ion-item>\n                <ion-label>$10 and below</ion-label>\n                <ion-radio value="10below"></ion-radio>\n              </ion-item>\n              <ion-item>\n                <ion-label>$11 to $30</ion-label>\n                <ion-radio value="11to30"></ion-radio>\n              </ion-item>\n              <ion-item>\n                <ion-label>$31 to $60</ion-label>\n                <ion-radio value="30to60"></ion-radio>\n              </ion-item>\n              <ion-item>\n                  <ion-label>$61 and above</ion-label>\n                  <ion-radio value="61plus"></ion-radio>\n                </ion-item>\n            </ion-list>\n\n            <p align="center"><button (click)="applyFilters()" ion-button >Apply filters</button></p>\n    </ion-list>  \n  \n    <!-- <p align="center" id="intitalstring">\n      <b>Edung Divinefavour</b><br>\n      Hourly rate - $12.5/hr<br>\n      Skills - Android | UI/UX\n      <br>\n      <br>\n      <button onclick="Window.myComponent.viewProfile()" class="contactbtn">View Profile</button>\n    </p> -->\n  </ion-content>\n  '/*ion-inline-end:"/home/lawrene/Tech-Tinder/src/pages/freelancers/freelancers.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__["a" /* AuthService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _g || Object])
+        __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Keyboard */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth_service__["a" /* AuthService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _h || Object])
     ], FreelancersPage);
     return FreelancersPage;
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
 }());
 
 //# sourceMappingURL=freelancers.js.map
 
 /***/ }),
 
-/***/ 281:
+/***/ 282:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1179,9 +1199,9 @@ var FreelancersPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_user_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_chat_model__ = __webpack_require__(621);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_chat_model__ = __webpack_require__(622);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__chat_chat__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_firebase__);
@@ -1287,7 +1307,7 @@ var DetailsfreelancerPage = (function () {
 
 /***/ }),
 
-/***/ 282:
+/***/ 283:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1556,14 +1576,14 @@ var SetupprofilePage = (function () {
 
 /***/ }),
 
-/***/ 283:
+/***/ 284:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JobsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(96);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1755,7 +1775,7 @@ var JobsPage = (function () {
 
 /***/ }),
 
-/***/ 284:
+/***/ 285:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2060,7 +2080,7 @@ var ProfilefreelancerPage = (function () {
 
 /***/ }),
 
-/***/ 285:
+/***/ 286:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2069,7 +2089,7 @@ var ProfilefreelancerPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabsclient_tabsclient__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabsclient_tabsclient__ = __webpack_require__(95);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2229,7 +2249,7 @@ var PostjobPage = (function () {
 
 /***/ }),
 
-/***/ 286:
+/***/ 287:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2369,7 +2389,7 @@ var ProfileclientPage = (function () {
 
 /***/ }),
 
-/***/ 287:
+/***/ 288:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2408,7 +2428,7 @@ var JoblistPage = (function () {
 
 /***/ }),
 
-/***/ 288:
+/***/ 289:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2505,20 +2525,6 @@ var UserProfilePage = (function () {
 
 /***/ }),
 
-/***/ 289:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(290);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(294);
-
-
-Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
-//# sourceMappingURL=main.js.map
-
-/***/ }),
-
 /***/ 29:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2529,7 +2535,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(89);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -2605,7 +2611,21 @@ var AuthService = (function (_super) {
 
 /***/ }),
 
-/***/ 294:
+/***/ 290:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(295);
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 295:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2617,36 +2637,37 @@ var AuthService = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(248);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pipes_capitalize_capitalize__ = __webpack_require__(619);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_chat__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_chat_chat_service__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_custom_logged_header_custom_logged_header_component__ = __webpack_require__(620);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_message_box_message_box_component__ = __webpack_require__(622);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_message_message_service__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__app_component__ = __webpack_require__(623);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_progress_bar_progress_bar_component__ = __webpack_require__(624);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_signup_signup__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_signin_signin__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_user_info_user_info_component__ = __webpack_require__(625);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_user_menu_user_menu_component__ = __webpack_require__(626);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_user_user_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_user_profile_user_profile__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_tabsclient_tabsclient__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_tabsfreelancer_tabsfreelancer__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_jobs_jobs__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_profilefreelancer_profilefreelancer__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_freelancers_freelancers__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_shortlisted_shortlisted__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_chats_chats__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_setupprofile_setupprofile__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_modal_modal__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_detailsfreelancer_detailsfreelancer__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_postjob_postjob__ = __webpack_require__(285);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_profileclient_profileclient__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_joblist_joblist__ = __webpack_require__(287);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__ionic_native_geolocation__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_linkedin__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_auth_auth_service__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pipes_capitalize_capitalize__ = __webpack_require__(620);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_chat_chat__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_chat_chat_service__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_custom_logged_header_custom_logged_header_component__ = __webpack_require__(621);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_message_box_message_box_component__ = __webpack_require__(623);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_message_message_service__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__app_component__ = __webpack_require__(624);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_progress_bar_progress_bar_component__ = __webpack_require__(625);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_signup_signup__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_signin_signin__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_user_info_user_info_component__ = __webpack_require__(626);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_user_menu_user_menu_component__ = __webpack_require__(627);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_user_user_service__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_user_profile_user_profile__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_tabsclient_tabsclient__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_tabsfreelancer_tabsfreelancer__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_jobs_jobs__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_profilefreelancer_profilefreelancer__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_freelancers_freelancers__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_shortlisted_shortlisted__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_chats_chats__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_setupprofile_setupprofile__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_modal_modal__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_detailsfreelancer_detailsfreelancer__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_postjob_postjob__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_profileclient_profileclient__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__pages_joblist_joblist__ = __webpack_require__(288);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__ionic_native_geolocation__ = __webpack_require__(96);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2661,6 +2682,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
  //importa o firebase app config
+
 
 
 
@@ -2707,36 +2729,36 @@ var AppModule = (function () {
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_9__pipes_capitalize_capitalize__["a" /* CapitalizePipe */],
-                __WEBPACK_IMPORTED_MODULE_10__pages_chat_chat__["a" /* ChatPage */],
-                __WEBPACK_IMPORTED_MODULE_12__components_custom_logged_header_custom_logged_header_component__["a" /* CustomLoggedHeaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__components_message_box_message_box_component__["a" /* MessageBoxComponent */],
-                __WEBPACK_IMPORTED_MODULE_15__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_16__components_progress_bar_progress_bar_component__["a" /* ProgressBarComponent */],
-                __WEBPACK_IMPORTED_MODULE_18__pages_signin_signin__["a" /* SigninPage */],
-                __WEBPACK_IMPORTED_MODULE_23__pages_tabsclient_tabsclient__["a" /* TabsclientPage */],
-                __WEBPACK_IMPORTED_MODULE_24__pages_tabsfreelancer_tabsfreelancer__["a" /* TabsfreelancerPage */],
-                __WEBPACK_IMPORTED_MODULE_25__pages_jobs_jobs__["a" /* JobsPage */],
-                __WEBPACK_IMPORTED_MODULE_33__pages_postjob_postjob__["a" /* PostjobPage */],
-                __WEBPACK_IMPORTED_MODULE_34__pages_profileclient_profileclient__["a" /* ProfileclientPage */],
-                __WEBPACK_IMPORTED_MODULE_27__pages_freelancers_freelancers__["a" /* FreelancersPage */],
-                __WEBPACK_IMPORTED_MODULE_28__pages_shortlisted_shortlisted__["a" /* ShortlistedPage */],
-                __WEBPACK_IMPORTED_MODULE_30__pages_setupprofile_setupprofile__["a" /* SetupprofilePage */],
-                __WEBPACK_IMPORTED_MODULE_35__pages_joblist_joblist__["a" /* JoblistPage */],
-                __WEBPACK_IMPORTED_MODULE_32__pages_detailsfreelancer_detailsfreelancer__["a" /* DetailsfreelancerPage */],
-                __WEBPACK_IMPORTED_MODULE_31__pages_modal_modal__["a" /* ModalPage */],
-                __WEBPACK_IMPORTED_MODULE_26__pages_profilefreelancer_profilefreelancer__["a" /* ProfilefreelancerPage */],
-                __WEBPACK_IMPORTED_MODULE_29__pages_chats_chats__["a" /* ChatsPage */],
-                __WEBPACK_IMPORTED_MODULE_17__pages_signup_signup__["a" /* SignupPage */],
-                __WEBPACK_IMPORTED_MODULE_19__components_user_info_user_info_component__["a" /* UserInfoComponent */],
-                __WEBPACK_IMPORTED_MODULE_20__components_user_menu_user_menu_component__["a" /* UserMenuComponent */],
-                __WEBPACK_IMPORTED_MODULE_22__pages_user_profile_user_profile__["a" /* UserProfilePage */]
+                __WEBPACK_IMPORTED_MODULE_10__pipes_capitalize_capitalize__["a" /* CapitalizePipe */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_chat_chat__["a" /* ChatPage */],
+                __WEBPACK_IMPORTED_MODULE_13__components_custom_logged_header_custom_logged_header_component__["a" /* CustomLoggedHeaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_14__components_message_box_message_box_component__["a" /* MessageBoxComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_17__components_progress_bar_progress_bar_component__["a" /* ProgressBarComponent */],
+                __WEBPACK_IMPORTED_MODULE_19__pages_signin_signin__["a" /* SigninPage */],
+                __WEBPACK_IMPORTED_MODULE_24__pages_tabsclient_tabsclient__["a" /* TabsclientPage */],
+                __WEBPACK_IMPORTED_MODULE_25__pages_tabsfreelancer_tabsfreelancer__["a" /* TabsfreelancerPage */],
+                __WEBPACK_IMPORTED_MODULE_26__pages_jobs_jobs__["a" /* JobsPage */],
+                __WEBPACK_IMPORTED_MODULE_34__pages_postjob_postjob__["a" /* PostjobPage */],
+                __WEBPACK_IMPORTED_MODULE_35__pages_profileclient_profileclient__["a" /* ProfileclientPage */],
+                __WEBPACK_IMPORTED_MODULE_28__pages_freelancers_freelancers__["a" /* FreelancersPage */],
+                __WEBPACK_IMPORTED_MODULE_29__pages_shortlisted_shortlisted__["a" /* ShortlistedPage */],
+                __WEBPACK_IMPORTED_MODULE_31__pages_setupprofile_setupprofile__["a" /* SetupprofilePage */],
+                __WEBPACK_IMPORTED_MODULE_36__pages_joblist_joblist__["a" /* JoblistPage */],
+                __WEBPACK_IMPORTED_MODULE_33__pages_detailsfreelancer_detailsfreelancer__["a" /* DetailsfreelancerPage */],
+                __WEBPACK_IMPORTED_MODULE_32__pages_modal_modal__["a" /* ModalPage */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_profilefreelancer_profilefreelancer__["a" /* ProfilefreelancerPage */],
+                __WEBPACK_IMPORTED_MODULE_30__pages_chats_chats__["a" /* ChatsPage */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_signup_signup__["a" /* SignupPage */],
+                __WEBPACK_IMPORTED_MODULE_20__components_user_info_user_info_component__["a" /* UserInfoComponent */],
+                __WEBPACK_IMPORTED_MODULE_21__components_user_menu_user_menu_component__["a" /* UserMenuComponent */],
+                __WEBPACK_IMPORTED_MODULE_23__pages_user_profile_user_profile__["a" /* UserProfilePage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_7_angularfire2__["b" /* AngularFireModule */].initializeApp(firebaseAppConfig, firebaseAuthConfig),
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* HttpModule */],
-                __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_15__app_component__["a" /* MyApp */], {
+                __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_16__app_component__["a" /* MyApp */], {
                     tabsHideOnSubPages: true,
                     // tabsLayout:'icon-left',
                     preloadModules: true
@@ -2747,34 +2769,35 @@ var AppModule = (function () {
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["d" /* IonicApp */]],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_10__pages_chat_chat__["a" /* ChatPage */],
-                __WEBPACK_IMPORTED_MODULE_15__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_30__pages_setupprofile_setupprofile__["a" /* SetupprofilePage */],
-                __WEBPACK_IMPORTED_MODULE_25__pages_jobs_jobs__["a" /* JobsPage */],
-                __WEBPACK_IMPORTED_MODULE_32__pages_detailsfreelancer_detailsfreelancer__["a" /* DetailsfreelancerPage */],
-                __WEBPACK_IMPORTED_MODULE_31__pages_modal_modal__["a" /* ModalPage */],
-                __WEBPACK_IMPORTED_MODULE_27__pages_freelancers_freelancers__["a" /* FreelancersPage */],
-                __WEBPACK_IMPORTED_MODULE_28__pages_shortlisted_shortlisted__["a" /* ShortlistedPage */],
-                __WEBPACK_IMPORTED_MODULE_35__pages_joblist_joblist__["a" /* JoblistPage */],
-                __WEBPACK_IMPORTED_MODULE_33__pages_postjob_postjob__["a" /* PostjobPage */],
-                __WEBPACK_IMPORTED_MODULE_34__pages_profileclient_profileclient__["a" /* ProfileclientPage */],
-                __WEBPACK_IMPORTED_MODULE_26__pages_profilefreelancer_profilefreelancer__["a" /* ProfilefreelancerPage */],
-                __WEBPACK_IMPORTED_MODULE_18__pages_signin_signin__["a" /* SigninPage */],
-                __WEBPACK_IMPORTED_MODULE_23__pages_tabsclient_tabsclient__["a" /* TabsclientPage */],
-                __WEBPACK_IMPORTED_MODULE_29__pages_chats_chats__["a" /* ChatsPage */],
-                __WEBPACK_IMPORTED_MODULE_24__pages_tabsfreelancer_tabsfreelancer__["a" /* TabsfreelancerPage */],
-                __WEBPACK_IMPORTED_MODULE_17__pages_signup_signup__["a" /* SignupPage */],
-                __WEBPACK_IMPORTED_MODULE_22__pages_user_profile_user_profile__["a" /* UserProfilePage */]
+                __WEBPACK_IMPORTED_MODULE_11__pages_chat_chat__["a" /* ChatPage */],
+                __WEBPACK_IMPORTED_MODULE_16__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_31__pages_setupprofile_setupprofile__["a" /* SetupprofilePage */],
+                __WEBPACK_IMPORTED_MODULE_26__pages_jobs_jobs__["a" /* JobsPage */],
+                __WEBPACK_IMPORTED_MODULE_33__pages_detailsfreelancer_detailsfreelancer__["a" /* DetailsfreelancerPage */],
+                __WEBPACK_IMPORTED_MODULE_32__pages_modal_modal__["a" /* ModalPage */],
+                __WEBPACK_IMPORTED_MODULE_28__pages_freelancers_freelancers__["a" /* FreelancersPage */],
+                __WEBPACK_IMPORTED_MODULE_29__pages_shortlisted_shortlisted__["a" /* ShortlistedPage */],
+                __WEBPACK_IMPORTED_MODULE_36__pages_joblist_joblist__["a" /* JoblistPage */],
+                __WEBPACK_IMPORTED_MODULE_34__pages_postjob_postjob__["a" /* PostjobPage */],
+                __WEBPACK_IMPORTED_MODULE_35__pages_profileclient_profileclient__["a" /* ProfileclientPage */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_profilefreelancer_profilefreelancer__["a" /* ProfilefreelancerPage */],
+                __WEBPACK_IMPORTED_MODULE_19__pages_signin_signin__["a" /* SigninPage */],
+                __WEBPACK_IMPORTED_MODULE_24__pages_tabsclient_tabsclient__["a" /* TabsclientPage */],
+                __WEBPACK_IMPORTED_MODULE_30__pages_chats_chats__["a" /* ChatsPage */],
+                __WEBPACK_IMPORTED_MODULE_25__pages_tabsfreelancer_tabsfreelancer__["a" /* TabsfreelancerPage */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_signup_signup__["a" /* SignupPage */],
+                __WEBPACK_IMPORTED_MODULE_23__pages_user_profile_user_profile__["a" /* UserProfilePage */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth_service__["a" /* AuthService */],
-                __WEBPACK_IMPORTED_MODULE_11__providers_chat_chat_service__["a" /* ChatService */],
-                __WEBPACK_IMPORTED_MODULE_36__ionic_native_geolocation__["a" /* Geolocation */],
+                __WEBPACK_IMPORTED_MODULE_9__providers_auth_auth_service__["a" /* AuthService */],
+                __WEBPACK_IMPORTED_MODULE_12__providers_chat_chat_service__["a" /* ChatService */],
+                __WEBPACK_IMPORTED_MODULE_37__ionic_native_geolocation__["a" /* Geolocation */],
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__["a" /* SplashScreen */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* IonicErrorHandler */] },
-                __WEBPACK_IMPORTED_MODULE_21__providers_user_user_service__["a" /* UserService */],
-                __WEBPACK_IMPORTED_MODULE_14__providers_message_message_service__["a" /* MessageService */],
+                __WEBPACK_IMPORTED_MODULE_22__providers_user_user_service__["a" /* UserService */],
+                __WEBPACK_IMPORTED_MODULE_15__providers_message_message_service__["a" /* MessageService */],
+                __WEBPACK_IMPORTED_MODULE_8__ionic_native_linkedin__["a" /* LinkedIn */]
             ]
         })
     ], AppModule);
@@ -2794,8 +2817,8 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(89);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -2918,7 +2941,7 @@ var UserService = (function (_super) {
 
 /***/ }),
 
-/***/ 619:
+/***/ 620:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2958,13 +2981,13 @@ var CapitalizePipe = (function () {
 
 /***/ }),
 
-/***/ 620:
+/***/ 621:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomLoggedHeaderComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__base_component__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__base_component__ = __webpack_require__(279);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth_service__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user_model__ = __webpack_require__(158);
@@ -3027,7 +3050,7 @@ var CustomLoggedHeaderComponent = (function (_super) {
 
 /***/ }),
 
-/***/ 621:
+/***/ 622:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3047,13 +3070,13 @@ var Chat = (function () {
 
 /***/ }),
 
-/***/ 622:
+/***/ 623:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MessageBoxComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_message_model__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_message_model__ = __webpack_require__(277);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3100,7 +3123,7 @@ var MessageBoxComponent = (function () {
 
 /***/ }),
 
-/***/ 623:
+/***/ 624:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3112,11 +3135,11 @@ var MessageBoxComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_signin_signin__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabsfreelancer_tabsfreelancer__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_postjob_postjob__ = __webpack_require__(285);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_joblist_joblist__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_postjob_postjob__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_joblist_joblist__ = __webpack_require__(288);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_firebase__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -3221,7 +3244,7 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 624:
+/***/ 625:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3257,7 +3280,7 @@ var ProgressBarComponent = (function () {
 
 /***/ }),
 
-/***/ 625:
+/***/ 626:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3300,7 +3323,7 @@ var UserInfoComponent = (function () {
 
 /***/ }),
 
-/***/ 626:
+/***/ 627:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3308,9 +3331,9 @@ var UserInfoComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_component__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__base_component__ = __webpack_require__(279);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user_model__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_user_profile_user_profile__ = __webpack_require__(288);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_user_profile_user_profile__ = __webpack_require__(289);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -3369,13 +3392,13 @@ var UserMenuComponent = (function (_super) {
 
 /***/ }),
 
-/***/ 88:
+/***/ 89:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__(358);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__(359);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
 
 
@@ -3410,7 +3433,7 @@ var BaseService = (function () {
 
 /***/ }),
 
-/***/ 93:
+/***/ 94:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3419,8 +3442,8 @@ var BaseService = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__base_base_service__ = __webpack_require__(89);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -3504,15 +3527,15 @@ var ChatService = (function (_super) {
 
 /***/ }),
 
-/***/ 94:
+/***/ 95:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsclientPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__chats_chats__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shortlisted_shortlisted__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__freelancers_freelancers__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shortlisted_shortlisted__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__freelancers_freelancers__ = __webpack_require__(281);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3544,5 +3567,5 @@ var TabsclientPage = (function () {
 
 /***/ })
 
-},[289]);
+},[290]);
 //# sourceMappingURL=main.js.map
