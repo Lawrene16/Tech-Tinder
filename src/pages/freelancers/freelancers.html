@@ -1,36 +1,16 @@
-<!-- <ion-header>
-  <ion-navbar color="transparent">
-    <ion-buttons start>
-      <button ion-button menuToggle>
-      <ion-icon name="menu" color="dark"></ion-icon>
-    </button>
-    </ion-buttons>
-
-    <ion-searchbar class="searchitem"
-    animated="true" 
-   placeholder="Search for talents close to you"></ion-searchbar>
-
-    <ion-buttons end>
-      <button ion-button icon-only (click)="openSecondModal()">
-          <ion-icon  class="icon ion-home custom-icon" name="notifications"></ion-icon>
-      </button>
-  </ion-buttons>
-  </ion-navbar>
-</ion-header> -->
-
 <ion-content class="maincontent">
 
-    <ion-fab bottom right (click)="increase()" >
+    <ion-fab *ngIf="!shouldshowfilterlist" bottom right (click)="increase()" >
       <button color="testone" ion-fab mini>
         <ion-icon name="md-add"></ion-icon>
       </button>
     </ion-fab>
   
-    <ion-input [(ngModel)]="radius" (keypress)="eventHandler($event.keyCode)" class="bottominput" bottom right placeholder="radius">
+    <ion-input *ngIf="!shouldshowfilterlist" [(ngModel)]="radius" (keypress)="eventHandler($event.keyCode)" class="bottominput" bottom right placeholder="radius">
         
     </ion-input>
   
-    <ion-fab bottom (click)="reduce()" right style="margin-right: 85px">
+    <ion-fab *ngIf="!shouldshowfilterlist" bottom (click)="reduce()" right style="margin-right: 85px">
       <button color="testone" ion-fab mini>
         <ion-icon name="md-remove"></ion-icon>
       </button>
@@ -38,13 +18,13 @@
   
   
   
-    <div  #map id="map">
+    <div *ngIf="!shouldshowfilterlist"  #map id="map">
     </div>
   
-  
-    <ion-list class="floatinglist">
+    <ion-list *ngIf="shouldshowskillslist" class="floatinglist">
       <ion-item *ngFor="let country of countries" (click)="add(country, i)">
         {{country}}
+        <ion-icon item-right name="ios-options-outline"></ion-icon>
       </ion-item>
     </ion-list>
   
@@ -60,6 +40,7 @@
             <ion-searchbar animated="true" 
             placeholder="Find talents close to you"
             (ionChange)="search()"
+            (click)="showit()"
             (ionBlur)="removeFocus()"
             debounce=500 [(ngModel)]="searchedtag" class="mysearch"></ion-searchbar>
               <!-- <ion-searchbar animated="true" 
@@ -82,6 +63,53 @@
       </div>
            -->
       </ion-card>
+
+    <ion-list *ngIf="shouldshowfilterlist" class="floatinglist">
+        <ion-list-header>Minimum Salary</ion-list-header>
+        <ion-list radio-group [(ngModel)]="minimumsalary">
+            <ion-item>
+              <ion-label>$10k - $20k / year</ion-label>
+              <ion-radio value="10to20"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>$21k - 30k / year</ion-label>
+              <ion-radio value="21to30"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>$31k - $50k / year</ion-label>
+              <ion-radio value="31to50"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>$51k+</ion-label>
+              <ion-radio value="51plus"></ion-radio>
+            </ion-item>
+          </ion-list>
+          <ion-list-header>Hourly Rate</ion-list-header>
+          <ion-list radio-group [(ngModel)]="minimumsalary">
+              <ion-item>
+                <ion-label>Any hourly rate</ion-label>
+                <ion-radio value="10to20"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>$10 and below</ion-label>
+                <ion-radio value="10below"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>$11 to $30</ion-label>
+                <ion-radio value="11to30"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>$31 to $60</ion-label>
+                <ion-radio value="30to60"></ion-radio>
+              </ion-item>
+              <ion-item>
+                  <ion-label>$61 and above</ion-label>
+                  <ion-radio value="61plus"></ion-radio>
+                </ion-item>
+            </ion-list>
+
+            <p align="center"><button (click)="applyFilters()" ion-button >Apply filters</button></p>
+    </ion-list>  
   
     <!-- <p align="center" id="intitalstring">
       <b>Edung Divinefavour</b><br>

@@ -27,6 +27,10 @@ export class FreelancersPage {
   zoomvalue = 20;
   radius = 0;
   num = 20;
+  shouldshowskillslist = true;
+  shouldshowfilterlist = false;
+  minimumsalary = "10to20";
+
 
   skills: Array<string>;
   private list: string[] = ['Android',
@@ -55,14 +59,28 @@ export class FreelancersPage {
   }
 
   add(item: string, i) {
-    this.countries = [];
+    // this.shouldshowskillslist = true
+    // this.countries = [];    
     this.searchedtag = item;
+    this.countries = [];
+    this.shouldshowskillslist = false;
+    this.shouldshowfilterlist = true;
+  }
+
+  showit(){
+    this.shouldshowskillslist = true;
   }
 
 
   ionViewCanEnter(): Promise<boolean> {
     return this.authService.authenticated;
   }
+
+  applyFilters(){
+    this.shouldshowfilterlist = false;
+    this.searchedtag = "";
+  }
+
 
   search() {
     if (!this.searchedtag.trim().length || !this.keyboard.isOpen()) {
@@ -239,7 +257,7 @@ export class FreelancersPage {
 
       this.populateMap(this.map);
       this.map.addListener('click', (e) => {
-        console.log(this.map.getZoom())
+        // console.log(this.map.getZoom())
       });
     }).catch((err) =>{
       alert(err);
