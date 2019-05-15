@@ -6,7 +6,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import { AngularFireModule, AuthMethods, AuthProviders, FirebaseAppConfig } from 'angularfire2'; //importa o firebase app config
-
 import { AuthService } from '../providers/auth/auth.service';
 import { CapitalizePipe } from '../pipes/capitalize/capitalize';
 import { ChatPage } from '../pages/chat/chat';

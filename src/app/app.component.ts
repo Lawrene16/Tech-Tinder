@@ -34,7 +34,7 @@ export class MyApp {
     public authService: AuthService,
     platform: Platform,
     statusBar: StatusBar,
-    splashScreen: SplashScreen,
+    public splashScreen: SplashScreen,
     userService: UserService
   ) {
 
@@ -80,7 +80,9 @@ export class MyApp {
 
     platform.ready().then(() => {
       statusBar.styleDefault();
-      splashScreen.hide();
+      setTimeout(()=>{
+        this.splashScreen.hide();  
+      },1000);
     });
 
   }
