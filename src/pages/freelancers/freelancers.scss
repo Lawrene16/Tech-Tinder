@@ -7,7 +7,7 @@ page-freelancers {
     
       #map{
         // height: 85vh
-        height: 85vh;
+        height: 100vh;
     }
 
     .floatinglist{
@@ -20,10 +20,10 @@ page-freelancers {
     }
 
     .bottominput{
-          position: absolute;
+          position: fixed;
           z-index: 5;
           bottom: 15px;
-          left: 74vw;
+          left: 76vw;
           font-size: 12px;
           width: 12vw;
           padding-left: 6px;

@@ -1,11 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, Content } from 'ionic-angular';
 import { DetailsfreelancerPage } from '../detailsfreelancer/detailsfreelancer';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
 import { Keyboard } from 'ionic-angular';
 import { AuthService } from '../../providers/auth/auth.service';
-import { Geolocation } from '@ionic-native/geolocation';
+// import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google: any;
 
@@ -16,7 +16,7 @@ declare var google: any;
 export class FreelancersPage {
 
   @ViewChild('map') mapElement: ElementRef;
-
+  @ViewChild('cont') maincont: Content;
   map: any;
   firedata = firebase.database();
   firebaseArray = [];
@@ -29,6 +29,7 @@ export class FreelancersPage {
   num = 20;
   shouldshowskillslist = true;
   shouldshowfilterlist = false;
+  showmap = true;
   minimumsalary = "10to20";
 
 
@@ -52,7 +53,7 @@ export class FreelancersPage {
     private keyboard: Keyboard,
     public authService: AuthService,
     public storage: Storage,
-    private geolocation: Geolocation,
+    // private geolocation: Geolocation,
     public loadingCtrl: LoadingController) {
     Window["myComponent"] = this;
 
@@ -65,6 +66,7 @@ export class FreelancersPage {
     this.countries = [];
     this.shouldshowskillslist = false;
     this.shouldshowfilterlist = true;
+    // this.showmap = false;
   }
 
   showit(){
@@ -79,6 +81,9 @@ export class FreelancersPage {
   applyFilters(){
     this.shouldshowfilterlist = false;
     this.searchedtag = "";
+    // this.showmap = true;
+    // this.loadMap();
+    this.maincont.scrollToTop();
   }
 
 
@@ -242,9 +247,9 @@ export class FreelancersPage {
       }
     ];
 
-    this.geolocation.getCurrentPosition().then((resp) => {
+    // this.geolocation.getCurrentPosition().then((resp) => {
 
-      let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+      let latLng = new google.maps.LatLng(6.529843199999999, 3.3636352);
       let mapOptions = {
         center: latLng,
         zoom: this.zoomvalue,
@@ -259,9 +264,9 @@ export class FreelancersPage {
       this.map.addListener('click', (e) => {
         // console.log(this.map.getZoom())
       });
-    }).catch((err) =>{
-      alert(err);
-    })
+    // }).catch((err) =>{
+    //   alert(err);
+    // })
 
 
 

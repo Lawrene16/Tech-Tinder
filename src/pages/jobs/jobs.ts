@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
+// import { Geolocation } from '@ionic-native/geolocation';
 
 
 declare var google: any;
@@ -18,7 +18,7 @@ export class JobsPage {
   map: any;
 
   constructor(public navCtrl: NavController,
-    private geolocation: Geolocation,
+    // private geolocation: Geolocation,
     public toastCtrl: ToastController,
   ) {
     Window["myComponent"] = this;
@@ -143,10 +143,10 @@ export class JobsPage {
     ];
 
 
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp.coords);
+    // this.geolocation.getCurrentPosition().then((resp) => {
+      // console.log(resp.coords);
 
-      let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+      let latLng = new google.maps.LatLng(6.529843199999999, 3.3636352);
       let mapOptions = {
         center: latLng,
         zoom: 16,
@@ -161,7 +161,7 @@ export class JobsPage {
       this.map.addListener('click', (e) => {
         console.log('Clicked')
       });
-    })
+    // })
   }
 
   addDefaultMarker(map, position) {

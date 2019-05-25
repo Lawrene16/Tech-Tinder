@@ -6,6 +6,8 @@ import { AuthService } from '../../providers/auth/auth.service';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 import { SignupPage } from './../signup/signup';
+import { TabsclientPage } from '../tabsclient/tabsclient';
+import { TabsfreelancerPage } from '../tabsfreelancer/tabsfreelancer';
 
 @Component({
   selector: 'page-signin',
@@ -43,20 +45,29 @@ export class SigninPage {
     this.authService.signInWithEmail(user)
       .then((isLogged: boolean) => {
         if (isLogged) {
-          console.log(user);
+          // console.log(user);
 
+          this.firedata.ref('/users').orderByChild('mmmm').once('value', (snapshot) => {
+            let result = snapshot.val();
+            let temparr = [];
+            for (var key in result) {
+              temparr.push(result[key]);
+            }
 
-          // this.firedata.ref('/users').orderByChild('value').once('value', (snapshot) => {
-          //   let result = snapshot.val();
-          //   let temparr = [];
-          //   for (var key in result) {
-          //     temparr.push(result[key]);
-          //   }
-
-          //   temparr.forEach((fireuser) => {
-          //     console.log(fireuser);
-          //   });
-          // })
+            temparr.forEach((fireuser) => {
+              // console.log(fireuser);
+              // console.log(user);
+              if(user.email == fireuser.email){
+                // console.log(fireuser);
+                // console.log(user);
+                if(fireuser.userType == "recruiter"){
+                  this.navCtrl.setRoot(TabsclientPage);
+                }else if(fireuser.userType == "freelancer"){
+                  this.navCtrl.setRoot(TabsfreelancerPage);
+                }
+              }
+            });
+          })
         
           // this.navCtrl.setRoot(HomePage);
           loading.dismiss();

@@ -1,4 +1,4 @@
-<ion-content class="maincontent">
+<ion-content #cont class="maincontent">
 
     <ion-fab *ngIf="!shouldshowfilterlist" bottom right (click)="increase()" >
       <button color="testone" ion-fab mini>
@@ -18,7 +18,7 @@
   
   
   
-    <div *ngIf="!shouldshowfilterlist"  #map id="map">
+    <div *ngIf="showmap"  #map id="map">
     </div>
   
     <ion-list *ngIf="shouldshowskillslist" class="floatinglist">

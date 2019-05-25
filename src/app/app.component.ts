@@ -75,6 +75,8 @@ export class MyApp {
         })
       } else {
         this.rootPage = SigninPage;
+        // this.rootPage = SetupprofilePage;
+
       }
     })
 

@@ -15,7 +15,7 @@ import { UserService } from './../../providers/user/user.service';
 import { TabsclientPage } from '../tabsclient/tabsclient';
 import { SetupprofilePage } from '../setupprofile/setupprofile';
 // import { emailValidator } from '../../validators/email';
-import { Geolocation } from '@ionic-native/geolocation';
+// import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-signup',
@@ -39,7 +39,7 @@ export class SignupPage {
     public loadingCtrl: LoadingController,  // mostrar o loading
     public navCtrl: NavController,
     public navParams: NavParams,
-    private geolocation: Geolocation,    
+    // private geolocation: Geolocation,    
     public userService: UserService
   ) {
     // variavel com a expressão regular de validação de e-mail
@@ -106,17 +106,16 @@ export class SignupPage {
             this.userService.create(formUser, userUniqueId) // cria usuario (nó no database)
               .then(() => {  // o método retorna uma promise vazia
 
-
-                this.geolocation.getCurrentPosition().then((resp) =>{
-                  console.log(resp.coords);
+                // this.geolocation.getCurrentPosition().then((resp) =>{
+                //   console.log(resp.coords);
 
                   console.log(this.userType);
                   
                   this.firedata.ref('/users').child(userUniqueId).update({
                     userType: this.userType,
                     uid: userUniqueId,
-                    lat: resp.coords.latitude,
-                    lng: resp.coords.longitude
+                    lat: 6.529843199999999,
+                    lng: 3.3636352
                   }).then(() =>{
   
                     loading.dismiss();
@@ -127,9 +126,9 @@ export class SignupPage {
                         this.navCtrl.setRoot(TabsclientPage);
                     }
                   });
-                }).catch((err) =>{
-                  this.showAlert(err);
-                })                
+                // }).catch((err) =>{
+                //   this.showAlert(err);
+                // })                
               }).catch((error: any) => {
                 loading.dismiss();
                 this.showAlert(error);

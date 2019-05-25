@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0170BAEFEFEC4FEAA9B7BD63 /* CDVWKWebViewEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 570A5110A5D0474DAA59018B /* CDVWKWebViewEngine.m */; };
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
@@ -26,17 +27,17 @@
 		599B790BA07E4CF9A76EAD22 /* CDVWKProcessPoolFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E43DA9C0FA934E10B1BA46B1 /* CDVWKProcessPoolFactory.m */; };
 		60F083B0655044089D41300D /* GCDWebServerDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3781ADDEB3FB43DE905BB75E /* GCDWebServerDataResponse.m */; };
 		62F4DB6086B64FA58BF3D52F /* GCDWebServerMultiPartFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 17164B9C2B8E45F49D9FFE89 /* GCDWebServerMultiPartFormRequest.m */; };
+		681E298BE3334CB4A4370BF7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1044D526BA0B47DE910B0089 /* CoreLocation.framework */; };
 		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
 		6B154B74A605443789F5F66F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 520AA18D608447BDB60A7992 /* libz.tbd */; };
 		7975D3C7529B4B0EA381689C /* GCDWebServerURLEncodedFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F4987C8BBDF460DABCDBC82 /* GCDWebServerURLEncodedFormRequest.m */; };
 		7E20CFFFF6A94DF595A1D884 /* GCDWebServerDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DE17BD9BA9A0412A9CFC55E4 /* GCDWebServerDataRequest.m */; };
 		8FB4F7AA404B4EFCB96889DC /* GCDWebServerFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDEA8D31CE9481289B84237 /* GCDWebServerFileRequest.m */; };
 		921B4C3760AA464A83E70B70 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DC02DF5CA9AC48FB86911519 /* CDVDevice.m */; };
+		AF5390F448E44159BF89E6F4 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 156842F41D984E328BB525B7 /* CDVLocation.m */; };
 		B434C449848C4A7DBA5A99CE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7955314453147B2A52FB458 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F12843304F6E4EC6A17C7DD1 /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A036790EA1F432AB59C84C4 /* CDVViewController+SplashScreen.m */; };
 		FCFE039C5B994293B247927F /* GCDWebServerStreamedResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C75565ABA74A71BF83FE13 /* GCDWebServerStreamedResponse.m */; };
-		AF5390F448E44159BF89E6F4 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 156842F41D984E328BB525B7 /* CDVLocation.m */; };
-		681E298BE3334CB4A4370BF7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1044D526BA0B47DE910B0089 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,9 +65,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		019B64DF5B344BC2A5A60FE0 /* CDVLocation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLocation.h; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; };
 		0207DA571B56EA530066E2B4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Tech-Tinder/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		09611C8B0388445BAA2A8E5F /* GCDWebServerErrorResponse.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = GCDWebServerErrorResponse.m; path = "cordova-plugin-ionic-webview/GCDWebServerErrorResponse.m"; sourceTree = "<group>"; };
 		0FF7663A046D4F539551B7D6 /* CDVWKWebViewUIDelegate.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVWKWebViewUIDelegate.m; path = "cordova-plugin-ionic-webview/CDVWKWebViewUIDelegate.m"; sourceTree = "<group>"; };
+		1044D526BA0B47DE910B0089 /* CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		156842F41D984E328BB525B7 /* CDVLocation.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLocation.m; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; };
 		15F016678A56404FA64EFC97 /* CDVWKWebViewEngine.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVWKWebViewEngine.h; path = "cordova-plugin-ionic-webview/CDVWKWebViewEngine.h"; sourceTree = "<group>"; };
 		17164B9C2B8E45F49D9FFE89 /* GCDWebServerMultiPartFormRequest.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = GCDWebServerMultiPartFormRequest.m; path = "cordova-plugin-ionic-webview/GCDWebServerMultiPartFormRequest.m"; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -128,9 +132,6 @@
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "Tech-Tinder/config.xml"; sourceTree = "<group>"; };
 		F9043D2ED38E45649C152642 /* GCDWebServerMultiPartFormRequest.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = GCDWebServerMultiPartFormRequest.h; path = "cordova-plugin-ionic-webview/GCDWebServerMultiPartFormRequest.h"; sourceTree = "<group>"; };
 		FEED1390E4B345ACBEACE20D /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; };
-		156842F41D984E328BB525B7 /* CDVLocation.m */ = {isa = PBXFileReference; name = "CDVLocation.m"; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		019B64DF5B344BC2A5A60FE0 /* CDVLocation.h */ = {isa = PBXFileReference; name = "CDVLocation.h"; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		1044D526BA0B47DE910B0089 /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
