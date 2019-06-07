@@ -6,6 +6,7 @@ import { Keyboard } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { ModalPage } from '../modal/modal';
 import firebase from 'firebase';
+import { ImageproviderProvider } from '../../providers/imageprovider/imageprovider';
 
 
 @Component({
@@ -52,6 +53,7 @@ export class ProfilefreelancerPage {
   constructor(public navCtrl: NavController,
     public modalCtrl: ModalController,
     private keyboard: Keyboard,
+    public imagehandler: ImageproviderProvider,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     // public countriesApi: CountriesapiProvider,
@@ -80,6 +82,14 @@ export class ProfilefreelancerPage {
         this.presentToast("Couldnt fetch user details");
       });
     
+  }
+
+  selectImage(){
+    this.imagehandler.selectImage().then((res) =>{
+        this.presentToast(res);
+    }).catch((err) =>{
+        this.presentToast(err)
+    })
   }
 
   add(item: string, i) {

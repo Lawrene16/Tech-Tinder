@@ -24,6 +24,9 @@
     },
     "ionic-plugin-keyboard": {
       "PACKAGE_NAME": "com.deepak.techtinder"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.deepak.techtinder"
     }
   },
   "dependent_plugins": {}

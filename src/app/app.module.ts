@@ -24,6 +24,7 @@ import { UserProfilePage } from './../pages/user-profile/user-profile';
 import { TabsclientPage } from '../pages/tabsclient/tabsclient';
 import { TabsfreelancerPage } from '../pages/tabsfreelancer/tabsfreelancer';
 import { JobsPage } from '../pages/jobs/jobs';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ProfilefreelancerPage } from '../pages/profilefreelancer/profilefreelancer';
 import { FreelancersPage } from '../pages/freelancers/freelancers';
 import { ShortlistedPage } from '../pages/shortlisted/shortlisted';
@@ -34,7 +35,9 @@ import { DetailsfreelancerPage } from '../pages/detailsfreelancer/detailsfreelan
 import { PostjobPage } from '../pages/postjob/postjob';
 import { ProfileclientPage } from '../pages/profileclient/profileclient';
 import { JoblistPage } from '../pages/joblist/joblist';
-// import { Geolocation } from  '@ionic-native/geolocation';
+import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
+import { ImageproviderProvider } from '../providers/imageprovider/imageprovider';
+import { Geolocation } from  '@ionic-native/geolocation';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -65,6 +68,7 @@ const firebaseAuthConfig = {
     JobsPage,
     PostjobPage,
     ProfileclientPage,
+    ResetpasswordPage,
     FreelancersPage,
     ShortlistedPage,
     SetupprofilePage,
@@ -100,6 +104,7 @@ const firebaseAuthConfig = {
     FreelancersPage,
     ShortlistedPage,
     JoblistPage,
+    ResetpasswordPage,
     PostjobPage,
     ProfileclientPage,
     ProfilefreelancerPage,
@@ -113,12 +118,14 @@ const firebaseAuthConfig = {
   providers: [
     AuthService,
     ChatService,
-    // Geolocation,
+    Geolocation,
+    Camera,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserService,
     MessageService,
+    ImageproviderProvider,
   ]
 })
 export class AppModule {}

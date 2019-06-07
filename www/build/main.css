@@ -51748,7 +51748,7 @@ page-postjob ion-input.custom-input ::placeholder {
 }
 
 page-postjob .itemclass {
-  height: 6vh;
+  height: auto;
   -webkit-align-content: center;
   -ms-flex-line-pack: center;
   align-content: center;
@@ -51921,37 +51921,74 @@ page-shortlisted .imagi {
 }
 
 page-signin .content_bg {
-  background-color: white;
+  background-image: url("../../assets/login.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 page-signin .listt {
   background: transparent;
-  color: #006096;
+  color: #ffffff;
 }
 
 page-signin .btn {
   color: #006096;
-  border: 2px solid #006096;
-  background-color: transparent;
+  border: 2px solid #f4f4f4;
+  background-color: white;
   color: #006096;
-  padding: 20px 28px;
-  font-size: 16px;
+  padding: 25px 28px;
+  font-size: 18px;
   margin-right: 40px;
-  margin-top: 20px;
-  margin-left: 30px;
-  width: 75vw;
+  margin-top: 40px;
+  margin-left: 20px;
+  width: 80vw;
   cursor: pointer;
 }
 
-page-signin .forgotp {
-  color: #006096;
-  margin-left: 15px;
+page-signin .linkedin {
+  border: 2px solid #006096;
+  color: #f4f4f4;
+  padding: 25px 28px;
+  font-size: 18px;
+  margin-right: 40px;
+  border-radius: 20px;
+  background-color: #006096;
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 80vw;
+  cursor: pointer;
+}
+
+page-signin .lineunder {
+  width: 80vw;
+  margin-left: 4.5vw;
+  position: absolute;
+  bottom: 20vh;
+  background: transparent;
+}
+
+page-signin .fpwd {
+  float: right;
+  margin-right: 15px;
+  color: #f4f4f4;
+  font-size: 16px;
+  margin-top: 30px;
 }
 
 page-signin .joinn {
   float: right;
   margin-right: 15px;
   color: #006096;
+}
+
+page-signin .newmember {
+  font-size: 17px;
+  color: white;
+}
+
+page-signin .signup {
+  color: white;
+  margin-left: 10px;
 }
 
 page-signup .invalid {

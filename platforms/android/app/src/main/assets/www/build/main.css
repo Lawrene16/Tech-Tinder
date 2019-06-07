@@ -51748,7 +51748,7 @@ page-postjob ion-input.custom-input ::placeholder {
 }
 
 page-postjob .itemclass {
-  height: 6vh;
+  height: auto;
   -webkit-align-content: center;
   -ms-flex-line-pack: center;
   align-content: center;

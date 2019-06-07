@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
-// import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 declare var google: any;
@@ -18,7 +18,7 @@ export class JobsPage {
   map: any;
 
   constructor(public navCtrl: NavController,
-    // private geolocation: Geolocation,
+    private geolocation: Geolocation,
     public toastCtrl: ToastController,
   ) {
     Window["myComponent"] = this;
@@ -26,6 +26,12 @@ export class JobsPage {
 
   ionViewDidLoad() {
     this.loadMap();
+
+    this.geolocation.getCurrentPosition().then((resp) =>{
+      this.presentToast(resp.coords.latitude);
+    }).catch((err) =>{
+      this.presentToast('Error getting location' + err.message)
+    });
   }
 
   populateMap(map) {
@@ -161,6 +167,12 @@ export class JobsPage {
       this.map.addListener('click', (e) => {
         console.log('Clicked')
       });
+
+      // this.map.getMyLocation().then((res) =>{
+      //     this.presentToast(res)
+      // }).catch((err) =>{
+      //     this.presentToast(err)
+      // });
     // })
   }
 

@@ -18,6 +18,9 @@
         <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
     <name>Tech-Tinder</name>
     <description>My first ionic 3 chat using firebase</description>
     <author email="lawrenedickson49@gmail.com" href="https://github.com/Lawrene16">Edung Divinefavour</author>
@@ -48,6 +51,10 @@
     <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
     <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
     <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+    <custom-config-file parent="/*" target="AndroidManifest.xml">
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    </custom-config-file>
     <preference name="loglevel" value="DEBUG" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />

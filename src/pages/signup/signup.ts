@@ -114,8 +114,8 @@ export class SignupPage {
                   this.firedata.ref('/users').child(userUniqueId).update({
                     userType: this.userType,
                     uid: userUniqueId,
-                    lat: 6.529843199999999,
-                    lng: 3.3636352
+                    // lat: 6.529843199999999,
+                    // lng: 3.3636352
                   }).then(() =>{
   
                     loading.dismiss();

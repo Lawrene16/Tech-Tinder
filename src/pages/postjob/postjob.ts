@@ -33,6 +33,8 @@ export class PostjobPage {
   title = "";
   category = "";
   url = "";
+  skilllevel = "";
+  jobtype = "";
   pinuid;
   timeposted;
   firedata = firebase.database();
@@ -101,7 +103,10 @@ export class PostjobPage {
       this.presentToast("Please Enter a Job Title");
     }else if(this.category == ""){
       this.presentToast("Please select a job category");
-    }else if(this.description == ""){
+    }else if(this.skilllevel == ""){
+      this.presentToast("Please select a skill level");
+    }
+    else if(this.description == ""){
       this.presentToast("Please Enter a Job Description");
     }else if(this.description.length < 15){
       this.presentToast("Job Description should be atleast 15 words");
@@ -123,6 +128,8 @@ export class PostjobPage {
         title: this.title,
         category: this.category,
         description: this.description,
+        skilllevel: this.skilllevel,
+        jobtype: this.jobtype,
         timeposted: this.timeposted.getTime(),
         url: this.url,
         jobposter: firebase.auth().currentUser.uid

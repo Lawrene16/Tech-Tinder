@@ -40,6 +40,10 @@
 
       <br>
       <b style="margin-left: 11px; margin-bottom: 7px; ">Enter the title of your job post here</b>
+      <br>
+      <br>
+
+     
       <ion-row class="itemclass">
           <ion-input
           [(ngModel)]="title"
@@ -69,6 +73,45 @@
                       <ion-option>Design & Creative</ion-option>
                       <ion-option>Customer Service</ion-option>
                       
+                    </ion-select>
+            </ion-item>
+         
+      </ion-card>
+
+
+
+
+
+
+
+      <br>
+      <b style="margin-left: 11px; margin-bottom: 1px; ">
+        Skill Level</b>
+      
+      <ion-card>
+            <ion-item>
+                    <ion-label style="opacity: 0.7; margin: 10px">Select Skill Level </ion-label>
+                    <ion-select [(ngModel)]="skilllevel">
+                      <ion-option>Beginner</ion-option>
+                      <ion-option>Intermediate</ion-option>
+                      <ion-option>Expert</ion-option>                      
+                    </ion-select>
+            </ion-item>
+      </ion-card>
+
+
+
+
+      <br>
+      <b style="margin-left: 11px; margin-bottom: 1px; ">
+        Job Type</b>
+      
+      <ion-card>
+            <ion-item>
+                    <ion-label style="opacity: 0.7; margin: 10px">Select Job Type</ion-label>
+                    <ion-select [(ngModel)]="jobtype">
+                      <ion-option>Fixed Price</ion-option>
+                      <ion-option>Hourly</ion-option>
                     </ion-select>
             </ion-item>
          

@@ -8,6 +8,7 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
 import { SignupPage } from './../signup/signup';
 import { TabsclientPage } from '../tabsclient/tabsclient';
 import { TabsfreelancerPage } from '../tabsfreelancer/tabsfreelancer';
+import { ResetpasswordPage } from '../resetpassword/resetpassword';
 
 @Component({
   selector: 'page-signin',
@@ -45,7 +46,7 @@ export class SigninPage {
     this.authService.signInWithEmail(user)
       .then((isLogged: boolean) => {
         if (isLogged) {
-          // console.log(user);
+          console.log(user);
 
           this.firedata.ref('/users').orderByChild('mmmm').once('value', (snapshot) => {
             let result = snapshot.val();
@@ -68,10 +69,7 @@ export class SigninPage {
               }
             });
           })
-        
-          // this.navCtrl.setRoot(HomePage);
           loading.dismiss();
-
         }
       })
       .catch((er: any) => {
@@ -96,6 +94,10 @@ export class SigninPage {
       message: message,
       buttons: ['Ok']
     }).present();
+  }
+
+  forgotPassword(){
+    this.navCtrl.push(ResetpasswordPage)
   }
 
 }

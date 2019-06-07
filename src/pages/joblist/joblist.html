@@ -18,20 +18,18 @@
 
 <ion-content>
   <ion-list>
-    <ion-item>
+    <ion-item *ngFor="let job of joblist">
       <div style="margin-top: 10px">
-          <h2 style="color: #287AB0">Developer needed for creating site</h2>
+          <h2 style="color: #287AB0">{{job.title}}</h2>
           <ion-icon style="position: absolute; z-index: 5;
           top: 20px;
            right: 20px;" name="ios-heart-outline"></ion-icon>
       </div>
-      
-      <br>
-      <div><b>Hourly</b> - Just now</div>
+      <div><b>{{job.jobtype}}</b> - Just now</div>
       <br>
       <div>
           <p>Skill Level</p>
-          <p>Intermediate</p>
+          <p>{{job.skilllevel}}</p>
           <p style="position: absolute; z-index: 5;
           bottom: 20px;
            right: 20px;">3/5(19)</p>
@@ -39,115 +37,5 @@
       
       <div></div>
     </ion-item>
-
-    <ion-item>
-        <div style="margin-top: 10px">
-            <h2 style="color: #287AB0">Developer needed for creating site</h2>
-            <ion-icon style="position: absolute; z-index: 5;
-            top: 20px;
-             right: 20px;" name="ios-heart-outline"></ion-icon>
-        </div>
-        
-        <br>
-        <div><b>Hourly</b> - 5minutes ago</div>
-        <br>
-        <div>
-            <p>Skill Level</p>
-            <p>Intermediate</p>
-            <p style="position: absolute; z-index: 5;
-            bottom: 20px;
-             right: 20px;">3/5(19)</p>
-        </div>
-        
-        <div></div>
-      </ion-item>
-
-      <ion-item>
-          <div style="margin-top: 10px">
-              <h2 style="color: #287AB0">Developer needed for creating site</h2>
-              <ion-icon style="position: absolute; z-index: 5;
-              top: 20px;
-               right: 20px;" name="ios-heart-outline"></ion-icon>
-          </div>
-          
-          <br>
-          <div><b>Hourly</b> - 19minutes ago</div>
-          <br>
-          <div>
-              <p>Skill Level</p>
-              <p>Intermediate</p>
-              <p style="position: absolute; z-index: 5;
-              bottom: 20px;
-               right: 20px;">3/5(19)</p>
-          </div>
-          
-          <div></div>
-        </ion-item>
-
-        <ion-item>
-            <div style="margin-top: 10px">
-                <h2 style="color: #287AB0">Developer needed for creating site</h2>
-                <ion-icon style="position: absolute; z-index: 5;
-                top: 20px;
-                 right: 20px;" name="ios-heart-outline"></ion-icon>
-            </div>
-            
-            <br>
-            <div><b>Hourly</b> - 19minutes ago</div>
-            <br>
-            <div>
-                <p>Skill Level</p>
-                <p>Intermediate</p>
-                <p style="position: absolute; z-index: 5;
-                bottom: 20px;
-                 right: 20px;">3/5(19)</p>
-            </div>
-            
-            <div></div>
-          </ion-item>
-
-          <ion-item>
-              <div style="margin-top: 10px">
-                  <h2 style="color: #287AB0">Developer needed for creating site</h2>
-                  <ion-icon style="position: absolute; z-index: 5;
-                  top: 20px;
-                   right: 20px;" name="ios-heart-outline"></ion-icon>
-              </div>
-              
-              <br>
-              <div><b>Hourly</b> - 19minutes ago</div>
-              <br>
-              <div>
-                  <p>Skill Level</p>
-                  <p>Intermediate</p>
-                  <p style="position: absolute; z-index: 5;
-                  bottom: 20px;
-                   right: 20px;">3/5(19)</p>
-              </div>
-              
-              <div></div>
-            </ion-item>
-
-            <ion-item>
-                <div style="margin-top: 10px">
-                    <h2 style="color: #287AB0">Developer needed for creating site</h2>
-                    <ion-icon style="position: absolute; z-index: 5;
-                    top: 20px;
-                     right: 20px;" name="ios-heart-outline"></ion-icon>
-                </div>
-                
-                <br>
-                <div><b>Hourly</b> - 19minutes ago</div>
-                <br>
-                <div>
-                    <p>Skill Level</p>
-                    <p>Intermediate</p>
-                    <p style="position: absolute; z-index: 5;
-                    bottom: 20px;
-                     right: 20px;">3/5(19)</p>
-                </div>
-                
-                <div></div>
-              </ion-item>
   </ion-list>
 </ion-content>
