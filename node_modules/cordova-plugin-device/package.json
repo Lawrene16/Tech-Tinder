@@ -16,13 +16,22 @@
     "fetchSpec": "1.1.4"
   },
   "_requiredBy": [
+<<<<<<< HEAD
     "#DEV:/",
     "#USER"
+=======
+    "#USER",
+    "/"
+>>>>>>> 2e282b2ec3de9f229c9eea1e8c892f63e226efac
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-device/-/cordova-plugin-device-1.1.4.tgz",
   "_shasum": "d5fe74712069d03f6d386ef0bd321b3abd0d38dc",
   "_spec": "cordova-plugin-device@1.1.4",
+<<<<<<< HEAD
   "_where": "/Users/villifixinc/Desktop/Tech-Tinder",
+=======
+  "_where": "/home/lawrene/Tech-Tinder",
+>>>>>>> 2e282b2ec3de9f229c9eea1e8c892f63e226efac
   "author": {
     "name": "Apache Software Foundation"
   },

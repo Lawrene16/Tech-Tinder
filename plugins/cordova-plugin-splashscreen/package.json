@@ -16,13 +16,22 @@
     "fetchSpec": "~4.0.1"
   },
   "_requiredBy": [
+<<<<<<< HEAD
     "#DEV:/",
     "#USER"
+=======
+    "#USER",
+    "/"
+>>>>>>> 2e282b2ec3de9f229c9eea1e8c892f63e226efac
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-splashscreen/-/cordova-plugin-splashscreen-4.0.3.tgz",
   "_shasum": "773cd1363c1f3bacb9901663e9e3793dd3e0a19d",
   "_spec": "cordova-plugin-splashscreen@~4.0.1",
+<<<<<<< HEAD
   "_where": "/Users/villifixinc/Desktop/Tech-Tinder",
+=======
+  "_where": "/home/lawrene/Tech-Tinder",
+>>>>>>> 2e282b2ec3de9f229c9eea1e8c892f63e226efac
   "author": {
     "name": "Apache Software Foundation"
   },

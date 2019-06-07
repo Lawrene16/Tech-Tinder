@@ -16,13 +16,22 @@
     "fetchSpec": "~2.2.1"
   },
   "_requiredBy": [
+<<<<<<< HEAD
     "#DEV:/",
     "#USER"
+=======
+    "#USER",
+    "/"
+>>>>>>> 2e282b2ec3de9f229c9eea1e8c892f63e226efac
   ],
   "_resolved": "https://registry.npmjs.org/ionic-plugin-keyboard/-/ionic-plugin-keyboard-2.2.1.tgz",
   "_shasum": "f2a9e169bbe9b5522400347c9fd6d3467ee3fa12",
   "_spec": "ionic-plugin-keyboard@~2.2.1",
+<<<<<<< HEAD
   "_where": "/Users/villifixinc/Desktop/Tech-Tinder",
+=======
+  "_where": "/home/lawrene/Tech-Tinder",
+>>>>>>> 2e282b2ec3de9f229c9eea1e8c892f63e226efac
   "author": {
     "name": "Ionic"
   },

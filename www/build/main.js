@@ -168,9 +168,9 @@ var ChatPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__signup_signup__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__tabsclient_tabsclient__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__tabsclient_tabsclient__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsfreelancer_tabsfreelancer__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__resetpassword_resetpassword__ = __webpack_require__(287);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -188,12 +188,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+// import { LinkedIn, LinkedInLoginScopes } from '@ionic-native/linkedin';
 
 
 
 
 var SigninPage = (function () {
-    function SigninPage(alertCtrl, authService, formBuilder, loadingCtrl, navCtrl, navParams) {
+    // scopes: LinkedInLoginScopes[] = ['r_basicprofile', 'r_emailaddress', 'rw_company_admin', 'w_share'];
+    function SigninPage(alertCtrl, authService, formBuilder, 
+        // private linkedin: LinkedIn,
+        loadingCtrl, navCtrl, navParams) {
         this.alertCtrl = alertCtrl;
         this.authService = authService;
         this.formBuilder = formBuilder;
@@ -210,6 +214,12 @@ var SigninPage = (function () {
     SigninPage.prototype.onSignUp = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__signup_signup__["a" /* SignupPage */]);
     };
+    // linkedinlogin() {
+    //   this.linkedin.login(this.scopes, true)
+    //     .then(() => console.log('Logged in!'))
+    //     .catch(e => console.log('Error logging in', e));
+    //     // console.log("dlkjdlfkjdf");
+    // }
     SigninPage.prototype.onSubmit = function () {
         var _this = this;
         var loading = this.showLoading(); // retorna o loading
@@ -267,14 +277,10 @@ var SigninPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'page-signin',template:/*ion-inline-start:"/Users/villifixinc/Desktop/Tech-Tinder/src/pages/signin/signin.html"*/'<ion-content class="content_bg" padding>\n\n    <br>\n    <br>\n    <br>\n    <br>\n\n    <br>\n    <p align="center">\n      <img src="assets/icon.png" height="110">\n      <!-- <b style="font-size: 35px; color: white">ech-Tinder</b> -->\n    </p>\n  \n    <br>\n\n  <form (ngSubmit)="onSubmit()" [formGroup]="signinForm">\n\n      <ion-item class="listt">\n          <ion-input type="email" formControlName="email" placeholder="Username/Email"></ion-input>\n          <ion-icon name="ios-person-outline" item-left></ion-icon>\n        </ion-item>\n    \n        <ion-item class="listt">\n            <ion-input type="password" formControlName="password" placeholder="Password"></ion-input> \n          <ion-icon name="ios-lock-outline" item-left></ion-icon>\n        </ion-item>\n\n      <b class="fpwd" (click)="onSignUp()">Forgot Password?</b>\n      <!-- <ion-item class="listt"></ion-item> -->\n\n\n\n    <!-- <button ion-button block style="border-radius: 20px; width: 80%" color="light" (click)="signin()">SIGN IN</button> -->\n\n    <button  ion-button type="submit" style="border-radius: 20px; background-color: white"\n      class="btn success"><b>SIGN IN</b></button>\n     <!-- [disabled]="signinForm.invalid" -->\n\n\n\n        <!-- <button  ion-button type="submit" [disabled]="signinForm.invalid" class="btn success">SIGN IN</button> -->\n    \n  </form>\n\n  <button  ion-button  class="linkedin">\n  <ion-icon style="font-size: 30px;\n     position: absolute; left: 20px;" name="logo-linkedin"></ion-icon> \n\n  <b>SIGN IN WITH LINKEDIN</b>\n</button>\n\n  <ion-item class="lineunder"></ion-item>\n\n  \n \n    <br>\n    <br>\n    <br>\n    <br>\n    <br>\n\n    <div class="newmember">New Member?\n      <b class="signup" (click)="onSignUp()">SIGN UP</b>\n    </div>\n\n\n\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/villifixinc/Desktop/Tech-Tinder/src/pages/signin/signin.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _f || Object])
     ], SigninPage);
     return SigninPage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=signin.js.map
@@ -292,10 +298,10 @@ var SigninPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_alert_alert_controller__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular_components_loading_loading_controller__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth_service__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_user_user_service__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tabsclient_tabsclient__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__setupprofile_setupprofile__ = __webpack_require__(281);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1267,7 +1273,7 @@ var FreelancersPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth_service__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_chat_chat_service__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_user_service__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_chat_model__ = __webpack_require__(624);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_chat_model__ = __webpack_require__(625);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__chat_chat__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_firebase__);
@@ -2314,7 +2320,7 @@ var ResetpasswordPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabsclient_tabsclient__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabsclient_tabsclient__ = __webpack_require__(68);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2811,17 +2817,17 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_chat_chat__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_chat_chat_service__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_custom_logged_header_custom_logged_header_component__ = __webpack_require__(623);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_message_box_message_box_component__ = __webpack_require__(625);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_message_box_message_box_component__ = __webpack_require__(626);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_message_message_service__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__app_component__ = __webpack_require__(626);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_progress_bar_progress_bar_component__ = __webpack_require__(627);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__app_component__ = __webpack_require__(627);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_progress_bar_progress_bar_component__ = __webpack_require__(628);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_signup_signup__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_signin_signin__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_user_info_user_info_component__ = __webpack_require__(628);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_user_menu_user_menu_component__ = __webpack_require__(629);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_user_info_user_info_component__ = __webpack_require__(629);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_user_menu_user_menu_component__ = __webpack_require__(630);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_user_user_service__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_user_profile_user_profile__ = __webpack_require__(291);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_tabsclient_tabsclient__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_tabsclient_tabsclient__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_tabsfreelancer_tabsfreelancer__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_jobs_jobs__ = __webpack_require__(282);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_camera__ = __webpack_require__(286);
@@ -2838,6 +2844,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__pages_resetpassword_resetpassword__ = __webpack_require__(287);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__providers_imageprovider_imageprovider__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__ionic_native_geolocation__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__ionic_native_linkedin__ = __webpack_require__(624);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2852,6 +2859,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
  //importa o firebase app config
+
 
 
 
@@ -2968,6 +2976,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_39__ionic_native_geolocation__["a" /* Geolocation */],
                 __WEBPACK_IMPORTED_MODULE_26__ionic_native_camera__["a" /* Camera */],
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_40__ionic_native_linkedin__["a" /* LinkedIn */],
                 __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__["a" /* SplashScreen */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* IonicErrorHandler */] },
                 __WEBPACK_IMPORTED_MODULE_21__providers_user_user_service__["a" /* UserService */],
@@ -3225,7 +3234,7 @@ var CustomLoggedHeaderComponent = (function (_super) {
 
 /***/ }),
 
-/***/ 624:
+/***/ 625:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3245,7 +3254,7 @@ var Chat = (function () {
 
 /***/ }),
 
-/***/ 625:
+/***/ 626:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3298,7 +3307,7 @@ var MessageBoxComponent = (function () {
 
 /***/ }),
 
-/***/ 626:
+/***/ 627:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3310,7 +3319,7 @@ var MessageBoxComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth_service__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_signin_signin__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_user_service__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_tabsclient_tabsclient__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabsfreelancer_tabsfreelancer__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_postjob_postjob__ = __webpack_require__(288);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_profileclient_profileclient__ = __webpack_require__(289);
@@ -3423,7 +3432,7 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 627:
+/***/ 628:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3459,7 +3468,7 @@ var ProgressBarComponent = (function () {
 
 /***/ }),
 
-/***/ 628:
+/***/ 629:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3502,7 +3511,7 @@ var UserInfoComponent = (function () {
 
 /***/ }),
 
-/***/ 629:
+/***/ 630:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3571,7 +3580,7 @@ var UserMenuComponent = (function (_super) {
 
 /***/ }),
 
-/***/ 67:
+/***/ 68:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
